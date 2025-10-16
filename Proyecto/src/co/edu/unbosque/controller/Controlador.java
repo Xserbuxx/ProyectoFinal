@@ -21,6 +21,9 @@ public class Controlador implements ActionListener{
 	
 	public void run() {
 		agregarOyentes();
+		vf.mostrarPanel("idioma");
+		
+		vf.getVentanaPrincipal().actualizar();
 	}
 	
 	private void agregarOyentes() {
