@@ -11,20 +11,20 @@ public abstract class Persona implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	// datos basicos
-	String nombre;
-	String alias;
-	int edad;
-	String fechaNacimiento;
-	float estatura;
-	String correo;
-	ImageIcon imagen;
-	boolean disponibilidad;
-	String contrasena;
-	String codigo;
+	private String nombre;
+	private String alias;
+	private int edad;
+	private String fechaNacimiento;
+	private float estatura;
+	private String correo;
+	private ImageIcon imagen;
+	private boolean disponibilidad;
+	private String contrasena;
+	private String codigo;
 	// gustos
-	int edadMaxima;
-	int edadMinima;
-	float estaturaIdeal;
+	private int edadMaxima;
+	private int edadMinima;
+	private float estaturaIdeal;
 
 	public Persona() {
 		// TODO Auto-generated constructor stub

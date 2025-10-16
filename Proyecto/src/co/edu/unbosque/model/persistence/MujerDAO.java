@@ -5,10 +5,10 @@ import java.util.ArrayList;
 import co.edu.unbosque.model.Mujer;
 import co.edu.unbosque.model.MujerDTO;
 
-public class MujerDAO implements DAO<MujerDTO,Mujer>{
-	
-	String SERIAL_FILE_NAME = "Mujeres.bin";
-	ArrayList<Mujer> Mujeres;
+public class MujerDAO implements DAO<MujerDTO, Mujer> {
+
+	private String SERIAL_FILE_NAME = "Mujeres.bin";
+	private ArrayList<Mujer> Mujeres;
 
 	public MujerDAO() {
 		cargarArchivoSerializado();
@@ -68,17 +68,17 @@ public class MujerDAO implements DAO<MujerDTO,Mujer>{
 
 		return null;
 	}
-	
-	String lista;
-	int n;
-	
+
+	private String lista;
+	private int n;
+
 	@Override
 	public String mostrar() {
 		lista = "";
 		n = 0;
 
 		Mujeres.forEach((Mujer) -> {
-			lista +=  Mujer.toString() + "\n";
+			lista += Mujer.toString() + "\n";
 			n++;
 		});
 
@@ -100,5 +100,12 @@ public class MujerDAO implements DAO<MujerDTO,Mujer>{
 		FileHandler.escribirArchivoSerializado(SERIAL_FILE_NAME, Mujeres);
 	}
 
-	
+	public ArrayList<Mujer> getMujeres() {
+		return Mujeres;
+	}
+
+	public void setMujeres(ArrayList<Mujer> mujeres) {
+		Mujeres = mujeres;
+	}
+
 }

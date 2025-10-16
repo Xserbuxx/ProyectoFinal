@@ -7,8 +7,8 @@ import co.edu.unbosque.model.HombreDTO;
 
 public class HombreDAO implements DAO<HombreDTO, Hombre> {
 
-	String SERIAL_FILE_NAME = "hombres.bin";
-	ArrayList<Hombre> hombres;
+	private String SERIAL_FILE_NAME = "hombres.bin";
+	private ArrayList<Hombre> hombres;
 
 	public HombreDAO() {
 		cargarArchivoSerializado();
@@ -68,17 +68,17 @@ public class HombreDAO implements DAO<HombreDTO, Hombre> {
 
 		return null;
 	}
-	
-	String lista;
-	int n;
-	
+
+	private String lista;
+	private int n;
+
 	@Override
 	public String mostrar() {
 		lista = "";
 		n = 0;
 
 		hombres.forEach((hombre) -> {
-			lista +=  hombre.toString() + "\n";
+			lista += hombre.toString() + "\n";
 			n++;
 		});
 
@@ -100,4 +100,11 @@ public class HombreDAO implements DAO<HombreDTO, Hombre> {
 		FileHandler.escribirArchivoSerializado(SERIAL_FILE_NAME, hombres);
 	}
 
+	public ArrayList<Hombre> getHombres() {
+		return hombres;
+	}
+
+	public void setHombres(ArrayList<Hombre> hombres) {
+		this.hombres = hombres;
+	}
 }

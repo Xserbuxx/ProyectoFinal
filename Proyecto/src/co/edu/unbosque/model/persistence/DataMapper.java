@@ -38,9 +38,9 @@ public class DataMapper {
 		ArrayList<HombreDTO> dtoLista = new ArrayList<>();
 		for (Hombre h : entidadLista) {
 			dtoLista.add(new HombreDTO(h.getNombre(), h.getAlias(), h.getEdad(), h.getFechaNacimiento(),
-					h.getEstatura(), h.getCorreo(), h.getImagen(), h.isDisponibilidad(),
-					h.getContrasena(), h.getCodigo(), h.getEdadMaxima(), h.getEdadMinima(),
-					h.getEstaturaIdeal(), h.getIngresoProm(), h.isEstadoDivorcio()));
+					h.getEstatura(), h.getCorreo(), h.getImagen(), h.isDisponibilidad(), h.getContrasena(),
+					h.getCodigo(), h.getEdadMaxima(), h.getEdadMinima(), h.getEstaturaIdeal(), h.getIngresoProm(),
+					h.isEstadoDivorcio()));
 		}
 		return dtoLista;
 	}
@@ -48,21 +48,21 @@ public class DataMapper {
 	public static ArrayList<Hombre> listaHombreDTOAListaHombre(ArrayList<HombreDTO> dtoLista) {
 		ArrayList<Hombre> entidadLista = new ArrayList<>();
 		for (HombreDTO h : dtoLista) {
-			entidadLista.add(new Hombre(h.getNombre(), h.getAlias(), h.getEdad(), h.getFechaNacimiento(), h.getEstatura(),
-					h.getCorreo(), h.getImagen(), h.isDisponibilidad(), h.getContrasena(), h.getCodigo(),
-					h.getEdadMaxima(), h.getEdadMinima(), h.getEstaturaIdeal(), h.getIngresoProm(),
+			entidadLista.add(new Hombre(h.getNombre(), h.getAlias(), h.getEdad(), h.getFechaNacimiento(),
+					h.getEstatura(), h.getCorreo(), h.getImagen(), h.isDisponibilidad(), h.getContrasena(),
+					h.getCodigo(), h.getEdadMaxima(), h.getEdadMinima(), h.getEstaturaIdeal(), h.getIngresoProm(),
 					h.isEstadoDivorcio()));
 		}
 		return entidadLista;
 	}
-	
+
 	public static ArrayList<MujerDTO> listaMujerAListaMujerDTO(ArrayList<Mujer> entidadLista) {
 		ArrayList<MujerDTO> dtoLista = new ArrayList<>();
 		for (Mujer m : entidadLista) {
-			dtoLista.add(new MujerDTO(m.getNombre(), m.getAlias(), m.getEdad(), m.getFechaNacimiento(),
-					m.getEstatura(), m.getCorreo(), m.getImagen(), m.isDisponibilidad(),
-					m.getContrasena(), m.getCodigo(), m.getEdadMaxima(), m.getEdadMinima(),
-					m.getEstaturaIdeal(), m.isDivorciada(), m.getIngresosIdeal()));
+			dtoLista.add(new MujerDTO(m.getNombre(), m.getAlias(), m.getEdad(), m.getFechaNacimiento(), m.getEstatura(),
+					m.getCorreo(), m.getImagen(), m.isDisponibilidad(), m.getContrasena(), m.getCodigo(),
+					m.getEdadMaxima(), m.getEdadMinima(), m.getEstaturaIdeal(), m.isDivorciada(),
+					m.getIngresosIdeal()));
 		}
 		return dtoLista;
 	}
@@ -70,9 +70,9 @@ public class DataMapper {
 	public static ArrayList<Mujer> listaMujerDTOAListaMujer(ArrayList<MujerDTO> dtoLista) {
 		ArrayList<Mujer> entidadLista = new ArrayList<>();
 		for (MujerDTO m : dtoLista) {
-			entidadLista.add(new Mujer(m.getNombre(), m.getAlias(), m.getEdad(), m.getFechaNacimiento(), m.getEstatura(),
-					m.getCorreo(), m.getImagen(), m.isDisponibilidad(), m.getContrasena(), m.getCodigo(),
-					m.getEdadMaxima(), m.getEdadMinima(), m.getEstaturaIdeal(), m.isDivorciada(),
+			entidadLista.add(new Mujer(m.getNombre(), m.getAlias(), m.getEdad(), m.getFechaNacimiento(),
+					m.getEstatura(), m.getCorreo(), m.getImagen(), m.isDisponibilidad(), m.getContrasena(),
+					m.getCodigo(), m.getEdadMaxima(), m.getEdadMinima(), m.getEstaturaIdeal(), m.isDivorciada(),
 					m.getIngresosIdeal()));
 		}
 		return entidadLista;

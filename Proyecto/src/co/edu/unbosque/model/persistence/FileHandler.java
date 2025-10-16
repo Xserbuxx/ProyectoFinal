@@ -108,14 +108,14 @@ public class FileHandler {
 		return null;
 	}
 
-	//propiedades
+	// propiedades
 	public static Properties cargarArchivoDePropiedades(String url) {
 		try {
 			archivo = new File(url);
 			if (!archivo.exists()) {
 				archivo.createNewFile();
 			}
-			
+
 			prop = new Properties();
 			prop.load(new FileInputStream(archivo));
 			return prop;

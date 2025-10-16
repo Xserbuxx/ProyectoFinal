@@ -9,9 +9,9 @@ public class Mujer extends Persona {
 	 */
 	private static final long serialVersionUID = 1L;
 	// datos basicos
-	boolean Divorciada;
+	private boolean Divorciada;
 	// gustos
-	float ingresosIdeal;
+	private float ingresosIdeal;
 
 	public Mujer() {
 		// TODO Auto-generated constructor stub

@@ -5,9 +5,9 @@ import javax.swing.ImageIcon;
 public class MujerDTO extends Persona {
 
 	// datos basicos
-	boolean Divorciada;
+	private boolean Divorciada;
 	// gustos
-	float ingresosIdeal;
+	private float ingresosIdeal;
 
 	public MujerDTO() {
 		// TODO Auto-generated constructor stub
