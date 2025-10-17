@@ -10,6 +10,7 @@ public class VentanaPrincipal extends JFrame{
 		this.setTitle("BOSTINDER");
 		this.setResizable(false);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		this.setLocationRelativeTo(null);
 		this.setVisible(true);
 	}
 	

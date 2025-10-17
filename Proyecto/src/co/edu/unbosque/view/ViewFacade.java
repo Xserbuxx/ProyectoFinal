@@ -11,6 +11,8 @@ public class ViewFacade {
 	private CardLayout cl;
 	
 	private Idioma idm;
+	private InicioSesion is;
+	private Registro reg;
 	
 	public ViewFacade() {
 		ventanaPrincipal = new VentanaPrincipal();
@@ -20,8 +22,12 @@ public class ViewFacade {
 		paneles.setLayout(cl);
 		
 		idm = new Idioma();
+		is = new InicioSesion();
+		reg = new Registro();
 		
-		paneles.add(idm, "idioma");
+		//paneles.add(idm, "idioma");
+		//paneles.add(is, "inicioSesion");
+		paneles.add(reg, "registro");
 		
 		ventanaPrincipal.add(paneles);
 	}
@@ -60,6 +66,22 @@ public class ViewFacade {
 
 	public void setCl(CardLayout cl) {
 		this.cl = cl;
+	}
+
+	public InicioSesion getIs() {
+		return is;
+	}
+
+	public void setIs(InicioSesion is) {
+		this.is = is;
+	}
+
+	public Registro getReg() {
+		return reg;
+	}
+
+	public void setReg(Registro reg) {
+		this.reg = reg;
 	}	
 	
 }

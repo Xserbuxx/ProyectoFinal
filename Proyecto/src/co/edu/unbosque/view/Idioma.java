@@ -15,10 +15,8 @@ public class Idioma extends JPanel {
 
 	public Idioma() {
 		
-		Color negroClaro = new Color(36,41,46);
-		
 		this.setLayout(null);
-		this.setBackground(negroClaro);
+		this.setBackground(new Color(36,41,46));
 
 		JPanel panel = new JPanel();
 
@@ -35,7 +33,7 @@ public class Idioma extends JPanel {
 
 		comboBox = new JComboBox<>(idiomas);
 		comboBox.setBounds(400, 320, 450, 60);
-		comboBox.setBackground(negroClaro);
+		comboBox.setBackground(new Color(36,41,46));
 		comboBox.setForeground(new Color(255, 255, 255, 200));
 		comboBox.setFocusable(false);
 		comboBox.setFont(new Font("Sans", Font.BOLD, 20));
@@ -54,4 +52,13 @@ public class Idioma extends JPanel {
 		this.add(comboBox);
 		this.add(panel);
 	}
+
+	public JButton getConfirmar() {
+		return confirmar;
+	}
+
+	public void setConfirmar(JButton confirmar) {
+		this.confirmar = confirmar;
+	}
+	
 }
