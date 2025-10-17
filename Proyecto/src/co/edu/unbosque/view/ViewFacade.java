@@ -25,8 +25,8 @@ public class ViewFacade {
 		is = new InicioSesion();
 		reg = new Registro();
 		
-		//paneles.add(idm, "idioma");
-		//paneles.add(is, "inicioSesion");
+		paneles.add(idm, "idioma");
+		paneles.add(is, "inicioSesion");
 		paneles.add(reg, "registro");
 		
 		ventanaPrincipal.add(paneles);

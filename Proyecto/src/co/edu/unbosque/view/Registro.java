@@ -53,7 +53,7 @@ public class Registro extends JPanel {
 		// parametros para la seleccion de disponibilidad
 		disponible = new JRadioButton();
 
-		disponible.setBounds(50, 670, 200, 20);
+		disponible.setBounds(50, 940, 200, 20);
 		disponible.setBackground(new Color(36, 41, 46));
 		disponible.setForeground(Color.WHITE);
 		disponible.setFocusable(false);
@@ -62,7 +62,7 @@ public class Registro extends JPanel {
 
 		noDisponible = new JRadioButton();
 
-		noDisponible.setBounds(50, 700, 200, 20);
+		noDisponible.setBounds(50, 970, 200, 20);
 		noDisponible.setBackground(new Color(36, 41, 46));
 		noDisponible.setForeground(Color.WHITE);
 		noDisponible.setFocusable(false);
@@ -77,7 +77,7 @@ public class Registro extends JPanel {
 		izquierda = new JPanel();
 
 		izquierda.setLayout(null);
-		izquierda.setPreferredSize(new Dimension(640, 1280));
+		izquierda.setPreferredSize(new Dimension(640, 1380));
 		izquierda.setBackground(new Color(36, 41, 46));
 
 		scroll = new JScrollPane(izquierda, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
@@ -88,7 +88,7 @@ public class Registro extends JPanel {
 		scroll.setBorder(null);
 
 		botonConfirmar = new JButton();
-		botonConfirmar.setBounds(150, 900, 330, 50);
+		botonConfirmar.setBounds(150, 1220, 330, 50);
 		botonConfirmar.setBackground(new Color(3, 102, 214));
 		botonConfirmar.setForeground(Color.white);
 		botonConfirmar.setFocusable(false);
@@ -96,7 +96,7 @@ public class Registro extends JPanel {
 		botonConfirmar.setBorderPainted(false);
 
 		botonIniciarSesion = new JButton();
-		botonIniciarSesion.setBounds(135, 970, 200, 14);
+		botonIniciarSesion.setBounds(135, 1300, 200, 14);
 		botonIniciarSesion.setFont(new Font("Arial", Font.BOLD, 14));
 		botonIniciarSesion.setForeground(new Color(0, 102, 204));
 		botonIniciarSesion.setHorizontalAlignment(JLabel.LEFT);
@@ -105,7 +105,8 @@ public class Registro extends JPanel {
 		botonIniciarSesion.setFocusPainted(false);
 
 		botonSexoHombre = new JButton("♂");
-		botonSexoHombre.setBounds(250, 50, 50, 30);
+		botonSexoHombre.setFont(new Font("Sans", Font.BOLD, 20));
+		botonSexoHombre.setBounds(50, 150, 50, 30);
 		botonSexoHombre.setBackground(new Color(3, 102, 214));
 		botonSexoHombre.setForeground(Color.white);
 		botonSexoHombre.setFocusable(false);
@@ -113,7 +114,8 @@ public class Registro extends JPanel {
 		botonSexoHombre.setBorderPainted(false);
 
 		botonSexoMujer = new JButton("♀");
-		botonSexoMujer.setBounds(320, 50, 50, 30);
+		botonSexoMujer.setFont(new Font("Sans", Font.BOLD, 20));
+		botonSexoMujer.setBounds(100, 150, 50, 30);
 		botonSexoMujer.setBackground(new Color(255, 0, 102));
 		botonSexoMujer.setForeground(Color.white);
 		botonSexoMujer.setFocusable(false);
@@ -125,28 +127,28 @@ public class Registro extends JPanel {
 
 		// campos de texto
 		campoNombre = new JTextField();
-		campoNombre.setBounds(50, 130, 540, 30);
+		campoNombre.setBounds(50, 250, 540, 30);
 
 		campoAlias = new JTextField();
-		campoAlias.setBounds(50, 210, 540, 30);
+		campoAlias.setBounds(50, 350, 540, 30);
 
 		campoEdad = new JTextField();
-		campoEdad.setBounds(50, 290, 540, 30);
+		campoEdad.setBounds(50, 450, 540, 30);
 
 		campoFechaNacimiento = new JTextField();
-		campoFechaNacimiento.setBounds(50, 370, 540, 30);
+		campoFechaNacimiento.setBounds(50, 550, 540, 30);
 
 		campoEstatura = new JTextField();
-		campoEstatura.setBounds(50, 450, 540, 30);
+		campoEstatura.setBounds(50, 650, 540, 30);
 
 		campoCorreo = new JTextField();
-		campoCorreo.setBounds(50, 530, 540, 30);
+		campoCorreo.setBounds(50, 750, 540, 30);
 
 		campoImagen = new JTextField();
-		campoImagen.setBounds(50, 610, 540, 30);
+		campoImagen.setBounds(50, 850, 540, 30);
 
 		campoContrasena = new JTextField();
-		campoContrasena.setBounds(50, 750, 540, 30);
+		campoContrasena.setBounds(50, 1050, 540, 30);
 
 		izquierda.add(botonSexoMujer);
 		izquierda.add(botonSexoHombre);
@@ -172,17 +174,17 @@ public class Registro extends JPanel {
 			String labelBotonConfirmar, String labelBotonIniciarSesionTexto, String labelYaCuenta, String labelSexo) {
 
 		crearLabel(labelRegistro, Color.WHITE, 200, 20, 300, 50, 30);
-		crearLabel(labelNombre, Color.WHITE, 50, 100, 200, 30, 20);
-		crearLabel(labelAlias, Color.WHITE, 50, 180, 200, 30, 20);
-		crearLabel(labelEdad, Color.WHITE, 50, 260, 200, 30, 20);
-		crearLabel(labelFechaNacimiento, Color.WHITE, 50, 340, 200, 30, 20);
-		crearLabel(labelEstatura, Color.WHITE, 50, 420, 200, 30, 20);
-		crearLabel(labelCorreo, Color.WHITE, 50, 500, 200, 30, 20);
-		crearLabel(labelImagen, Color.WHITE, 50, 580, 200, 30, 20);
-		crearLabel(labelDisponibilidad, Color.WHITE, 50, 640, 300, 30, 20);
-		crearLabel(labelContrasena, Color.WHITE, 50, 720, 200, 30, 20);
-		crearLabel(labelYaCuenta, Color.WHITE, 50, 800, 200, 30, 20);
-		crearLabel(labelSexo, Color.WHITE, 50, 45, 200, 30, 20);
+		crearLabel(labelNombre, Color.WHITE, 50, 200, 200, 30, 20);
+		crearLabel(labelAlias, Color.WHITE, 50, 300, 200, 30, 20);
+		crearLabel(labelEdad, Color.WHITE, 50, 400, 200, 30, 20);
+		crearLabel(labelFechaNacimiento, Color.WHITE, 50, 500, 200, 30, 20);
+		crearLabel(labelEstatura, Color.WHITE, 50, 600, 200, 30, 20);
+		crearLabel(labelCorreo, Color.WHITE, 50, 700, 200, 30, 20);
+		crearLabel(labelImagen, Color.WHITE, 50, 800, 200, 30, 20);
+		crearLabel(labelDisponibilidad, Color.WHITE, 50, 900, 300, 30, 20);
+		crearLabel(labelContrasena, Color.WHITE, 50, 1000, 200, 30, 20);
+		crearLabel(labelYaCuenta, Color.WHITE, 150, 1270, 200, 30, 14);
+		crearLabel(labelSexo, Color.WHITE, 50, 100, 200, 30, 20);
 
 		botonConfirmar.setText(labelBotonConfirmar);
 		botonIniciarSesion.setText(labelBotonIniciarSesionTexto);
@@ -197,8 +199,8 @@ public class Registro extends JPanel {
 		campoIngresoProm.setVisible(true);
 		campoIngresoProm.setEnabled(true);
 
-		campoIngresoProm.setBounds(50, 830, 540, 30);
-		crearLabel(labelIngresoProm, Color.WHITE, 50, 780, 300, 30, 20);
+		campoIngresoProm.setBounds(50, 1150, 540, 30);
+		crearLabel(labelIngresoProm, Color.WHITE, 50, 1100, 300, 30, 20);
 		izquierda.add(campoIngresoProm);
 		izquierda.setComponentZOrder(campoIngresoProm, 0);
 	}
@@ -209,8 +211,8 @@ public class Registro extends JPanel {
 		campoDivorciada.setVisible(true);
 		campoDivorciada.setEnabled(true);
 
-		campoDivorciada.setBounds(50, 810, 540, 30);
-		crearLabel(labelDivorciada, Color.WHITE, 50, 780, 300, 30, 20);
+		campoDivorciada.setBounds(50, 1150, 540, 30);
+		crearLabel(labelDivorciada, Color.WHITE, 50, 1100, 300, 30, 20);
 		izquierda.add(campoDivorciada);
 		izquierda.setComponentZOrder(campoDivorciada, 0);
 	}
