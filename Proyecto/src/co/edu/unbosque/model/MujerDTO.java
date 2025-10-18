@@ -21,18 +21,18 @@ public class MujerDTO extends Persona {
 
 	public MujerDTO(String nombre, String alias, int edad, String fechaNacimiento, float estatura, String correo,
 			ImageIcon imagen, boolean disponibilidad, String contrasena, String codigo, int edadMaxima, int edadMinima,
-			float estaturaIdeal, boolean Divorciada, float ingresosIdeal) {
+			float estaturaIdeal, boolean Divorciada, float ingresosIdeal, int likesRecibidos, boolean incognito) {
 		super(nombre, alias, edad, fechaNacimiento, estatura, correo, imagen, disponibilidad, contrasena, codigo,
-				edadMaxima, edadMinima, estaturaIdeal);
+				edadMaxima, edadMinima, estaturaIdeal, likesRecibidos, incognito);
 		this.Divorciada = Divorciada;
 		this.ingresosIdeal = ingresosIdeal;
 	}
 
 	public MujerDTO(String nombre, String alias, int edad, String fechaNacimiento, float estatura, String correo,
 			ImageIcon imagen, boolean disponibilidad, String contrasena, String codigo, int edadMaxima, int edadMinima,
-			float estaturaIdeal) {
+			float estaturaIdeal, int likesRecibidos, boolean incognito) {
 		super(nombre, alias, edad, fechaNacimiento, estatura, correo, imagen, disponibilidad, contrasena, codigo,
-				edadMaxima, edadMinima, estaturaIdeal);
+				edadMaxima, edadMinima, estaturaIdeal, likesRecibidos, incognito);
 		// TODO Auto-generated constructor stub
 	}
 

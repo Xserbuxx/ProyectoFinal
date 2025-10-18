@@ -21,6 +21,8 @@ public abstract class Persona implements Serializable {
 	private boolean disponibilidad;
 	private String contrasena;
 	private String codigo;
+	private int likesRecibidos;
+	private boolean incognito;
 	// gustos
 	private int edadMaxima;
 	private int edadMinima;
@@ -32,7 +34,7 @@ public abstract class Persona implements Serializable {
 
 	public Persona(String nombre, String alias, int edad, String fechaNacimiento, float estatura, String correo,
 			ImageIcon imagen, boolean disponibilidad, String contrasena, String codigo, int edadMaxima, int edadMinima,
-			float estaturaIdeal) {
+			float estaturaIdeal, int likesRecibidos, boolean incognito) {
 		super();
 		this.nombre = nombre;
 		this.alias = alias;
@@ -47,6 +49,8 @@ public abstract class Persona implements Serializable {
 		this.edadMaxima = edadMaxima;
 		this.edadMinima = edadMinima;
 		this.estaturaIdeal = estaturaIdeal;
+		this.likesRecibidos = likesRecibidos;
+		this.incognito = incognito;
 	}
 
 	public String getNombre() {
@@ -152,12 +156,24 @@ public abstract class Persona implements Serializable {
 	public void setEstaturaIdeal(float estaturaIdeal) {
 		this.estaturaIdeal = estaturaIdeal;
 	}
+	public int getLikesRecibidos() {
+		return likesRecibidos;
+	}
+	public void setLikesRecibidos(int likesRecibidos) {
+		this.likesRecibidos = likesRecibidos;
+	}
+	public boolean isIncognito() {
+		return incognito;
+	}
+	public void setIncognito(boolean incognito) {
+		this.incognito = incognito;
+	}
 
 	@Override
 	public String toString() {
 		return nombre + ";" + alias + ";" + edad + ";" + fechaNacimiento + ";" + estatura + ";" + correo + ";" + imagen
 				+ ";" + disponibilidad + ";" + contrasena + ";" + codigo + ";" + edadMaxima + ";" + edadMinima + ";"
-				+ estaturaIdeal;
+				+ estaturaIdeal + ";" + likesRecibidos + ";" + incognito;
 	}
 
 }

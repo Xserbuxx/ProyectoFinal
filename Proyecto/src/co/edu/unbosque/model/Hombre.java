@@ -25,18 +25,18 @@ public class Hombre extends Persona {
 
 	public Hombre(String nombre, String alias, int edad, String fechaNacimiento, float estatura, String correo,
 			ImageIcon imagen, boolean disponibilidad, String contrasena, String codigo, int edadMaxima, int edadMinima,
-			float estaturaIdeal, float ingresoProm, boolean estadoDivorcio) {
+			float estaturaIdeal, float ingresoProm, boolean estadoDivorcio, int likesRecibidos, boolean incognito) {
 		super(nombre, alias, edad, fechaNacimiento, estatura, correo, imagen, disponibilidad, contrasena, codigo,
-				edadMaxima, edadMinima, estaturaIdeal);
+				edadMaxima, edadMinima, estaturaIdeal, likesRecibidos, incognito);
 		this.ingresoProm = ingresoProm;
 		this.estadoDivorcio = estadoDivorcio;
 	}
 
 	public Hombre(String nombre, String alias, int edad, String fechaNacimiento, float estatura, String correo,
 			ImageIcon imagen, boolean disponibilidad, String contrasena, String codigo, int edadMaxima, int edadMinima,
-			float estaturaIdeal) {
+			float estaturaIdeal, int likesRecibidos, boolean incognito) {
 		super(nombre, alias, edad, fechaNacimiento, estatura, correo, imagen, disponibilidad, contrasena, codigo,
-				edadMaxima, edadMinima, estaturaIdeal);
+				edadMaxima, edadMinima, estaturaIdeal, likesRecibidos, incognito);
 		// TODO Auto-generated constructor stub
 	}
 

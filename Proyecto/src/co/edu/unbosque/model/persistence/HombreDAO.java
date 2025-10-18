@@ -51,36 +51,28 @@ public class HombreDAO implements DAO<HombreDTO, Hombre> {
 
 	@Override
 	public Hombre encontrar(Hombre datoAEncontrar) {
-
-		Hombre found = null;
-		if (!hombres.isEmpty()) {
-			for (Hombre Hombre : hombres) {
-				if (Hombre.getAlias().equals(datoAEncontrar.getAlias())) {
-					found = Hombre;
-					return found;
-				} else {
-					continue;
-				}
-			}
-		} else {
+		if (hombres.isEmpty()) {
 			return null;
+		}
+
+		for (Hombre hombre : hombres) {
+			if (hombre.getAlias().equals(datoAEncontrar.getAlias())) {
+				return hombre;
+			} else {
+				continue;
+			}
 		}
 
 		return null;
 	}
 
-	private String lista;
-	private int n;
-
 	@Override
 	public String mostrar() {
-		lista = "";
-		n = 0;
+		String lista = "";
 
-		hombres.forEach((hombre) -> {
-			lista += hombre.toString() + "\n";
-			n++;
-		});
+		for (Hombre h : hombres) {
+			lista += h.toString() + "\n";
+		}
 
 		return lista;
 	}

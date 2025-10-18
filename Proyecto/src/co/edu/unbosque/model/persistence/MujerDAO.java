@@ -51,36 +51,28 @@ public class MujerDAO implements DAO<MujerDTO, Mujer> {
 
 	@Override
 	public Mujer encontrar(Mujer datoAEncontrar) {
-
-		Mujer found = null;
-		if (!Mujeres.isEmpty()) {
-			for (Mujer Mujer : Mujeres) {
-				if (Mujer.getAlias().equals(datoAEncontrar.getAlias())) {
-					found = Mujer;
-					return found;
-				} else {
-					continue;
-				}
-			}
-		} else {
+		if (Mujeres.isEmpty()) {
 			return null;
+		}
+		
+		for (Mujer mujer : Mujeres) {
+			if (mujer.getAlias().equals(datoAEncontrar.getAlias())) {
+				return mujer;
+			} else {
+				continue;
+			}
 		}
 
 		return null;
 	}
 
-	private String lista;
-	private int n;
-
 	@Override
 	public String mostrar() {
-		lista = "";
-		n = 0;
+		String lista = "";
 
-		Mujeres.forEach((Mujer) -> {
-			lista += Mujer.toString() + "\n";
-			n++;
-		});
+		for (Mujer m : Mujeres) {
+			lista += m.toString() + "\n";
+		}
 
 		return lista;
 	}
