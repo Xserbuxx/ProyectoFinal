@@ -60,5 +60,13 @@ public class Idioma extends JPanel {
 	public void setConfirmar(JButton confirmar) {
 		this.confirmar = confirmar;
 	}
+
+	public JComboBox<String> getComboBox() {
+		return comboBox;
+	}
+
+	public void setComboBox(JComboBox<String> comboBox) {
+		this.comboBox = comboBox;
+	}
 	
 }

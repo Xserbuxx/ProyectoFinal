@@ -26,7 +26,11 @@ public class Registro extends JPanel {
 
 	private JRadioButton disponible;
 	private JRadioButton noDisponible;
-	private ButtonGroup group;
+	private ButtonGroup grupoDisponibilidad;
+
+	private JRadioButton divorciada;
+	private JRadioButton noDivorciada;
+	private ButtonGroup grupoSexo;
 
 	private JTextField campoNombre;
 	private JTextField campoAlias;
@@ -38,8 +42,6 @@ public class Registro extends JPanel {
 	private JTextField campoContrasena;
 
 	private JTextField campoIngresoProm;
-
-	private JTextField campoDivorciada;
 
 	public Registro() {
 		// paramentros ventana
@@ -69,10 +71,37 @@ public class Registro extends JPanel {
 		noDisponible.setFocusPainted(false);
 		noDisponible.setBorderPainted(false);
 
-		group = new ButtonGroup();
-		group.add(disponible);
-		group.add(noDisponible);
+		grupoDisponibilidad = new ButtonGroup();
+		grupoDisponibilidad.add(disponible);
+		grupoDisponibilidad.add(noDisponible);
+		// parametros para divorciada
+		divorciada = new JRadioButton();
 
+		divorciada.setBounds(50, 1140, 200, 20);
+		divorciada.setBackground(new Color(36, 41, 46));
+		divorciada.setForeground(Color.WHITE);
+		divorciada.setFocusable(false);
+		divorciada.setFocusPainted(false);
+		divorciada.setBorderPainted(false);
+		
+		divorciada.setVisible(false);
+		divorciada.setEnabled(false);
+
+		noDivorciada = new JRadioButton();
+
+		noDivorciada.setBounds(50, 1170, 200, 20);
+		noDivorciada.setBackground(new Color(36, 41, 46));
+		noDivorciada.setForeground(Color.WHITE);
+		noDivorciada.setFocusable(false);
+		noDivorciada.setFocusPainted(false);
+		noDivorciada.setBorderPainted(false);
+		
+		noDivorciada.setVisible(false);
+		noDivorciada.setEnabled(false);
+
+		grupoSexo = new ButtonGroup();
+		grupoSexo.add(divorciada);
+		grupoSexo.add(noDivorciada);
 		// parametros panel izquierdo
 		izquierda = new JPanel();
 
@@ -123,8 +152,9 @@ public class Registro extends JPanel {
 		botonSexoMujer.setBorderPainted(false);
 
 		campoIngresoProm = new JTextField();
-		campoDivorciada = new JTextField();
-
+		campoIngresoProm.setBounds(50, 1150, 540, 30);
+		campoIngresoProm.setVisible(false);
+		campoIngresoProm.setEnabled(false);
 		// campos de texto
 		campoNombre = new JTextField();
 		campoNombre.setBounds(50, 250, 540, 30);
@@ -164,6 +194,9 @@ public class Registro extends JPanel {
 		izquierda.add(botonConfirmar);
 		izquierda.add(disponible);
 		izquierda.add(noDisponible);
+		izquierda.add(divorciada);
+		izquierda.add(noDivorciada);
+		izquierda.add(campoIngresoProm);
 		this.add(scroll);
 		this.add(derecha);
 	}
@@ -171,7 +204,8 @@ public class Registro extends JPanel {
 	public void mostrarTextos(String labelRegistro, String labelNombre, String labelAlias, String labelEdad,
 			String labelFechaNacimiento, String labelEstatura, String labelCorreo, String labelImagen,
 			String labelDisponibilidad, String labelDisponible, String labelNoDisponible, String labelContrasena,
-			String labelBotonConfirmar, String labelBotonIniciarSesionTexto, String labelYaCuenta, String labelSexo) {
+			String labelBotonConfirmar, String labelBotonIniciarSesionTexto, String labelYaCuenta, String labelSexo,
+			String labelDivorciada, String labelNoDivorciada) {
 
 		crearLabel(labelRegistro, Color.WHITE, 200, 20, 300, 50, 30);
 		crearLabel(labelNombre, Color.WHITE, 50, 200, 200, 30, 20);
@@ -191,30 +225,33 @@ public class Registro extends JPanel {
 
 		disponible.setText(labelDisponible);
 		noDisponible.setText(labelNoDisponible);
+		
+		divorciada.setText(labelDivorciada);
+		noDivorciada.setText(labelNoDivorciada);
 	}
 
 	public void mostrarCampoHombre(String labelIngresoProm) {
-		campoDivorciada.setVisible(false);
-		campoDivorciada.setEnabled(false);
+		divorciada.setVisible(false);
+		divorciada.setEnabled(false);
+		noDivorciada.setVisible(false);
+		noDivorciada.setEnabled(false);
 		campoIngresoProm.setVisible(true);
 		campoIngresoProm.setEnabled(true);
+		grupoSexo.clearSelection();
 
-		campoIngresoProm.setBounds(50, 1150, 540, 30);
 		crearLabel(labelIngresoProm, Color.WHITE, 50, 1100, 300, 30, 20);
-		izquierda.add(campoIngresoProm);
-		izquierda.setComponentZOrder(campoIngresoProm, 0);
 	}
 
 	public void mostrarCampoMujer(String labelDivorciada) {
 		campoIngresoProm.setVisible(false);
 		campoIngresoProm.setEnabled(false);
-		campoDivorciada.setVisible(true);
-		campoDivorciada.setEnabled(true);
+		divorciada.setVisible(true);
+		divorciada.setEnabled(true);
+		noDivorciada.setVisible(true);
+		noDivorciada.setEnabled(true);
+		campoIngresoProm.setText("");
 
-		campoDivorciada.setBounds(50, 1150, 540, 30);
 		crearLabel(labelDivorciada, Color.WHITE, 50, 1100, 300, 30, 20);
-		izquierda.add(campoDivorciada);
-		izquierda.setComponentZOrder(campoDivorciada, 0);
 	}
 
 	public void eliminarLabelSexos(String labelIngresoProm, String labelDivorciada) {
@@ -238,6 +275,170 @@ public class Registro extends JPanel {
 		label.setFont(new Font("Sans", Font.BOLD, tamanoLetra));
 		izquierda.add(label);
 		izquierda.setComponentZOrder(label, 0);
+	}
+
+	public void limpiarCampos() {
+		campoNombre.setText("");
+		campoAlias.setText("");
+		campoEdad.setText("");
+		campoFechaNacimiento.setText("");
+		campoEstatura.setText("");
+		campoCorreo.setText("");
+		campoImagen.setText("");
+		campoContrasena.setText("");
+		campoIngresoProm.setText("");
+		grupoDisponibilidad.clearSelection();
+		grupoSexo.clearSelection();
+		divorciada.setVisible(false);
+		divorciada.setEnabled(false);
+		noDivorciada.setVisible(false);
+		noDivorciada.setEnabled(false);
+		campoIngresoProm.setVisible(false);
+		campoIngresoProm.setEnabled(false);
+	}
+
+	public JScrollPane getScroll() {
+		return scroll;
+	}
+
+	public void setScroll(JScrollPane scroll) {
+		this.scroll = scroll;
+	}
+
+	public JPanel getIzquierda() {
+		return izquierda;
+	}
+
+	public void setIzquierda(JPanel izquierda) {
+		this.izquierda = izquierda;
+	}
+
+	public JButton getBotonConfirmar() {
+		return botonConfirmar;
+	}
+
+	public void setBotonConfirmar(JButton botonConfirmar) {
+		this.botonConfirmar = botonConfirmar;
+	}
+
+	public JButton getBotonIniciarSesion() {
+		return botonIniciarSesion;
+	}
+
+	public void setBotonIniciarSesion(JButton botonIniciarSesion) {
+		this.botonIniciarSesion = botonIniciarSesion;
+	}
+
+	public JButton getBotonSexoHombre() {
+		return botonSexoHombre;
+	}
+
+	public void setBotonSexoHombre(JButton botonSexoHombre) {
+		this.botonSexoHombre = botonSexoHombre;
+	}
+
+	public JButton getBotonSexoMujer() {
+		return botonSexoMujer;
+	}
+
+	public void setBotonSexoMujer(JButton botonSexoMujer) {
+		this.botonSexoMujer = botonSexoMujer;
+	}
+
+	public JRadioButton getDisponible() {
+		return disponible;
+	}
+
+	public void setDisponible(JRadioButton disponible) {
+		this.disponible = disponible;
+	}
+
+	public JRadioButton getNoDisponible() {
+		return noDisponible;
+	}
+
+	public void setNoDisponible(JRadioButton noDisponible) {
+		this.noDisponible = noDisponible;
+	}
+
+	public ButtonGroup getGrupoDisponibilidad() {
+		return grupoDisponibilidad;
+	}
+
+	public void setGrupoDisponibilidad(ButtonGroup grupoDisponibilidad) {
+		this.grupoDisponibilidad = grupoDisponibilidad;
+	}
+
+	public JTextField getCampoNombre() {
+		return campoNombre;
+	}
+
+	public void setCampoNombre(JTextField campoNombre) {
+		this.campoNombre = campoNombre;
+	}
+
+	public JTextField getCampoAlias() {
+		return campoAlias;
+	}
+
+	public void setCampoAlias(JTextField campoAlias) {
+		this.campoAlias = campoAlias;
+	}
+
+	public JTextField getCampoEdad() {
+		return campoEdad;
+	}
+
+	public void setCampoEdad(JTextField campoEdad) {
+		this.campoEdad = campoEdad;
+	}
+
+	public JTextField getCampoFechaNacimiento() {
+		return campoFechaNacimiento;
+	}
+
+	public void setCampoFechaNacimiento(JTextField campoFechaNacimiento) {
+		this.campoFechaNacimiento = campoFechaNacimiento;
+	}
+
+	public JTextField getCampoEstatura() {
+		return campoEstatura;
+	}
+
+	public void setCampoEstatura(JTextField campoEstatura) {
+		this.campoEstatura = campoEstatura;
+	}
+
+	public JTextField getCampoCorreo() {
+		return campoCorreo;
+	}
+
+	public void setCampoCorreo(JTextField campoCorreo) {
+		this.campoCorreo = campoCorreo;
+	}
+
+	public JTextField getCampoImagen() {
+		return campoImagen;
+	}
+
+	public void setCampoImagen(JTextField campoImagen) {
+		this.campoImagen = campoImagen;
+	}
+
+	public JTextField getCampoContrasena() {
+		return campoContrasena;
+	}
+
+	public void setCampoContrasena(JTextField campoContrasena) {
+		this.campoContrasena = campoContrasena;
+	}
+
+	public JTextField getCampoIngresoProm() {
+		return campoIngresoProm;
+	}
+
+	public void setCampoIngresoProm(JTextField campoIngresoProm) {
+		this.campoIngresoProm = campoIngresoProm;
 	}
 
 }

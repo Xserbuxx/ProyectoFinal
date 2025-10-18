@@ -79,5 +79,42 @@ public class InicioSesion extends JPanel {
 		this.add(label);
 		this.setComponentZOrder(label, 0);
 	}
+	
+	public void limpiarCampos() {
+		campoUsuario.setText("");
+		campoContrasena.setText("");
+	}
 
+	public JTextField getCampoUsuario() {
+		return campoUsuario;
+	}
+
+	public void setCampoUsuario(JTextField campoUsuario) {
+		this.campoUsuario = campoUsuario;
+	}
+
+	public JTextField getCampoContrasena() {
+		return campoContrasena;
+	}
+
+	public void setCampoContrasena(JTextField campoContrasena) {
+		this.campoContrasena = campoContrasena;
+	}
+
+	public JButton getBotonConfirmar() {
+		return botonConfirmar;
+	}
+
+	public void setBotonConfirmar(JButton botonConfirmar) {
+		this.botonConfirmar = botonConfirmar;
+	}
+
+	public JButton getBotonRegistrarse() {
+		return botonRegistrarse;
+	}
+
+	public void setBotonRegistrarse(JButton botonRegistrarse) {
+		this.botonRegistrarse = botonRegistrarse;
+	}
+	
 }
