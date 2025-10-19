@@ -10,7 +10,7 @@ public class DataMapper {
 		return new Hombre(dto.getNombre(), dto.getAlias(), dto.getEdad(), dto.getFechaNacimiento(), dto.getEstatura(),
 				dto.getCorreo(), dto.getImagen(), dto.isDisponibilidad(), dto.getContrasena(), dto.getCodigo(),
 				dto.getEdadMaxima(), dto.getEdadMinima(), dto.getEstaturaIdeal(), dto.getIngresoProm(),
-				dto.isEstadoDivorcio(), dto.getLikesRecibidos(), dto.isIncognito());
+				dto.isEstadoDivorcio(), dto.getLikesRecibidos(), dto.isIncognito(), dto.getLikesDados(), dto.isVerificado());
 	}
 
 	public static HombreDTO HombreAHombreDTO(Hombre entidad) {
@@ -18,14 +18,14 @@ public class DataMapper {
 				entidad.getEstatura(), entidad.getCorreo(), entidad.getImagen(), entidad.isDisponibilidad(),
 				entidad.getContrasena(), entidad.getCodigo(), entidad.getEdadMaxima(), entidad.getEdadMinima(),
 				entidad.getEstaturaIdeal(), entidad.getIngresoProm(), entidad.isEstadoDivorcio(),
-				entidad.getLikesRecibidos(), entidad.isIncognito());
+				entidad.getLikesRecibidos(), entidad.isIncognito(), entidad.getLikesDados(), entidad.isVerificado());
 	}
 
 	public static Mujer MujerDTOAMujer(MujerDTO dto) {
 		return new Mujer(dto.getNombre(), dto.getAlias(), dto.getEdad(), dto.getFechaNacimiento(), dto.getEstatura(),
 				dto.getCorreo(), dto.getImagen(), dto.isDisponibilidad(), dto.getContrasena(), dto.getCodigo(),
 				dto.getEdadMaxima(), dto.getEdadMinima(), dto.getEstaturaIdeal(), dto.isDivorciada(),
-				dto.getIngresosIdeal(), dto.getLikesRecibidos(), dto.isIncognito());
+				dto.getIngresosIdeal(), dto.getLikesRecibidos(), dto.isIncognito(), dto.getLikesDados(), dto.isVerificado());
 	}
 
 	public static MujerDTO MujerAMujerDTO(Mujer entidad) {
@@ -33,7 +33,7 @@ public class DataMapper {
 				entidad.getEstatura(), entidad.getCorreo(), entidad.getImagen(), entidad.isDisponibilidad(),
 				entidad.getContrasena(), entidad.getCodigo(), entidad.getEdadMaxima(), entidad.getEdadMinima(),
 				entidad.getEstaturaIdeal(), entidad.isDivorciada(), entidad.getIngresosIdeal(),
-				entidad.getLikesRecibidos(), entidad.isIncognito());
+				entidad.getLikesRecibidos(), entidad.isIncognito(), entidad.getLikesDados(), entidad.isVerificado());
 	}
 
 	public static ArrayList<HombreDTO> listaHombreAListaHombreDTO(ArrayList<Hombre> entidadLista) {
@@ -42,7 +42,7 @@ public class DataMapper {
 			dtoLista.add(new HombreDTO(h.getNombre(), h.getAlias(), h.getEdad(), h.getFechaNacimiento(),
 					h.getEstatura(), h.getCorreo(), h.getImagen(), h.isDisponibilidad(), h.getContrasena(),
 					h.getCodigo(), h.getEdadMaxima(), h.getEdadMinima(), h.getEstaturaIdeal(), h.getIngresoProm(),
-					h.isEstadoDivorcio(), h.getLikesRecibidos(), h.isIncognito()));
+					h.isEstadoDivorcio(), h.getLikesRecibidos(), h.isIncognito(), h.getLikesDados(), h.isVerificado()));
 		}
 		return dtoLista;
 	}
@@ -53,7 +53,7 @@ public class DataMapper {
 			entidadLista.add(new Hombre(h.getNombre(), h.getAlias(), h.getEdad(), h.getFechaNacimiento(),
 					h.getEstatura(), h.getCorreo(), h.getImagen(), h.isDisponibilidad(), h.getContrasena(),
 					h.getCodigo(), h.getEdadMaxima(), h.getEdadMinima(), h.getEstaturaIdeal(), h.getIngresoProm(),
-					h.isEstadoDivorcio(), h.getLikesRecibidos(), h.isIncognito()));
+					h.isEstadoDivorcio(), h.getLikesRecibidos(), h.isIncognito(), h.getLikesDados(), h.isVerificado()));
 		}
 		return entidadLista;
 	}
@@ -64,7 +64,7 @@ public class DataMapper {
 			dtoLista.add(new MujerDTO(m.getNombre(), m.getAlias(), m.getEdad(), m.getFechaNacimiento(), m.getEstatura(),
 					m.getCorreo(), m.getImagen(), m.isDisponibilidad(), m.getContrasena(), m.getCodigo(),
 					m.getEdadMaxima(), m.getEdadMinima(), m.getEstaturaIdeal(), m.isDivorciada(), m.getIngresosIdeal(),
-					m.getLikesRecibidos(), m.isIncognito()));
+					m.getLikesRecibidos(), m.isIncognito(), m.getLikesDados(), m.isVerificado()));
 		}
 		return dtoLista;
 	}
@@ -75,7 +75,7 @@ public class DataMapper {
 			entidadLista.add(new Mujer(m.getNombre(), m.getAlias(), m.getEdad(), m.getFechaNacimiento(),
 					m.getEstatura(), m.getCorreo(), m.getImagen(), m.isDisponibilidad(), m.getContrasena(),
 					m.getCodigo(), m.getEdadMaxima(), m.getEdadMinima(), m.getEstaturaIdeal(), m.isDivorciada(),
-					m.getIngresosIdeal(), m.getLikesRecibidos(), m.isIncognito()));
+					m.getIngresosIdeal(), m.getLikesRecibidos(), m.isIncognito(), m.getLikesDados(), m.isVerificado()));
 		}
 		return entidadLista;
 	}

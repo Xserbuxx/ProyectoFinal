@@ -1,5 +1,7 @@
 package co.edu.unbosque.model;
 
+import java.util.ArrayList;
+
 import javax.swing.ImageIcon;
 
 public class Mujer extends Persona {
@@ -24,19 +26,20 @@ public class Mujer extends Persona {
 	}
 
 	public Mujer(String nombre, String alias, int edad, String fechaNacimiento, float estatura, String correo,
-			ImageIcon imagen, boolean disponibilidad, String contrasena, String codigo, int edadMaxima, int edadMinima,
-			float estaturaIdeal, boolean Divorciada, float ingresosIdeal, int likesRecibidos, boolean incognito) {
+			ImageIcon imagen, boolean disponibilidad, String contrasena, int codigo, int edadMaxima, int edadMinima,
+			float estaturaIdeal, boolean Divorciada, float ingresosIdeal, int likesRecibidos, boolean incognito,
+			ArrayList<String> likesDados, boolean verificado) {
 		super(nombre, alias, edad, fechaNacimiento, estatura, correo, imagen, disponibilidad, contrasena, codigo,
-				edadMaxima, edadMinima, estaturaIdeal, likesRecibidos, incognito);
+				edadMaxima, edadMinima, estaturaIdeal, likesRecibidos, incognito, likesDados, verificado);
 		this.Divorciada = Divorciada;
 		this.ingresosIdeal = ingresosIdeal;
 	}
 
 	public Mujer(String nombre, String alias, int edad, String fechaNacimiento, float estatura, String correo,
-			ImageIcon imagen, boolean disponibilidad, String contrasena, String codigo, int edadMaxima, int edadMinima,
-			float estaturaIdeal, int likesRecibidos, boolean incognito) {
+			ImageIcon imagen, boolean disponibilidad, String contrasena, int codigo, int edadMaxima, int edadMinima,
+			float estaturaIdeal, int likesRecibidos, boolean incognito, ArrayList<String> likesDados, boolean verificado) {
 		super(nombre, alias, edad, fechaNacimiento, estatura, correo, imagen, disponibilidad, contrasena, codigo,
-				edadMaxima, edadMinima, estaturaIdeal, likesRecibidos, incognito);
+				edadMaxima, edadMinima, estaturaIdeal, likesRecibidos, incognito, likesDados, verificado);
 		// TODO Auto-generated constructor stub
 	}
 

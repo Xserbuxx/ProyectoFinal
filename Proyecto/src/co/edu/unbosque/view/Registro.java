@@ -441,4 +441,27 @@ public class Registro extends JPanel {
 		this.campoIngresoProm = campoIngresoProm;
 	}
 
+	public JRadioButton getDivorciada() {
+		return divorciada;
+	}
+
+	public void setDivorciada(JRadioButton divorciada) {
+		this.divorciada = divorciada;
+	}
+
+	public JRadioButton getNoDivorciada() {
+		return noDivorciada;
+	}
+
+	public void setNoDivorciada(JRadioButton noDivorciada) {
+		this.noDivorciada = noDivorciada;
+	}
+
+	public ButtonGroup getGrupoSexo() {
+		return grupoSexo;
+	}
+
+	public void setGrupoSexo(ButtonGroup grupoSexo) {
+		this.grupoSexo = grupoSexo;
+	}
 }

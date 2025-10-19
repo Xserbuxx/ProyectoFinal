@@ -1,6 +1,7 @@
 package co.edu.unbosque.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 
@@ -20,9 +21,11 @@ public abstract class Persona implements Serializable {
 	private ImageIcon imagen;
 	private boolean disponibilidad;
 	private String contrasena;
-	private String codigo;
+	private int codigo;
 	private int likesRecibidos;
 	private boolean incognito;
+	private ArrayList<String> likesDados;
+	private boolean verificado;
 	// gustos
 	private int edadMaxima;
 	private int edadMinima;
@@ -33,8 +36,8 @@ public abstract class Persona implements Serializable {
 	}
 
 	public Persona(String nombre, String alias, int edad, String fechaNacimiento, float estatura, String correo,
-			ImageIcon imagen, boolean disponibilidad, String contrasena, String codigo, int edadMaxima, int edadMinima,
-			float estaturaIdeal, int likesRecibidos, boolean incognito) {
+			ImageIcon imagen, boolean disponibilidad, String contrasena, int codigo, int edadMaxima, int edadMinima,
+			float estaturaIdeal, int likesRecibidos, boolean incognito, ArrayList<String> likesDados, boolean verificado) {
 		super();
 		this.nombre = nombre;
 		this.alias = alias;
@@ -51,6 +54,8 @@ public abstract class Persona implements Serializable {
 		this.estaturaIdeal = estaturaIdeal;
 		this.likesRecibidos = likesRecibidos;
 		this.incognito = incognito;
+		this.likesDados = likesDados;
+		this.verificado = verificado;
 	}
 
 	public String getNombre() {
@@ -125,11 +130,11 @@ public abstract class Persona implements Serializable {
 		this.contrasena = contrasena;
 	}
 
-	public String getCodigo() {
+	public int getCodigo() {
 		return codigo;
 	}
 
-	public void setCodigo(String codigo) {
+	public void setCodigo(int codigo) {
 		this.codigo = codigo;
 	}
 
@@ -156,24 +161,46 @@ public abstract class Persona implements Serializable {
 	public void setEstaturaIdeal(float estaturaIdeal) {
 		this.estaturaIdeal = estaturaIdeal;
 	}
+
 	public int getLikesRecibidos() {
 		return likesRecibidos;
 	}
+
 	public void setLikesRecibidos(int likesRecibidos) {
 		this.likesRecibidos = likesRecibidos;
 	}
+
 	public boolean isIncognito() {
 		return incognito;
 	}
+
 	public void setIncognito(boolean incognito) {
 		this.incognito = incognito;
+	}
+	
+
+	public ArrayList<String> getLikesDados() {
+		return likesDados;
+	}
+
+	public void setLikesDados(ArrayList<String> likesDados) {
+		this.likesDados = likesDados;
+	}
+	
+
+	public boolean isVerificado() {
+		return verificado;
+	}
+
+	public void setVerificado(boolean verificado) {
+		this.verificado = verificado;
 	}
 
 	@Override
 	public String toString() {
 		return nombre + ";" + alias + ";" + edad + ";" + fechaNacimiento + ";" + estatura + ";" + correo + ";" + imagen
 				+ ";" + disponibilidad + ";" + contrasena + ";" + codigo + ";" + edadMaxima + ";" + edadMinima + ";"
-				+ estaturaIdeal + ";" + likesRecibidos + ";" + incognito;
+				+ estaturaIdeal + ";" + likesRecibidos + ";" + incognito + ";" + likesDados.toString() + ";" + verificado;
 	}
 
 }
