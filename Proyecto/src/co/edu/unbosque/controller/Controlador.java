@@ -60,6 +60,8 @@ public class Controlador implements ActionListener {
 		vf.getReg().getBotonSexoMujer().setActionCommand("BotonSexoMujer");
 		vf.getReg().getBotonConfirmar().addActionListener(this);
 		vf.getReg().getBotonConfirmar().setActionCommand("BotonConfirmarRegistro");
+		vf.getReg().getBotonExaminar().addActionListener(this);
+		vf.getReg().getBotonExaminar().setActionCommand("BotonExaminar");
 		vf.getVc().getBotonConfirmar().addActionListener(this);
 		vf.getVc().getBotonConfirmar().setActionCommand("BotonConfirmarVerificacion");
 	}
@@ -154,6 +156,9 @@ public class Controlador implements ActionListener {
 
 			}
 			break;
+		case "BotonExaminar":
+			vf.getReg().obtenerRutaImagen();
+			break;
 		default:
 			break;
 		}
@@ -189,7 +194,7 @@ public class Controlador implements ActionListener {
 
 			String correo = vf.getReg().getCampoCorreo().getText();
 
-			// ImageIcon Imagen = new ImageIcon(vf.getReg().getCampoImagen().getText());
+			ImageIcon Imagen = new ImageIcon(vf.getReg().getCampoImagen().getText());
 
 			boolean disponibilidad = false;
 
@@ -237,11 +242,11 @@ public class Controlador implements ActionListener {
 
 	private void enviarCodigoVerificacion(String correo, int codigo) {
 
-		String smtpHost = "smtp.gmail.com"; // Host SMTP del proveedor
-	    int smtpPort = 587; // Puerto SMTP (587 para STARTTLS, 465 para SSL)
-	    String emailRemitente = "sergio.che2107@gmail.com"; // Email desde el que enviarás los correos
-	    String contraseña = "amsd bfnt rfau ldig"; // App Password si es Gmail con 2FA
-	    boolean usarSSL = false; // false para STARTTLS (587), true para SSL (465)
+		String smtpHost = "smtp.gmail.com";
+	    int smtpPort = 587;
+	    String emailRemitente = "sergio.che2107@gmail.com";
+	    String contraseña = "amsd bfnt rfau ldig";
+	    boolean usarSSL = false;
 
 	    try {
 	        // Configurar propiedades SMTP
@@ -348,7 +353,7 @@ public class Controlador implements ActionListener {
 				prop.getProperty("ventana.registro.contrasena"), prop.getProperty("ventana.registro.botonConfirmar"),
 				prop.getProperty("ventana.registro.botonIniciarSesion"), prop.getProperty("ventana.registro.yaCuenta"),
 				prop.getProperty("ventana.registro.sexo"), prop.getProperty("ventana.registro.siDivorciada"),
-				prop.getProperty("ventana.registro.noDivorciada"));
+				prop.getProperty("ventana.registro.noDivorciada"), prop.getProperty("ventana.registro.botonExaminar"));
 		vf.getVc().mostrarTextos(prop.getProperty("ventana.verificarCodigo.titulo"),
 				prop.getProperty("ventana.verificarCodigo.instrucciones"),
 				prop.getProperty("ventana.verificarCodigo.codigo"),

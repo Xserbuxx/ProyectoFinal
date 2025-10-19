@@ -7,11 +7,13 @@ import java.awt.Font;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class Registro extends JPanel {
 
@@ -32,6 +34,8 @@ public class Registro extends JPanel {
 	private JRadioButton noDivorciada;
 	private ButtonGroup grupoSexo;
 
+	private JButton botonExaminar;
+
 	private JTextField campoNombre;
 	private JTextField campoAlias;
 	private JTextField campoEdad;
@@ -42,6 +46,8 @@ public class Registro extends JPanel {
 	private JTextField campoContrasena;
 
 	private JTextField campoIngresoProm;
+
+	private JFileChooser fileChooser;
 
 	public Registro() {
 		// paramentros ventana
@@ -83,7 +89,7 @@ public class Registro extends JPanel {
 		divorciada.setFocusable(false);
 		divorciada.setFocusPainted(false);
 		divorciada.setBorderPainted(false);
-		
+
 		divorciada.setVisible(false);
 		divorciada.setEnabled(false);
 
@@ -95,7 +101,7 @@ public class Registro extends JPanel {
 		noDivorciada.setFocusable(false);
 		noDivorciada.setFocusPainted(false);
 		noDivorciada.setBorderPainted(false);
-		
+
 		noDivorciada.setVisible(false);
 		noDivorciada.setEnabled(false);
 
@@ -180,6 +186,16 @@ public class Registro extends JPanel {
 		campoContrasena = new JTextField();
 		campoContrasena.setBounds(50, 1050, 540, 30);
 
+		botonExaminar = new JButton();
+		botonExaminar.setBounds(450, 810, 140, 30);
+		botonExaminar.setFont(new Font("Sans", Font.BOLD, 12));
+		botonExaminar.setBackground(new Color(3, 102, 214));
+		botonExaminar.setForeground(Color.white);
+		botonExaminar.setFocusable(false);
+		botonExaminar.setFocusPainted(false);
+		botonExaminar.setBorderPainted(false);
+
+		izquierda.add(botonExaminar);
 		izquierda.add(botonSexoMujer);
 		izquierda.add(botonSexoHombre);
 		izquierda.add(campoNombre);
@@ -205,7 +221,7 @@ public class Registro extends JPanel {
 			String labelFechaNacimiento, String labelEstatura, String labelCorreo, String labelImagen,
 			String labelDisponibilidad, String labelDisponible, String labelNoDisponible, String labelContrasena,
 			String labelBotonConfirmar, String labelBotonIniciarSesionTexto, String labelYaCuenta, String labelSexo,
-			String labelDivorciada, String labelNoDivorciada) {
+			String labelDivorciada, String labelNoDivorciada, String labelBotonExaminar) {
 
 		crearLabel(labelRegistro, Color.WHITE, 200, 20, 300, 50, 30);
 		crearLabel(labelNombre, Color.WHITE, 50, 200, 200, 30, 20);
@@ -225,9 +241,11 @@ public class Registro extends JPanel {
 
 		disponible.setText(labelDisponible);
 		noDisponible.setText(labelNoDisponible);
-		
+
 		divorciada.setText(labelDivorciada);
 		noDivorciada.setText(labelNoDivorciada);
+
+		botonExaminar.setText(labelBotonExaminar);
 	}
 
 	public void mostrarCampoHombre(String labelIngresoProm) {
@@ -265,6 +283,16 @@ public class Registro extends JPanel {
 				izquierda.repaint();
 			}
 
+		}
+	}
+
+	public void obtenerRutaImagen() {
+		fileChooser = new JFileChooser();
+
+		fileChooser.setFileFilter(new FileNameExtensionFilter("Files (jpg,jpeg,png)", "jpg", "jpeg", "png"));
+
+		if (fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+			campoImagen.setText(fileChooser.getSelectedFile().getAbsolutePath());
 		}
 	}
 
@@ -464,4 +492,21 @@ public class Registro extends JPanel {
 	public void setGrupoSexo(ButtonGroup grupoSexo) {
 		this.grupoSexo = grupoSexo;
 	}
+
+	public JButton getBotonExaminar() {
+		return botonExaminar;
+	}
+
+	public void setBotonExaminar(JButton botonExaminar) {
+		this.botonExaminar = botonExaminar;
+	}
+
+	public JFileChooser getFileChooser() {
+		return fileChooser;
+	}
+
+	public void setFileChooser(JFileChooser fileChooser) {
+		this.fileChooser = fileChooser;
+	}
+
 }
