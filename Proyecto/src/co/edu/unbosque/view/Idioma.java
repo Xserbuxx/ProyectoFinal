@@ -2,55 +2,92 @@ package co.edu.unbosque.view;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Image;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class Idioma extends JPanel {
-	
+
 	private JComboBox<String> comboBox;
-	private JButton confirmar;
+    private JButton confirmar;
+    private JPanel panelEncabezado;
+    private JLabel imagenLogo;
+    private JLabel textoEncabezado;
+    private JPanel panelContenido; 
 
-	public Idioma() {
-		
-		this.setLayout(null);
-		this.setBackground(new Color(36,41,46));
+    public Idioma() {
+        this.setLayout(null);
+        this.setBounds(0, 0, 1280, 720);
 
-		JPanel panel = new JPanel();
+        panelEncabezado = new JPanel();
+        panelEncabezado.setLayout(null);
+        panelEncabezado.setBounds(0, 0, 1280, 200);
 
-		panel.setBounds(150, 130, 950, 420);
-		panel.setBackground( new Color(30,31,34));
+    
+        ImageIcon headerIcon = new ImageIcon("Resources/fondoEncabezado.png");
+        Image headerImg = headerIcon.getImage().getScaledInstance(1280, 200, Image.SCALE_SMOOTH);
+        JLabel headerBg = new JLabel(new ImageIcon(headerImg));
+        headerBg.setLayout(null);
+        headerBg.setBounds(0, 0, 1280, 200);
+      
 
-		JLabel selecIdioma = new JLabel("Select the language");
+        imagenLogo = new JLabel(new ImageIcon("Resources/logo.png"));
+        imagenLogo.setBounds(0, 5, 250, 80);
+        headerBg.add(imagenLogo);
 
-		selecIdioma.setBounds(390, 200, 1000, 60);
-		selecIdioma.setForeground(new Color(255, 255, 255, 200));
-		selecIdioma.setFont(new Font("Arial", Font.BOLD, 50));
+        textoEncabezado = new JLabel("Experimenta el amor con una persona especial");
+        textoEncabezado.setFont(new Font("Sans Serif", Font.BOLD, 28));
+        textoEncabezado.setForeground(Color.BLACK);
+        textoEncabezado.setBounds(370, 100, 800, 40);
+        headerBg.add(textoEncabezado);
 
-		String[] idiomas = { "Español", "Português", "\u0420\u0443\u0441\u0441\u043A\u0438\u0439", "\u4E2D\u56FD\u4EBA", "\u05E2\u05B4\u05D1\u05E8\u05B4\u05D9\u05EA" };
+        panelEncabezado.add(headerBg);
+        this.add(panelEncabezado);
 
-		comboBox = new JComboBox<>(idiomas);
-		comboBox.setBounds(400, 320, 450, 60);
-		comboBox.setBackground(new Color(36,41,46));
-		comboBox.setForeground(new Color(255, 255, 255, 200));
-		comboBox.setFocusable(false);
-		comboBox.setFont(new Font("Sans", Font.BOLD, 20));
-		
-		confirmar = new JButton("Confirm");
-		confirmar.setBounds(420, 440, 400, 60);
-		confirmar.setForeground(Color.white);
-		confirmar.setBackground(new Color(3,102,214));
-		confirmar.setFont(new Font("Arial", Font.BOLD, 25));
-		confirmar.setFocusable(false);
-		confirmar.setFocusPainted(false);
-		confirmar.setBorderPainted(false);
-		
-		this.add(confirmar);
-		this.add(selecIdioma);
-		this.add(comboBox);
-		this.add(panel);
+        panelContenido = new JPanel();
+        panelContenido.setLayout(null);
+        panelContenido.setBounds(0, 200, 1280, 520);
+
+        ImageIcon contenidoIcon = new ImageIcon("Resources/fondoContenido.png"); // tu imagen
+        Image contenidoImg = contenidoIcon.getImage().getScaledInstance(1280, 520, Image.SCALE_SMOOTH);
+        JLabel contenidoBg = new JLabel(new ImageIcon(contenidoImg));
+        contenidoBg.setLayout(null);
+        contenidoBg.setBounds(0, 0, 1280, 520);
+        panelContenido.add(contenidoBg);
+        this.add(panelContenido);
+        
+        JLabel selecIdioma = new JLabel("Seleccione el idioma");
+        selecIdioma.setBounds(500, 40, 400, 50);
+        selecIdioma.setFont(new Font("Arial", Font.BOLD, 26));
+        selecIdioma.setForeground(Color.BLACK);
+        contenidoBg.add(selecIdioma);
+        
+        
+
+        String[] idiomas = { "Español", "Português", "Русский", "中文", "עברית" };
+        comboBox = new JComboBox<>(idiomas);
+        comboBox.setBounds(450, 120, 400, 50);
+        comboBox.setFont(new Font("Sans", Font.PLAIN, 20));
+        contenidoBg.add(comboBox);
+
+        Color colorTinder = new Color(255, 51, 102); 
+
+        confirmar = new JButton("Confirmar");
+        confirmar.setBounds(500, 200, 300, 50);
+        confirmar.setFont(new Font("Arial", Font.BOLD, 22));
+        confirmar.setBackground(colorTinder); 
+        confirmar.setForeground(Color.WHITE);
+        confirmar.setFocusPainted(false);
+        contenidoBg.add(confirmar);
+
+      
+        comboBox.setBackground(Color.WHITE);
+        comboBox.setForeground(Color.BLACK);
+       
 	}
 
 	public JButton getConfirmar() {
@@ -68,5 +105,5 @@ public class Idioma extends JPanel {
 	public void setComboBox(JComboBox<String> comboBox) {
 		this.comboBox = comboBox;
 	}
-	
+
 }
