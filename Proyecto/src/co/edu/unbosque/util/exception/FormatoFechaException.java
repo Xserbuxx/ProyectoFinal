@@ -1,4 +1,4 @@
-package co.edu.unbosque.view;
+package co.edu.unbosque.util.exception;
 
 public class FormatoFechaException extends Exception {
 	

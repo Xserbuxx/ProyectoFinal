@@ -5,9 +5,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-import co.edu.unbosque.view.FormatoCorreoException;
-import co.edu.unbosque.view.FormatoFechaException;
-
 public class LanzadorExcepciones {
 
 	public static void verificarNumeroNegativo(int numero) throws NumeroNegativoException {

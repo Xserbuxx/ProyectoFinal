@@ -13,8 +13,6 @@ import co.edu.unbosque.model.ModelFacade;
 import co.edu.unbosque.model.Persona;
 import co.edu.unbosque.model.persistence.FileHandler;
 import co.edu.unbosque.util.exception.*;
-import co.edu.unbosque.view.FormatoCorreoException;
-import co.edu.unbosque.view.FormatoFechaException;
 import co.edu.unbosque.view.ViewFacade;
 import jakarta.mail.Authenticator;
 import jakarta.mail.Message;
