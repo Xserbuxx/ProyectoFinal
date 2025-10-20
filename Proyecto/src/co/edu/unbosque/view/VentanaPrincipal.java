@@ -1,16 +1,29 @@
 package co.edu.unbosque.view;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import java.awt.Image;
 
 public class VentanaPrincipal extends JFrame{
-	
+	private JLabel fondo;
 	public VentanaPrincipal() {
 		this.setSize(1280, 720);
 		this.setTitle("BOSTINDER");
 		this.setResizable(false);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setLocationRelativeTo(null);
+		this.setVisible(true);
+		
+		ImageIcon fondoIcon = new ImageIcon("Resources/fondoGeneral.png");
+		Image imgEscalada = fondoIcon.getImage().getScaledInstance(1280, 720, Image.SCALE_SMOOTH);
+		fondoIcon = new ImageIcon(imgEscalada);
+
+		fondo = new JLabel(fondoIcon);
+		fondo.setBounds(0, 0, 1280, 720);
+		this.add(fondo);
+
 		this.setVisible(true);
 	}
 	

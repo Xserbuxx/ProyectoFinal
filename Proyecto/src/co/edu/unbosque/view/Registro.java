@@ -115,10 +115,12 @@ public class Registro extends JPanel {
 		scroll.setBounds(0, 0, 640, 682);
 		scroll.getVerticalScrollBar().setBackground(new Color(36, 41, 46));
 		scroll.setBorder(null);
+		
 
+        Color colorTinder = new Color(255, 51, 102); 
 		botonConfirmar = new JButton();
 		botonConfirmar.setBounds(150, 1220, 330, 50);
-		botonConfirmar.setBackground(new Color(3, 102, 214));
+		botonConfirmar.setBackground(colorTinder);
 		botonConfirmar.setForeground(Color.white);
 		botonConfirmar.setFocusable(false);
 		botonConfirmar.setFocusPainted(false);
@@ -127,7 +129,7 @@ public class Registro extends JPanel {
 		botonIniciarSesion = new JButton();
 		botonIniciarSesion.setBounds(135, 1300, 200, 14);
 		botonIniciarSesion.setFont(new Font("Arial", Font.BOLD, 14));
-		botonIniciarSesion.setForeground(new Color(0, 102, 204));
+		botonIniciarSesion.setForeground(new Color(255, 51, 102));
 		botonIniciarSesion.setHorizontalAlignment(JLabel.LEFT);
 		botonIniciarSesion.setContentAreaFilled(false);
 		botonIniciarSesion.setBorderPainted(false);
