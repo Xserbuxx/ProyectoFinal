@@ -1,5 +1,7 @@
 package co.edu.unbosque.view;
 
+import java.awt.Color;
+
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
@@ -11,6 +13,9 @@ public class VentanaPrincipal extends JFrame{
 		this.setResizable(false);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setLocationRelativeTo(null);
+	}
+	
+	public void mostrarVentana() {
 		this.setVisible(true);
 	}
 	

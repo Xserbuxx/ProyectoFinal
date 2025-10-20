@@ -182,6 +182,7 @@ public class Registro extends JPanel {
 
 		campoImagen = new JTextField();
 		campoImagen.setBounds(50, 850, 540, 30);
+		campoImagen.setEditable(false);
 
 		campoContrasena = new JTextField();
 		campoContrasena.setBounds(50, 1050, 540, 30);
@@ -289,7 +290,7 @@ public class Registro extends JPanel {
 	public void obtenerRutaImagen() {
 		fileChooser = new JFileChooser();
 
-		fileChooser.setFileFilter(new FileNameExtensionFilter("Files (jpg,jpeg,png)", "jpg", "jpeg", "png"));
+		fileChooser.setFileFilter(new FileNameExtensionFilter("Files (jpg)", "jpg"));
 
 		if (fileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
 			campoImagen.setText(fileChooser.getSelectedFile().getAbsolutePath());
