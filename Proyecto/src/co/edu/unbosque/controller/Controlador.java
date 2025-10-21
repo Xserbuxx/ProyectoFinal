@@ -10,6 +10,7 @@ import javax.swing.ImageIcon;
 
 import co.edu.unbosque.model.HombreDTO;
 import co.edu.unbosque.model.ModelFacade;
+import co.edu.unbosque.model.MujerDTO;
 import co.edu.unbosque.model.Persona;
 import co.edu.unbosque.model.persistence.FileHandler;
 import co.edu.unbosque.util.exception.*;
@@ -95,7 +96,6 @@ public class Controlador implements ActionListener {
 			vf.mostrarPanel("inicioSesion");
 			/////////////////////////////////////////////////////////////////
 			break;
-
 		case "BotonRegistrarse":
 			vf.getIs().limpiarCampos();
 			vf.getReg().eliminarLabelSexos(prop.getProperty("ventana.registro.ingresoProm"),
@@ -127,6 +127,8 @@ public class Controlador implements ActionListener {
 
 				LanzadorExcepciones.verificarCampoVacio(vf.getIs().getCampoContrasena().getText(),
 						prop.getProperty("ventana.iniciarSesion.contrasena"));
+
+				usuarioActual = null;
 
 				mf.getPersonas().forEach(persona -> {
 					if (persona.getAlias().equals(vf.getIs().getCampoUsuario().getText())
@@ -305,13 +307,12 @@ public class Controlador implements ActionListener {
 				return;
 			}
 
-			switch (vf.getReg().getGrupoDisponibilidad().getSelection().toString()) {
-			case "Disponible":
+			if (vf.getReg().getDisponible().isSelected()) {
 				disponibilidad = true;
-				break;
-			case "No Disponible":
+			}
+
+			if (vf.getReg().getNoDisponible().isSelected()) {
 				disponibilidad = false;
-				break;
 			}
 
 			String contrasena = vf.getReg().getCampoContrasena().getText();
@@ -401,7 +402,7 @@ public class Controlador implements ActionListener {
 
 	}
 
-	private void registrarUsuarioMujer() { //cambiar
+	private void registrarUsuarioMujer() {
 		try {
 			String nombre = vf.getReg().getCampoNombre().getText();
 			LanzadorExcepciones.verificarCampoVacio(nombre, prop.getProperty("ventana.registro.nombre"));
@@ -483,13 +484,12 @@ public class Controlador implements ActionListener {
 				return;
 			}
 
-			switch (vf.getReg().getGrupoDisponibilidad().getSelection().toString()) {
-			case "Disponible":
+			if (vf.getReg().getDisponible().isSelected()) {
 				disponibilidad = true;
-				break;
-			case "No Disponible":
+			}
+
+			if (vf.getReg().getNoDisponible().isSelected()) {
 				disponibilidad = false;
-				break;
 			}
 
 			String contrasena = vf.getReg().getCampoContrasena().getText();
@@ -499,31 +499,26 @@ public class Controlador implements ActionListener {
 
 			int codigo = ran.nextInt(100000, 999999);
 
-			float ingresoProm = 0.0f;
+			boolean divorciada = false;
 
-			try {
-				ingresoProm = Float.parseFloat(vf.getReg().getCampoIngresoProm().getText());
-				LanzadorExcepciones.verificarRangoNumero(ingresoProm, 0f, 100000000f);
-			} catch (NumberFormatException e) {
-				vf.getVentanaPrincipal().mostrarError(
-						prop.getProperty("error.formatoNumero") + prop.getProperty("ventana.registro.ingresoProm"));
+			if (vf.getReg().getGrupoSexo().getSelection() == null) {
+				vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.divorciadaNoSeleccionada"));
 				return;
-			} catch (RangoNumeroException e) {
-				switch (e.getMessage()) {
-				case "min":
-					vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.ingresoProm.min"));
-					return;
-				case "max":
-					vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.ingresoProm.max"));
-					return;
-				}
+			}
+
+			if (vf.getReg().getDivorciada().isSelected()) {
+				divorciada = true;
+			}
+
+			if (vf.getReg().getNoDivorciada().isSelected()) {
+				divorciada = false;
 			}
 
 			////////
 
-			if (mf.getHombreDAO()
-					.crear(new HombreDTO(nombre, alias, edad, fechaNacimiento, estatura, correo, imagenIcon,
-							disponibilidad, contrasena, codigo, 0, 0, 0.0f, ingresoProm, false, 0, false,
+			if (mf.getMujerDAO()
+					.crear(new MujerDTO(nombre, alias, edad, fechaNacimiento, estatura, correo, imagenIcon,
+							disponibilidad, contrasena, codigo, 0, 0, 0.0f, divorciada, 0, 0, false,
 							new ArrayList<String>(), false))) {
 				vf.mostrarPanel("inicioSesion");
 				vf.getVentanaPrincipal().mostrarMensaje(prop.getProperty("mensaje.registroExitoso"));
@@ -581,36 +576,25 @@ public class Controlador implements ActionListener {
 
 	private void enviarCodigoVerificacion(String correo, int codigo) {
 
-		String smtpHost = "smtp.gmail.com";
-		int smtpPort = 587;
-		String emailRemitente = "bostinderueb@gmail.com";
-		String contraseña = "flfy qotq qggz ktlx";
-		boolean usarSSL = false;
-
 		try {
 			Properties props = new Properties();
 			props.put("mail.smtp.auth", "true");
-			props.put("mail.smtp.host", smtpHost);
-			props.put("mail.smtp.port", String.valueOf(smtpPort));
+			props.put("mail.smtp.host", "smtp.gmail.com");
+			props.put("mail.smtp.port", String.valueOf(587));
 
-			if (usarSSL) {
-				props.put("mail.smtp.ssl.enable", "true");
-				props.put("mail.smtp.starttls.enable", "false");
-			} else {
-				props.put("mail.smtp.ssl.enable", "false");
-				props.put("mail.smtp.starttls.enable", "true");
-				props.put("mail.smtp.starttls.required", "true");
-			}
+			props.put("mail.smtp.ssl.enable", "false");
+			props.put("mail.smtp.starttls.enable", "true");
+			props.put("mail.smtp.starttls.required", "true");
 
 			Session session = Session.getInstance(props, new Authenticator() {
 				@Override
 				protected PasswordAuthentication getPasswordAuthentication() {
-					return new PasswordAuthentication(emailRemitente, contraseña);
+					return new PasswordAuthentication("bostinderueb@gmail.com", "flfy qotq qggz ktlx");
 				}
 			});
 
 			MimeMessage message = new MimeMessage(session);
-			message.setFrom(new InternetAddress(emailRemitente));
+			message.setFrom(new InternetAddress("bostinderueb@gmail.com"));
 			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(correo));
 			message.setSubject("Código de Seguridad de tu Cuenta", "UTF-8");
 
