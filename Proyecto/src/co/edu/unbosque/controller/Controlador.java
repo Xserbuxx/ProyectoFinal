@@ -220,10 +220,15 @@ public class Controlador implements ActionListener {
 			String nombre = vf.getReg().getCampoNombre().getText();
 			LanzadorExcepciones.verificarCampoVacio(nombre, prop.getProperty("ventana.registro.nombre"));
 			LanzadorExcepciones.verificarCaracterEspecial(nombre, prop.getProperty("ventana.registro.nombre"));
+			LanzadorExcepciones.verificarEspaciosExcesivos(nombre, prop.getProperty("ventana.registro.nombre"));
+			LanzadorExcepciones.verificarCampoMuyCorto(nombre, prop.getProperty("ventana.registro.nombre"));
 
 			String alias = vf.getReg().getCampoAlias().getText();
 			LanzadorExcepciones.verificarCampoVacio(alias, prop.getProperty("ventana.registro.usuario"));
 			LanzadorExcepciones.verificarCaracterEspecial(alias, prop.getProperty("ventana.registro.usuario"));
+			LanzadorExcepciones.verificarEspaciosExcesivos(alias, prop.getProperty("ventana.registro.usuario"));
+			LanzadorExcepciones.verificarCampoMuyCorto(alias, prop.getProperty("ventana.registro.usuario"));
+			LanzadorExcepciones.verificarCampoMuyLargo(alias, prop.getProperty("ventana.registro.usuario"));
 
 			int edad = 0;
 
@@ -248,7 +253,9 @@ public class Controlador implements ActionListener {
 			String fechaNacimiento = vf.getReg().getCampoFechaNacimiento().getText();
 			LanzadorExcepciones.verificarCampoVacio(fechaNacimiento,
 					prop.getProperty("ventana.registro.fechaNacimiento"));
-			LanzadorExcepciones.validarFormatoFecha(fechaNacimiento, edad);
+			LanzadorExcepciones.verificarEspacios(fechaNacimiento,
+					prop.getProperty("ventana.registro.fechaNacimiento"));
+			LanzadorExcepciones.verificarFormatoFecha(fechaNacimiento, edad);
 
 			float estatura = 0.0f;
 
@@ -272,11 +279,15 @@ public class Controlador implements ActionListener {
 
 			String correo = vf.getReg().getCampoCorreo().getText();
 			LanzadorExcepciones.verificarCampoVacio(correo, prop.getProperty("ventana.registro.correo"));
-			LanzadorExcepciones.validarFormatoCorreo(correo);
+			LanzadorExcepciones.verificarFormatoCorreo(correo);
+			LanzadorExcepciones.verificarEspacios(correo, prop.getProperty("ventana.registro.correo"));
+			LanzadorExcepciones.verificarCampoMuyCorto(correo, prop.getProperty("ventana.registro.correo"));
+			LanzadorExcepciones.verificarCampoMuyLargo(correo, prop.getProperty("ventana.registro.correo"));
 
 			String rutaImagen = vf.getReg().getCampoImagen().getText();
 			LanzadorExcepciones.verificarCampoVacio(rutaImagen, prop.getProperty("ventana.registro.imagen"));
-
+			LanzadorExcepciones.verificarImagen(rutaImagen);
+			
 			ImageIcon imagenIcon = new ImageIcon(rutaImagen);
 
 			boolean disponibilidad = false;
@@ -297,6 +308,8 @@ public class Controlador implements ActionListener {
 
 			String contrasena = vf.getReg().getCampoContrasena().getText();
 			LanzadorExcepciones.verificarCampoVacio(contrasena, prop.getProperty("ventana.registro.contrasena"));
+			LanzadorExcepciones.verificarCampoMuyCorto(contrasena, prop.getProperty("ventana.registro.contrasena"));
+			LanzadorExcepciones.verificarCampoMuyLargo(contrasena, prop.getProperty("ventana.registro.contrasena"));
 
 			int codigo = ran.nextInt(100000, 999999);
 
@@ -304,7 +317,7 @@ public class Controlador implements ActionListener {
 
 			try {
 				ingresoProm = Float.parseFloat(vf.getReg().getCampoIngresoProm().getText());
-				LanzadorExcepciones.verificarRangoNumero(ingresoProm, 0f, 1000000f);
+				LanzadorExcepciones.verificarRangoNumero(ingresoProm, 0f, 100000000f);
 			} catch (NumberFormatException e) {
 				vf.getVentanaPrincipal().mostrarError(
 						prop.getProperty("error.formatoNumero") + prop.getProperty("ventana.registro.ingresoProm"));
@@ -354,29 +367,42 @@ public class Controlador implements ActionListener {
 				break;
 			}
 			/////////////////////////////////////////////
-		}
+		} catch (EspaciosExcesivosException e) {
+			switch (e.getMessage().split("_")[1]) {
+			case "Inicio-Fin":
+				vf.getVentanaPrincipal()
+						.mostrarError(prop.getProperty("error.espacioInicioFin") + e.getMessage().split("_")[0]);
+				break;
 
-		/*
-		 * catch (Exception e) { vf.getVentanaPrincipal().mostrarError(prop.getProperty(
-		 * "error.registrarUsuario") + e.getMessage()); }
-		 */
+			case "Exceso":
+				vf.getVentanaPrincipal()
+						.mostrarError(prop.getProperty("error.espaciosExcesivos") + e.getMessage().split("_")[0]);
+				break;
+			}
+		} catch (ContieneEspaciosException e) {
+			vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.contieneEspacios") + " " + e.getMessage());
+		} catch (CampoCortoException e) {
+			vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.campoCorto") + e.getMessage());
+		} catch (CampoLargoException e) {
+			vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.campoLargo") + e.getMessage());
+		} catch (ImagenException e) {
+			vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.rutaImagen"));
+		} catch (Exception e) {
+			vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.registrarUsuario") + e.getMessage());
+		}
 
 	}
 
 	private void registrarUsuarioMujer() {
-		try {
-
-		} catch (Exception e) {
-			vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.registrarUsuario") + e.getMessage());
-		}
+		
 	}
 
 	private void enviarCodigoVerificacion(String correo, int codigo) {
 
 		String smtpHost = "smtp.gmail.com";
 		int smtpPort = 587;
-		String emailRemitente = "sergio.che2107@gmail.com";
-		String contraseña = "amsd bfnt rfau ldig";
+		String emailRemitente = "bostinderueb@gmail.com";
+		String contraseña = "flfy qotq qggz ktlx";
 		boolean usarSSL = false;
 
 		try {
@@ -407,39 +433,13 @@ public class Controlador implements ActionListener {
 			message.setSubject("Código de Seguridad de tu Cuenta", "UTF-8");
 
 			// cambiar mensaje por un properties
-			message.setContent("<!DOCTYPE html>" + "<html lang='es'>" + "<head>" + "    <meta charset='UTF-8'>"
-					+ "    <style>"
-					+ "        body { font-family: Arial, sans-serif; background-color: #f5f5f5; margin: 0; padding: 0; }"
-					+ "        .container { max-width: 600px; margin: 20px auto; background-color: #ffffff; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }"
-					+ "        .header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 30px; text-align: center; color: white; }"
-					+ "        .header h1 { margin: 0; font-size: 24px; }" + "        .content { padding: 40px 30px; }"
-					+ "        .content p { margin: 0 0 15px 0; line-height: 1.6; color: #333; font-size: 14px; }"
-					+ "        .codigo-box { background-color: #f0f4ff; border-left: 4px solid #667eea; padding: 25px; margin: 25px 0; text-align: center; border-radius: 4px; }"
-					+ "        .codigo-box p { margin: 0 0 10px 0; color: #666; font-size: 13px; text-transform: uppercase; }"
-					+ "        .codigo { font-size: 48px; font-weight: bold; color: #667eea; letter-spacing: 8px; margin: 10px 0; font-family: 'Courier New', monospace; }"
-					+ "        .alerta { background-color: #fff3cd; border: 1px solid #ffc107; border-radius: 4px; padding: 15px; margin: 20px 0; font-size: 13px; color: #856404; }"
-					+ "        .footer { background-color: #f9f9f9; padding: 20px 30px; border-top: 1px solid #eee; font-size: 12px; color: #999; text-align: center; }"
-					+ "        .footer p { margin: 5px 0; }" + "    </style>" + "</head>" + "<body>"
-					+ "    <div class='container'>" + "        <div class='header'>"
-					+ "            <h1>🔐 Código de Seguridad</h1>" + "        </div>" + "        <div class='content'>"
-					+ "            <p>Hola,</p>" + "            <p>El código de seguridad de tu cuenta es:</p>"
-					+ "            <div class='codigo-box'>" + "                <p>Tu código de seguridad es:</p>"
-					+ "                <div class='codigo'>" + String.format("%06d", codigo) + "</div>"
-					+ "            </div>" + "            <div class='alerta'>"
-					+ "                <strong>⚠️ Importante:</strong> Este código expira en 10 minutos. No compartas este código con nadie."
-					+ "            </div>" + "            <p>Si no solicitaste este código, ignora este correo.</p>"
-					+ "        </div>" + "        <div class='footer'>"
-					+ "            <p>Este es un correo automático generado por nuestro sistema.</p>"
-					+ "            <p>© 2025 Tu Empresa. Todos los derechos reservados.</p>" + "        </div>"
-					+ "    </div>" + "</body>" + "</html>", "text/html; charset=UTF-8");
+			message.setContent("Buen dia. "
+					+ "\nle hablamos desde BOSTINDER. \nsu correo electronico fue registrado en uno de nuestros perfiles. \nSu codigo de seguridad es: "
+					+ codigo + "\n\nSi no solicito este código, ignore este correo ", "text/plain; charset=UTF-8");
 
 			Transport.send(message);
-
-			System.out.println("✓ Correo de seguridad enviado a: " + correo);
-
 		} catch (MessagingException e) {
-			System.err.println("✗ Error al enviar correo: " + e.getMessage());
-			e.printStackTrace();
+			vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.enviarCorreo") + " " + correo);
 		}
 	}
 

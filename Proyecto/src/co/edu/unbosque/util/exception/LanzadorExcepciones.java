@@ -50,21 +50,20 @@ public class LanzadorExcepciones {
 	}
 
 	public static void verificarCaracterEspecial(String texto, String nombre) throws CaracteresEspecialesException {
-		if (!texto.matches("[a-zA-Z0-9]+$")) {
+		if (!texto.matches("^[a-zA-Z0-9\s]+$")) {
 			throw new CaracteresEspecialesException(nombre);
 		}
 	}
 
-	public static void validarFormatoCorreo(String correo) throws FormatoCorreoException {
-		String patronCorreo = "^[A-Za-z0-9._-]+@gmail\\.com+$";
+	public static void verificarFormatoCorreo(String correo) throws FormatoCorreoException {
+		String patronCorreo = "^[A-Za-z0-9._-]+@+[A-Za-z0-9._-]+$";
 
 		if (!correo.matches(patronCorreo)) {
 			throw new FormatoCorreoException("Formato Incorrecto de Correo");
 		}
 	}
 
-	public static void validarFormatoFecha(String fecha, int edadIngresada)
-			throws FormatoFechaException {
+	public static void verificarFormatoFecha(String fecha, int edadIngresada) throws FormatoFechaException {
 		String patronFecha = "^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/\\d{4}$";
 
 		if (!fecha.matches(patronFecha)) {
@@ -85,13 +84,49 @@ public class LanzadorExcepciones {
 
 			Calendar calendarHoy = Calendar.getInstance();
 			int edadCalculada = calendarHoy.get(Calendar.YEAR) - calendarFecha.get(Calendar.YEAR);
-			
+
 			if (edadCalculada != edadIngresada) {
 				throw new FormatoFechaException("Incoherencia");
 			}
 
 		} catch (ParseException e) {
 			throw new FormatoFechaException("Formato Incorrecto");
+		}
+	}
+
+	public static void verificarEspaciosExcesivos(String campo, String nombreCampo) throws EspaciosExcesivosException {
+		if (campo.startsWith(" ") || campo.endsWith(" ")) {
+			throw new EspaciosExcesivosException(nombreCampo + "_Inicio-Fin");
+		}
+
+		if (campo.contains("  ")) {
+			throw new EspaciosExcesivosException(nombreCampo + "_Exceso");
+		}
+	}
+
+	public static void verificarEspacios(String campo, String nombreCampo) throws ContieneEspaciosException {
+		if (campo.contains(" ")) {
+			throw new ContieneEspaciosException(nombreCampo);
+		}
+	}
+
+	public static void verificarCampoMuyCorto(String campo, String nombreCampo)
+			throws CampoCortoException {
+		if (campo.length() < 8) {
+			throw new CampoCortoException(nombreCampo);
+		}
+	}
+
+	public static void verificarCampoMuyLargo(String campo, String nombreCampo)
+			throws CampoLargoException {
+		if (campo.length() > 50) {
+			throw new CampoLargoException(nombreCampo);
+		}
+	}
+	
+	public static void verificarImagen(String ruta) throws ImagenException {
+		if (!ruta.endsWith(".jpg")) {
+			throw new ImagenException("");
 		}
 	}
 }
