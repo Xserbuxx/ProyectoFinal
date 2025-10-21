@@ -22,6 +22,8 @@ public class ModelFacade {
 		personas.clear();
 		hombreDAO.getHombres().forEach(h -> personas.add(h));
 		mujerDAO.getMujeres().forEach(m -> personas.add(m));
+		hombreDAO.escribirArchivoSerializado();
+		mujerDAO.escribirArchivoSerializado();
 	}
 
 	public HombreDAO getHombreDAO() {
