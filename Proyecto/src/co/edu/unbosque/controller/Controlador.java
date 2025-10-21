@@ -121,34 +121,41 @@ public class Controlador implements ActionListener {
 			mf.actualizarPersonas();
 			break;
 		case "BotonConfirmarInicioSesion":
+			try {
+				LanzadorExcepciones.verificarCampoVacio(vf.getIs().getCampoUsuario().getText(),
+						prop.getProperty("ventana.iniciarSesion.usuario"));
 
-			// mensaje de error si algun campo esta vacio o es invalido
+				LanzadorExcepciones.verificarCampoVacio(vf.getIs().getCampoContrasena().getText(),
+						prop.getProperty("ventana.iniciarSesion.contrasena"));
 
-			mf.getPersonas().forEach(persona -> {
-				if (persona.getAlias().equals(vf.getIs().getCampoUsuario().getText())
-						&& persona.getContrasena().equals(vf.getIs().getCampoContrasena().getText())) {
-					vf.getVentanaPrincipal().mostrarMensaje(prop.getProperty("mensaje.inicioSesionExitoso"));
-					usuarioActual = persona;
-					vf.getIs().limpiarCampos();
+				mf.getPersonas().forEach(persona -> {
+					if (persona.getAlias().equals(vf.getIs().getCampoUsuario().getText())
+							&& persona.getContrasena().equals(vf.getIs().getCampoContrasena().getText())) {
+						vf.getVentanaPrincipal().mostrarMensaje(prop.getProperty("mensaje.inicioSesionExitoso"));
+						usuarioActual = persona;
+						vf.getIs().limpiarCampos();
+					}
+				});
+
+				if (usuarioActual == null) {
+					vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.usuarioIncorrecto"));
+					break;
 				}
-			});
 
-			if (usuarioActual == null) {
-				vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.usuarioIncorrecto"));
-				break;
-			}
+				if (!usuarioActual.isVerificado()) {
+					vf.getVentanaPrincipal().mostrarMensaje(
+							prop.getProperty("mensaje.verificarCorreo") + " " + usuarioActual.getCorreo());
+					enviarCodigoVerificacion(usuarioActual.getCorreo(), usuarioActual.getCodigo());
+					vf.mostrarPanel("verificarCodigo");
+					break;
+				}
 
-			if (!usuarioActual.isVerificado()) {
 				vf.getVentanaPrincipal()
-						.mostrarMensaje(prop.getProperty("mensaje.verificarCorreo") + " " + usuarioActual.getCorreo());
-				enviarCodigoVerificacion(usuarioActual.getCorreo(), usuarioActual.getCodigo());
-				vf.mostrarPanel("verificarCodigo");
-				break;
+						.mostrarMensaje(prop.getProperty("mensaje.bienvenida") + " " + usuarioActual.getAlias());
+				vf.mostrarPanel("idioma"); // cambiar por panel principal
+			} catch (CampoVacioException ex) {
+				vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.campoVacio") + ex.getMessage());
 			}
-
-			vf.getVentanaPrincipal()
-					.mostrarMensaje(prop.getProperty("mensaje.bienvenida") + " " + usuarioActual.getAlias());
-			vf.mostrarPanel("idioma"); // cambiar por panel principal
 			break;
 		case "BotonConfirmarVerificacion":
 			////////////////////////////////////////////////////////////////////////////////
@@ -158,6 +165,7 @@ public class Controlador implements ActionListener {
 				LanzadorExcepciones.verificarCodigo(codigo);
 				if (usuarioActual.getCodigo() == codigo) {
 					usuarioActual.setVerificado(true);
+					mf.actualizarPersonas();
 					vf.getVentanaPrincipal().mostrarMensaje(prop.getProperty("mensaje.cuentaVerificada"));
 					vf.mostrarPanel("idioma"); // cambiar por panel principal
 				} else {
@@ -287,7 +295,7 @@ public class Controlador implements ActionListener {
 			String rutaImagen = vf.getReg().getCampoImagen().getText();
 			LanzadorExcepciones.verificarCampoVacio(rutaImagen, prop.getProperty("ventana.registro.imagen"));
 			LanzadorExcepciones.verificarImagen(rutaImagen);
-			
+
 			ImageIcon imagenIcon = new ImageIcon(rutaImagen);
 
 			boolean disponibilidad = false;
@@ -393,8 +401,182 @@ public class Controlador implements ActionListener {
 
 	}
 
-	private void registrarUsuarioMujer() {
-		
+	private void registrarUsuarioMujer() { //cambiar
+		try {
+			String nombre = vf.getReg().getCampoNombre().getText();
+			LanzadorExcepciones.verificarCampoVacio(nombre, prop.getProperty("ventana.registro.nombre"));
+			LanzadorExcepciones.verificarCaracterEspecial(nombre, prop.getProperty("ventana.registro.nombre"));
+			LanzadorExcepciones.verificarEspaciosExcesivos(nombre, prop.getProperty("ventana.registro.nombre"));
+			LanzadorExcepciones.verificarCampoMuyCorto(nombre, prop.getProperty("ventana.registro.nombre"));
+
+			String alias = vf.getReg().getCampoAlias().getText();
+			LanzadorExcepciones.verificarCampoVacio(alias, prop.getProperty("ventana.registro.usuario"));
+			LanzadorExcepciones.verificarCaracterEspecial(alias, prop.getProperty("ventana.registro.usuario"));
+			LanzadorExcepciones.verificarEspaciosExcesivos(alias, prop.getProperty("ventana.registro.usuario"));
+			LanzadorExcepciones.verificarCampoMuyCorto(alias, prop.getProperty("ventana.registro.usuario"));
+			LanzadorExcepciones.verificarCampoMuyLargo(alias, prop.getProperty("ventana.registro.usuario"));
+
+			int edad = 0;
+
+			try {
+				edad = Integer.parseInt(vf.getReg().getCampoEdad().getText());
+				LanzadorExcepciones.verificarRangoNumero(edad, 18, 130);
+			} catch (NumberFormatException e) {
+				vf.getVentanaPrincipal().mostrarError(
+						prop.getProperty("error.formatoNumero") + prop.getProperty("ventana.registro.edad"));
+				return;
+			} catch (RangoNumeroException e) {
+				switch (e.getMessage()) {
+				case "min":
+					vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.edad.min"));
+					return;
+				case "max":
+					vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.edad.max"));
+					return;
+				}
+			}
+
+			String fechaNacimiento = vf.getReg().getCampoFechaNacimiento().getText();
+			LanzadorExcepciones.verificarCampoVacio(fechaNacimiento,
+					prop.getProperty("ventana.registro.fechaNacimiento"));
+			LanzadorExcepciones.verificarEspacios(fechaNacimiento,
+					prop.getProperty("ventana.registro.fechaNacimiento"));
+			LanzadorExcepciones.verificarFormatoFecha(fechaNacimiento, edad);
+
+			float estatura = 0.0f;
+
+			try {
+				estatura = Float.parseFloat(vf.getReg().getCampoEstatura().getText());
+				LanzadorExcepciones.verificarRangoNumero(estatura, 50f, 250f);
+			} catch (NumberFormatException e) {
+				vf.getVentanaPrincipal().mostrarError(
+						prop.getProperty("error.formatoNumero") + prop.getProperty("ventana.registro.estatura"));
+				return;
+			} catch (RangoNumeroException e) {
+				switch (e.getMessage()) {
+				case "min":
+					vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.estatura.min"));
+					return;
+				case "max":
+					vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.estatura.max"));
+					return;
+				}
+			}
+
+			String correo = vf.getReg().getCampoCorreo().getText();
+			LanzadorExcepciones.verificarCampoVacio(correo, prop.getProperty("ventana.registro.correo"));
+			LanzadorExcepciones.verificarFormatoCorreo(correo);
+			LanzadorExcepciones.verificarEspacios(correo, prop.getProperty("ventana.registro.correo"));
+			LanzadorExcepciones.verificarCampoMuyCorto(correo, prop.getProperty("ventana.registro.correo"));
+			LanzadorExcepciones.verificarCampoMuyLargo(correo, prop.getProperty("ventana.registro.correo"));
+
+			String rutaImagen = vf.getReg().getCampoImagen().getText();
+			LanzadorExcepciones.verificarCampoVacio(rutaImagen, prop.getProperty("ventana.registro.imagen"));
+			LanzadorExcepciones.verificarImagen(rutaImagen);
+
+			ImageIcon imagenIcon = new ImageIcon(rutaImagen);
+
+			boolean disponibilidad = false;
+
+			if (vf.getReg().getGrupoDisponibilidad().getSelection() == null) {
+				vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.disponibilidadNoSeleccionada"));
+				return;
+			}
+
+			switch (vf.getReg().getGrupoDisponibilidad().getSelection().toString()) {
+			case "Disponible":
+				disponibilidad = true;
+				break;
+			case "No Disponible":
+				disponibilidad = false;
+				break;
+			}
+
+			String contrasena = vf.getReg().getCampoContrasena().getText();
+			LanzadorExcepciones.verificarCampoVacio(contrasena, prop.getProperty("ventana.registro.contrasena"));
+			LanzadorExcepciones.verificarCampoMuyCorto(contrasena, prop.getProperty("ventana.registro.contrasena"));
+			LanzadorExcepciones.verificarCampoMuyLargo(contrasena, prop.getProperty("ventana.registro.contrasena"));
+
+			int codigo = ran.nextInt(100000, 999999);
+
+			float ingresoProm = 0.0f;
+
+			try {
+				ingresoProm = Float.parseFloat(vf.getReg().getCampoIngresoProm().getText());
+				LanzadorExcepciones.verificarRangoNumero(ingresoProm, 0f, 100000000f);
+			} catch (NumberFormatException e) {
+				vf.getVentanaPrincipal().mostrarError(
+						prop.getProperty("error.formatoNumero") + prop.getProperty("ventana.registro.ingresoProm"));
+				return;
+			} catch (RangoNumeroException e) {
+				switch (e.getMessage()) {
+				case "min":
+					vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.ingresoProm.min"));
+					return;
+				case "max":
+					vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.ingresoProm.max"));
+					return;
+				}
+			}
+
+			////////
+
+			if (mf.getHombreDAO()
+					.crear(new HombreDTO(nombre, alias, edad, fechaNacimiento, estatura, correo, imagenIcon,
+							disponibilidad, contrasena, codigo, 0, 0, 0.0f, ingresoProm, false, 0, false,
+							new ArrayList<String>(), false))) {
+				vf.mostrarPanel("inicioSesion");
+				vf.getVentanaPrincipal().mostrarMensaje(prop.getProperty("mensaje.registroExitoso"));
+			} else {
+				vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.usuarioExistente"));
+			}
+
+		} catch (CampoVacioException e) {
+			vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.campoVacio") + e.getMessage());
+		} catch (NumberFormatException e) {
+			vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.formatoNumero"));
+		} catch (CaracteresEspecialesException e) {
+			vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.caracteresEspeciales") + e.getMessage());
+		} catch (FormatoCorreoException e) {
+			vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.formatoCorreo"));
+		} catch (FormatoFechaException e) {
+			/////////////////////////////////////////////
+			switch (e.getMessage()) {
+			case "Formato Incorrecto":
+				vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.formatoFecha.invalido"));
+				break;
+			case "Incoherencia":
+				vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.formatoFecha.incoherencia"));
+				break;
+			case "Futuro":
+				vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.formatoFecha.futuro"));
+				break;
+			}
+			/////////////////////////////////////////////
+		} catch (EspaciosExcesivosException e) {
+			switch (e.getMessage().split("_")[1]) {
+			case "Inicio-Fin":
+				vf.getVentanaPrincipal()
+						.mostrarError(prop.getProperty("error.espacioInicioFin") + e.getMessage().split("_")[0]);
+				break;
+
+			case "Exceso":
+				vf.getVentanaPrincipal()
+						.mostrarError(prop.getProperty("error.espaciosExcesivos") + e.getMessage().split("_")[0]);
+				break;
+			}
+		} catch (ContieneEspaciosException e) {
+			vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.contieneEspacios") + " " + e.getMessage());
+		} catch (CampoCortoException e) {
+			vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.campoCorto") + e.getMessage());
+		} catch (CampoLargoException e) {
+			vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.campoLargo") + e.getMessage());
+		} catch (ImagenException e) {
+			vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.rutaImagen"));
+		} catch (Exception e) {
+			vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.registrarUsuario") + e.getMessage());
+		}
+
 	}
 
 	private void enviarCodigoVerificacion(String correo, int codigo) {
