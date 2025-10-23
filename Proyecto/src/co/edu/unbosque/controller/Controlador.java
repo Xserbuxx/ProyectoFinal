@@ -8,8 +8,10 @@ import java.util.Random;
 
 import javax.swing.ImageIcon;
 
+import co.edu.unbosque.model.Hombre;
 import co.edu.unbosque.model.HombreDTO;
 import co.edu.unbosque.model.ModelFacade;
+import co.edu.unbosque.model.Mujer;
 import co.edu.unbosque.model.MujerDTO;
 import co.edu.unbosque.model.Persona;
 import co.edu.unbosque.model.persistence.FileHandler;
@@ -38,6 +40,9 @@ public class Controlador implements ActionListener {
 		vf = new ViewFacade();
 		prop = new Properties();
 		ran = new Random();
+
+		prop = FileHandler.cargarArchivoDePropiedades("es.properties");
+		agregarIdioma();
 	}
 
 	public void run() {
@@ -97,13 +102,13 @@ public class Controlador implements ActionListener {
 			/////////////////////////////////////////////////////////////////
 			break;
 		case "BotonRegistrarse":
-			vf.getIs().limpiarCampos();
+			vf.getReg().limpiarCampos();
 			vf.getReg().eliminarLabelSexos(prop.getProperty("ventana.registro.ingresoProm"),
 					prop.getProperty("ventana.registro.divorciada"));
 			vf.mostrarPanel("registro");
 			break;
 		case "BotonIniciarSesion":
-			vf.getReg().limpiarCampos();
+			vf.getIs().limpiarCampos();
 			vf.mostrarPanel("inicioSesion");
 			break;
 		case "BotonSexoHombre":
@@ -154,7 +159,11 @@ public class Controlador implements ActionListener {
 
 				vf.getVentanaPrincipal()
 						.mostrarMensaje(prop.getProperty("mensaje.bienvenida") + " " + usuarioActual.getAlias());
-				vf.mostrarPanel("idioma"); // cambiar por panel principal
+				if (usuarioActual.getEstaturaIdeal() == 0) {
+					mostrarVentanaGustos();
+				} else {
+					// mostrar ventana principal del aplicativo
+				}
 			} catch (CampoVacioException ex) {
 				vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.campoVacio") + ex.getMessage());
 			}
@@ -169,7 +178,11 @@ public class Controlador implements ActionListener {
 					usuarioActual.setVerificado(true);
 					mf.actualizarPersonas();
 					vf.getVentanaPrincipal().mostrarMensaje(prop.getProperty("mensaje.cuentaVerificada"));
-					vf.mostrarPanel("idioma"); // cambiar por panel principal
+					if (usuarioActual.getEstaturaIdeal() == 0) {
+						mostrarVentanaGustos();
+					} else {
+						// mostrar ventana principal del aplicativo
+					}
 				} else {
 					vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.codigoInvalido"));
 
@@ -574,6 +587,24 @@ public class Controlador implements ActionListener {
 
 	}
 
+	private void mostrarVentanaGustos() {
+		if (usuarioActual == null) {
+			return;
+		}
+
+		if (usuarioActual instanceof Hombre) {
+			vf.getSg().eliminarLabelGustos(prop.getProperty("ventana.seleccionGustos.ingresoIdeal"),
+					prop.getProperty("ventana.seleccionGustos.divorciada"));
+			vf.getSg().mostrarCamposHombre(prop.getProperty("ventana.seleccionGustos.divorciada"));
+			vf.mostrarPanel("seleccionGustos");
+		} else if (usuarioActual instanceof Mujer) {
+			vf.getSg().eliminarLabelGustos(prop.getProperty("ventana.seleccionGustos.ingresoIdeal"),
+					prop.getProperty("ventana.seleccionGustos.divorciada"));
+			vf.getSg().mostrarCamposMujer(prop.getProperty("ventana.seleccionGustos.ingresoIdeal"));
+			vf.mostrarPanel("seleccionGustos");
+		}
+	}
+
 	private void enviarCodigoVerificacion(String correo, int codigo) {
 
 		try {
@@ -629,5 +660,12 @@ public class Controlador implements ActionListener {
 				prop.getProperty("ventana.verificarCodigo.instrucciones"),
 				prop.getProperty("ventana.verificarCodigo.codigo"),
 				prop.getProperty("ventana.verificarCodigo.botonConfirmar"));
+		vf.getSg().mostrarTextos(prop.getProperty("ventana.seleccionGustos.edadmin"),
+				prop.getProperty("ventana.seleccionGustos.edadmax"),
+				prop.getProperty("ventana.seleccionGustos.estaturaIdeal"),
+				prop.getProperty("ventana.seleccionGustos.siDivorciada"),
+				prop.getProperty("ventana.seleccionGustos.noDivorciada"),
+				prop.getProperty("ventana.seleccionGustos.botonConfirmar"),
+				prop.getProperty("ventana.seleccionGustos.edad"));
 	}
 }
