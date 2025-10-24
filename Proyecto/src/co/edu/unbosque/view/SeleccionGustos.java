@@ -156,6 +156,14 @@ public class SeleccionGustos extends JPanel {
 
 		}
 	}
+	
+	public void limpiarCampos() {
+		campoEdadMinima.setText("");
+		campoEdadMaxima.setText("");
+		campoEstaturaIdeal.setText("");
+		campoIngresoIdeal.setText("");
+		estadoDivorcio.clearSelection();
+	}
 
 	public void crearLabel(String texto, Color colorFondo, int x, int y, int ancho, int alto, int tamanoLetra) {
 		JLabel label = new JLabel(texto);
@@ -166,4 +174,68 @@ public class SeleccionGustos extends JPanel {
 		this.setComponentZOrder(label, 0);
 	}
 
+	public JTextField getCampoEdadMinima() {
+		return campoEdadMinima;
+	}
+
+	public void setCampoEdadMinima(JTextField campoEdadMinima) {
+		this.campoEdadMinima = campoEdadMinima;
+	}
+
+	public JTextField getCampoEdadMaxima() {
+		return campoEdadMaxima;
+	}
+
+	public void setCampoEdadMaxima(JTextField campoEdadMaxima) {
+		this.campoEdadMaxima = campoEdadMaxima;
+	}
+
+	public JTextField getCampoEstaturaIdeal() {
+		return campoEstaturaIdeal;
+	}
+
+	public void setCampoEstaturaIdeal(JTextField campoEstaturaIdeal) {
+		this.campoEstaturaIdeal = campoEstaturaIdeal;
+	}
+
+	public JTextField getCampoIngresoIdeal() {
+		return campoIngresoIdeal;
+	}
+
+	public void setCampoIngresoIdeal(JTextField campoIngresoIdeal) {
+		this.campoIngresoIdeal = campoIngresoIdeal;
+	}
+
+	public JButton getBotonConfirmar() {
+		return botonConfirmar;
+	}
+
+	public void setBotonConfirmar(JButton botonConfirmar) {
+		this.botonConfirmar = botonConfirmar;
+	}
+
+	public JRadioButton getDivorciada() {
+		return divorciada;
+	}
+
+	public void setDivorciada(JRadioButton divorciada) {
+		this.divorciada = divorciada;
+	}
+
+	public JRadioButton getNoDivorciada() {
+		return noDivorciada;
+	}
+
+	public void setNoDivorciada(JRadioButton noDivorciada) {
+		this.noDivorciada = noDivorciada;
+	}
+
+	public ButtonGroup getEstadoDivorcio() {
+		return estadoDivorcio;
+	}
+
+	public void setEstadoDivorcio(ButtonGroup estadoDivorcio) {
+		this.estadoDivorcio = estadoDivorcio;
+	}
+	
 }

@@ -40,9 +40,6 @@ public class Controlador implements ActionListener {
 		vf = new ViewFacade();
 		prop = new Properties();
 		ran = new Random();
-
-		prop = FileHandler.cargarArchivoDePropiedades("es.properties");
-		agregarIdioma();
 	}
 
 	public void run() {
@@ -70,6 +67,8 @@ public class Controlador implements ActionListener {
 		vf.getReg().getBotonExaminar().setActionCommand("BotonExaminar");
 		vf.getVc().getBotonConfirmar().addActionListener(this);
 		vf.getVc().getBotonConfirmar().setActionCommand("BotonConfirmarVerificacion");
+		vf.getSg().getBotonConfirmar().addActionListener(this);
+		vf.getSg().getBotonConfirmar().setActionCommand("BotonConfirmarGustos");
 	}
 
 	@Override
@@ -178,11 +177,9 @@ public class Controlador implements ActionListener {
 					usuarioActual.setVerificado(true);
 					mf.actualizarPersonas();
 					vf.getVentanaPrincipal().mostrarMensaje(prop.getProperty("mensaje.cuentaVerificada"));
-					if (usuarioActual.getEstaturaIdeal() == 0) {
-						mostrarVentanaGustos();
-					} else {
-						// mostrar ventana principal del aplicativo
-					}
+
+					mostrarVentanaGustos();
+
 				} else {
 					vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.codigoInvalido"));
 
@@ -216,6 +213,14 @@ public class Controlador implements ActionListener {
 			break;
 		case "BotonExaminar":
 			vf.getReg().obtenerRutaImagen();
+			break;
+		case "BotonConfirmarGustos":
+			if (!registrarGustosUsuario()) {
+				break;
+			}
+			mf.actualizarPersonas();
+			vf.getVentanaPrincipal().mostrarMensaje(prop.getProperty("mensaje.gustosGuardados"));
+			vf.mostrarPanel("inicioSesion"); // cambiar por ventana principal del aplicativo
 			break;
 		default:
 			break;
@@ -587,6 +592,195 @@ public class Controlador implements ActionListener {
 
 	}
 
+	private boolean registrarGustosUsuario() {
+		if (usuarioActual == null) {
+			return false;
+		}
+
+		if (usuarioActual instanceof Hombre) {
+			return registrarGustosHombre();
+		}
+
+		else if (usuarioActual instanceof Mujer) {
+			return registrarGustosMujer();
+		}
+
+		return false;
+	}
+
+	private boolean registrarGustosHombre() {
+		int edadMinima = 0;
+		int edadMaxima = 0;
+		float estaturaIdeal = 0f;
+
+		try {
+			edadMinima = Integer.parseInt(vf.getSg().getCampoEdadMinima().getText());
+			LanzadorExcepciones.verificarRangoNumero(edadMinima, 18, 130);
+
+		} catch (NumberFormatException e) {
+			vf.getVentanaPrincipal().mostrarError(
+					prop.getProperty("error.formatoNumero") + prop.getProperty("ventana.seleccionGustos.edadmin"));
+			return false;
+		} catch (RangoNumeroException e) {
+			switch (e.getMessage()) {
+			case "min":
+				vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.edad.min"));
+				return false;
+			case "max":
+				vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.edad.max"));
+				return false;
+			}
+		}
+
+		try {
+			edadMaxima = Integer.parseInt(vf.getSg().getCampoEdadMaxima().getText());
+			LanzadorExcepciones.verificarRangoNumero(edadMaxima, 18, 130);
+
+		} catch (NumberFormatException e) {
+			vf.getVentanaPrincipal().mostrarError(
+					prop.getProperty("error.formatoNumero") + prop.getProperty("ventana.seleccionGustos.edadmax"));
+			return false;
+		} catch (RangoNumeroException e) {
+			switch (e.getMessage()) {
+			case "min":
+				vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.edad.min"));
+				return false;
+			case "max":
+				vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.edad.max"));
+				return false;
+			}
+		}
+
+		try {
+			estaturaIdeal = Float.parseFloat(vf.getSg().getCampoEstaturaIdeal().getText());
+			LanzadorExcepciones.verificarRangoNumero(estaturaIdeal, 50f, 250f);
+
+		} catch (NumberFormatException e) {
+			vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.formatoNumero")
+					+ prop.getProperty("ventana.seleccionGustos.estaturaIdeal"));
+			return false;
+		} catch (RangoNumeroException e) {
+			switch (e.getMessage()) {
+			case "min":
+				vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.estatura.min"));
+				return false;
+			case "max":
+				vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.estatura.max"));
+				return false;
+			}
+		}
+
+		boolean divorciada = false;
+
+		if (vf.getSg().getEstadoDivorcio().getSelection() == null) {
+			vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.divorciadaNoSeleccionada"));
+			return false;
+		}
+
+		if (vf.getSg().getDivorciada().isSelected()) {
+			divorciada = true;
+		}
+
+		if (vf.getSg().getNoDivorciada().isSelected()) {
+			divorciada = false;
+		}
+
+		usuarioActual.setEdadMinima(edadMinima);
+		usuarioActual.setEdadMaxima(edadMaxima);
+		usuarioActual.setEstaturaIdeal(estaturaIdeal);
+		((Hombre) usuarioActual).setEstadoDivorcio(divorciada);
+		return true;
+	}
+
+	private boolean registrarGustosMujer() {
+		int edadMinima = 0;
+		int edadMaxima = 0;
+		float estaturaIdeal = 0f;
+		float ingresoIdeal = 0f;
+
+		try {
+			edadMinima = Integer.parseInt(vf.getSg().getCampoEdadMinima().getText());
+			LanzadorExcepciones.verificarRangoNumero(edadMinima, 18, 130);
+
+		} catch (NumberFormatException e) {
+			vf.getVentanaPrincipal().mostrarError(
+					prop.getProperty("error.formatoNumero") + prop.getProperty("ventana.seleccionGustos.edadmin"));
+			return false;
+		} catch (RangoNumeroException e) {
+			switch (e.getMessage()) {
+			case "min":
+				vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.edad.min"));
+				return false;
+			case "max":
+				vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.edad.max"));
+				return false;
+			}
+		}
+
+		try {
+			edadMaxima = Integer.parseInt(vf.getSg().getCampoEdadMaxima().getText());
+			LanzadorExcepciones.verificarRangoNumero(edadMaxima, 18, 130);
+
+		} catch (NumberFormatException e) {
+			vf.getVentanaPrincipal().mostrarError(
+					prop.getProperty("error.formatoNumero") + prop.getProperty("ventana.seleccionGustos.edadmax"));
+			return false;
+		} catch (RangoNumeroException e) {
+			switch (e.getMessage()) {
+			case "min":
+				vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.edad.min"));
+				return false;
+			case "max":
+				vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.edad.max"));
+				return false;
+			}
+		}
+
+		try {
+			estaturaIdeal = Float.parseFloat(vf.getSg().getCampoEstaturaIdeal().getText());
+			LanzadorExcepciones.verificarRangoNumero(estaturaIdeal, 50f, 250f);
+
+		} catch (NumberFormatException e) {
+			vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.formatoNumero")
+					+ prop.getProperty("ventana.seleccionGustos.estaturaIdeal"));
+			return false;
+		} catch (RangoNumeroException e) {
+			switch (e.getMessage()) {
+			case "min":
+				vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.estatura.min"));
+				return false;
+			case "max":
+				vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.estatura.max"));
+				return false;
+			}
+		}
+
+		try {
+			ingresoIdeal = Float.parseFloat(vf.getSg().getCampoIngresoIdeal().getText());
+			LanzadorExcepciones.verificarRangoNumero(ingresoIdeal, 0f, 100000000f);
+
+		} catch (NumberFormatException e) {
+			vf.getVentanaPrincipal().mostrarError(
+					prop.getProperty("error.formatoNumero") + prop.getProperty("ventana.seleccionGustos.ingresoIdeal"));
+			return false;
+		} catch (RangoNumeroException e) {
+			switch (e.getMessage()) {
+			case "min":
+				vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.ingreso.min"));
+				return false;
+			case "max":
+				vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.ingreso.max"));
+				return false;
+			}
+		}
+
+		usuarioActual.setEdadMinima(edadMinima);
+		usuarioActual.setEdadMaxima(edadMaxima);
+		usuarioActual.setEstaturaIdeal(estaturaIdeal);
+		((Mujer) usuarioActual).setIngresosIdeal(ingresoIdeal);
+		return true;
+	}
+
 	private void mostrarVentanaGustos() {
 		if (usuarioActual == null) {
 			return;
@@ -595,11 +789,13 @@ public class Controlador implements ActionListener {
 		if (usuarioActual instanceof Hombre) {
 			vf.getSg().eliminarLabelGustos(prop.getProperty("ventana.seleccionGustos.ingresoIdeal"),
 					prop.getProperty("ventana.seleccionGustos.divorciada"));
+			vf.getSg().limpiarCampos();
 			vf.getSg().mostrarCamposHombre(prop.getProperty("ventana.seleccionGustos.divorciada"));
 			vf.mostrarPanel("seleccionGustos");
 		} else if (usuarioActual instanceof Mujer) {
 			vf.getSg().eliminarLabelGustos(prop.getProperty("ventana.seleccionGustos.ingresoIdeal"),
 					prop.getProperty("ventana.seleccionGustos.divorciada"));
+			vf.getSg().limpiarCampos();
 			vf.getSg().mostrarCamposMujer(prop.getProperty("ventana.seleccionGustos.ingresoIdeal"));
 			vf.mostrarPanel("seleccionGustos");
 		}
