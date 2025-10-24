@@ -50,10 +50,10 @@ public class Registro extends JPanel {
 	private JFileChooser fileChooser;
 
 	public Registro() {
-		// paramentros ventana
+		
 		this.setLayout(null);
-		this.setBackground(new Color(36, 41, 46));
-		// parametros panel derecho
+		this.setBackground(new Color(59, 59, 59));
+		
 		JPanel derecha = new JPanel();
 
 		derecha.setBounds(640, 0, 640, 720);
