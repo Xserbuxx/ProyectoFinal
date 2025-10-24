@@ -8,8 +8,11 @@ import java.util.Random;
 
 import javax.swing.ImageIcon;
 
+import co.edu.unbosque.model.Hombre;
 import co.edu.unbosque.model.HombreDTO;
 import co.edu.unbosque.model.ModelFacade;
+import co.edu.unbosque.model.Mujer;
+import co.edu.unbosque.model.MujerDTO;
 import co.edu.unbosque.model.Persona;
 import co.edu.unbosque.model.persistence.FileHandler;
 import co.edu.unbosque.util.exception.*;
@@ -64,6 +67,8 @@ public class Controlador implements ActionListener {
 		vf.getReg().getBotonExaminar().setActionCommand("BotonExaminar");
 		vf.getVc().getBotonConfirmar().addActionListener(this);
 		vf.getVc().getBotonConfirmar().setActionCommand("BotonConfirmarVerificacion");
+		vf.getSg().getBotonConfirmar().addActionListener(this);
+		vf.getSg().getBotonConfirmar().setActionCommand("BotonConfirmarGustos");
 	}
 
 	@Override
@@ -95,15 +100,14 @@ public class Controlador implements ActionListener {
 			vf.mostrarPanel("inicioSesion");
 			/////////////////////////////////////////////////////////////////
 			break;
-
 		case "BotonRegistrarse":
-			vf.getIs().limpiarCampos();
+			vf.getReg().limpiarCampos();
 			vf.getReg().eliminarLabelSexos(prop.getProperty("ventana.registro.ingresoProm"),
 					prop.getProperty("ventana.registro.divorciada"));
 			vf.mostrarPanel("registro");
 			break;
 		case "BotonIniciarSesion":
-			vf.getReg().limpiarCampos();
+			vf.getIs().limpiarCampos();
 			vf.mostrarPanel("inicioSesion");
 			break;
 		case "BotonSexoHombre":
@@ -127,6 +131,8 @@ public class Controlador implements ActionListener {
 
 				LanzadorExcepciones.verificarCampoVacio(vf.getIs().getCampoContrasena().getText(),
 						prop.getProperty("ventana.iniciarSesion.contrasena"));
+
+				usuarioActual = null;
 
 				mf.getPersonas().forEach(persona -> {
 					if (persona.getAlias().equals(vf.getIs().getCampoUsuario().getText())
@@ -152,7 +158,11 @@ public class Controlador implements ActionListener {
 
 				vf.getVentanaPrincipal()
 						.mostrarMensaje(prop.getProperty("mensaje.bienvenida") + " " + usuarioActual.getAlias());
-				vf.mostrarPanel("idioma"); // cambiar por panel principal
+				if (usuarioActual.getEstaturaIdeal() == 0) {
+					mostrarVentanaGustos();
+				} else {
+					// mostrar ventana principal del aplicativo
+				}
 			} catch (CampoVacioException ex) {
 				vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.campoVacio") + ex.getMessage());
 			}
@@ -167,7 +177,9 @@ public class Controlador implements ActionListener {
 					usuarioActual.setVerificado(true);
 					mf.actualizarPersonas();
 					vf.getVentanaPrincipal().mostrarMensaje(prop.getProperty("mensaje.cuentaVerificada"));
-					vf.mostrarPanel("idioma"); // cambiar por panel principal
+
+					mostrarVentanaGustos();
+
 				} else {
 					vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.codigoInvalido"));
 
@@ -201,6 +213,14 @@ public class Controlador implements ActionListener {
 			break;
 		case "BotonExaminar":
 			vf.getReg().obtenerRutaImagen();
+			break;
+		case "BotonConfirmarGustos":
+			if (!registrarGustosUsuario()) {
+				break;
+			}
+			mf.actualizarPersonas();
+			vf.getVentanaPrincipal().mostrarMensaje(prop.getProperty("mensaje.gustosGuardados"));
+			vf.mostrarPanel("inicioSesion"); // cambiar por ventana principal del aplicativo
 			break;
 		default:
 			break;
@@ -305,13 +325,12 @@ public class Controlador implements ActionListener {
 				return;
 			}
 
-			switch (vf.getReg().getGrupoDisponibilidad().getSelection().toString()) {
-			case "Disponible":
+			if (vf.getReg().getDisponible().isSelected()) {
 				disponibilidad = true;
-				break;
-			case "No Disponible":
+			}
+
+			if (vf.getReg().getNoDisponible().isSelected()) {
 				disponibilidad = false;
-				break;
 			}
 
 			String contrasena = vf.getReg().getCampoContrasena().getText();
@@ -401,7 +420,7 @@ public class Controlador implements ActionListener {
 
 	}
 
-	private void registrarUsuarioMujer() { //cambiar
+	private void registrarUsuarioMujer() {
 		try {
 			String nombre = vf.getReg().getCampoNombre().getText();
 			LanzadorExcepciones.verificarCampoVacio(nombre, prop.getProperty("ventana.registro.nombre"));
@@ -483,13 +502,12 @@ public class Controlador implements ActionListener {
 				return;
 			}
 
-			switch (vf.getReg().getGrupoDisponibilidad().getSelection().toString()) {
-			case "Disponible":
+			if (vf.getReg().getDisponible().isSelected()) {
 				disponibilidad = true;
-				break;
-			case "No Disponible":
+			}
+
+			if (vf.getReg().getNoDisponible().isSelected()) {
 				disponibilidad = false;
-				break;
 			}
 
 			String contrasena = vf.getReg().getCampoContrasena().getText();
@@ -499,31 +517,26 @@ public class Controlador implements ActionListener {
 
 			int codigo = ran.nextInt(100000, 999999);
 
-			float ingresoProm = 0.0f;
+			boolean divorciada = false;
 
-			try {
-				ingresoProm = Float.parseFloat(vf.getReg().getCampoIngresoProm().getText());
-				LanzadorExcepciones.verificarRangoNumero(ingresoProm, 0f, 100000000f);
-			} catch (NumberFormatException e) {
-				vf.getVentanaPrincipal().mostrarError(
-						prop.getProperty("error.formatoNumero") + prop.getProperty("ventana.registro.ingresoProm"));
+			if (vf.getReg().getGrupoSexo().getSelection() == null) {
+				vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.divorciadaNoSeleccionada"));
 				return;
-			} catch (RangoNumeroException e) {
-				switch (e.getMessage()) {
-				case "min":
-					vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.ingresoProm.min"));
-					return;
-				case "max":
-					vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.ingresoProm.max"));
-					return;
-				}
+			}
+
+			if (vf.getReg().getDivorciada().isSelected()) {
+				divorciada = true;
+			}
+
+			if (vf.getReg().getNoDivorciada().isSelected()) {
+				divorciada = false;
 			}
 
 			////////
 
-			if (mf.getHombreDAO()
-					.crear(new HombreDTO(nombre, alias, edad, fechaNacimiento, estatura, correo, imagenIcon,
-							disponibilidad, contrasena, codigo, 0, 0, 0.0f, ingresoProm, false, 0, false,
+			if (mf.getMujerDAO()
+					.crear(new MujerDTO(nombre, alias, edad, fechaNacimiento, estatura, correo, imagenIcon,
+							disponibilidad, contrasena, codigo, 0, 0, 0.0f, divorciada, 0, 0, false,
 							new ArrayList<String>(), false))) {
 				vf.mostrarPanel("inicioSesion");
 				vf.getVentanaPrincipal().mostrarMensaje(prop.getProperty("mensaje.registroExitoso"));
@@ -579,38 +592,236 @@ public class Controlador implements ActionListener {
 
 	}
 
-	private void enviarCodigoVerificacion(String correo, int codigo) {
+	private boolean registrarGustosUsuario() {
+		if (usuarioActual == null) {
+			return false;
+		}
 
-		String smtpHost = "smtp.gmail.com";
-		int smtpPort = 587;
-		String emailRemitente = "bostinderueb@gmail.com";
-		String contraseña = "flfy qotq qggz ktlx";
-		boolean usarSSL = false;
+		if (usuarioActual instanceof Hombre) {
+			return registrarGustosHombre();
+		}
+
+		else if (usuarioActual instanceof Mujer) {
+			return registrarGustosMujer();
+		}
+
+		return false;
+	}
+
+	private boolean registrarGustosHombre() {
+		int edadMinima = 0;
+		int edadMaxima = 0;
+		float estaturaIdeal = 0f;
+
+		try {
+			edadMinima = Integer.parseInt(vf.getSg().getCampoEdadMinima().getText());
+			LanzadorExcepciones.verificarRangoNumero(edadMinima, 18, 130);
+
+		} catch (NumberFormatException e) {
+			vf.getVentanaPrincipal().mostrarError(
+					prop.getProperty("error.formatoNumero") + prop.getProperty("ventana.seleccionGustos.edadmin"));
+			return false;
+		} catch (RangoNumeroException e) {
+			switch (e.getMessage()) {
+			case "min":
+				vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.edad.min"));
+				return false;
+			case "max":
+				vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.edad.max"));
+				return false;
+			}
+		}
+
+		try {
+			edadMaxima = Integer.parseInt(vf.getSg().getCampoEdadMaxima().getText());
+			LanzadorExcepciones.verificarRangoNumero(edadMaxima, 18, 130);
+
+		} catch (NumberFormatException e) {
+			vf.getVentanaPrincipal().mostrarError(
+					prop.getProperty("error.formatoNumero") + prop.getProperty("ventana.seleccionGustos.edadmax"));
+			return false;
+		} catch (RangoNumeroException e) {
+			switch (e.getMessage()) {
+			case "min":
+				vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.edad.min"));
+				return false;
+			case "max":
+				vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.edad.max"));
+				return false;
+			}
+		}
+
+		try {
+			estaturaIdeal = Float.parseFloat(vf.getSg().getCampoEstaturaIdeal().getText());
+			LanzadorExcepciones.verificarRangoNumero(estaturaIdeal, 50f, 250f);
+
+		} catch (NumberFormatException e) {
+			vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.formatoNumero")
+					+ prop.getProperty("ventana.seleccionGustos.estaturaIdeal"));
+			return false;
+		} catch (RangoNumeroException e) {
+			switch (e.getMessage()) {
+			case "min":
+				vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.estatura.min"));
+				return false;
+			case "max":
+				vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.estatura.max"));
+				return false;
+			}
+		}
+
+		boolean divorciada = false;
+
+		if (vf.getSg().getEstadoDivorcio().getSelection() == null) {
+			vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.divorciadaNoSeleccionada"));
+			return false;
+		}
+
+		if (vf.getSg().getDivorciada().isSelected()) {
+			divorciada = true;
+		}
+
+		if (vf.getSg().getNoDivorciada().isSelected()) {
+			divorciada = false;
+		}
+
+		usuarioActual.setEdadMinima(edadMinima);
+		usuarioActual.setEdadMaxima(edadMaxima);
+		usuarioActual.setEstaturaIdeal(estaturaIdeal);
+		((Hombre) usuarioActual).setEstadoDivorcio(divorciada);
+		return true;
+	}
+
+	private boolean registrarGustosMujer() {
+		int edadMinima = 0;
+		int edadMaxima = 0;
+		float estaturaIdeal = 0f;
+		float ingresoIdeal = 0f;
+
+		try {
+			edadMinima = Integer.parseInt(vf.getSg().getCampoEdadMinima().getText());
+			LanzadorExcepciones.verificarRangoNumero(edadMinima, 18, 130);
+
+		} catch (NumberFormatException e) {
+			vf.getVentanaPrincipal().mostrarError(
+					prop.getProperty("error.formatoNumero") + prop.getProperty("ventana.seleccionGustos.edadmin"));
+			return false;
+		} catch (RangoNumeroException e) {
+			switch (e.getMessage()) {
+			case "min":
+				vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.edad.min"));
+				return false;
+			case "max":
+				vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.edad.max"));
+				return false;
+			}
+		}
+
+		try {
+			edadMaxima = Integer.parseInt(vf.getSg().getCampoEdadMaxima().getText());
+			LanzadorExcepciones.verificarRangoNumero(edadMaxima, 18, 130);
+
+		} catch (NumberFormatException e) {
+			vf.getVentanaPrincipal().mostrarError(
+					prop.getProperty("error.formatoNumero") + prop.getProperty("ventana.seleccionGustos.edadmax"));
+			return false;
+		} catch (RangoNumeroException e) {
+			switch (e.getMessage()) {
+			case "min":
+				vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.edad.min"));
+				return false;
+			case "max":
+				vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.edad.max"));
+				return false;
+			}
+		}
+
+		try {
+			estaturaIdeal = Float.parseFloat(vf.getSg().getCampoEstaturaIdeal().getText());
+			LanzadorExcepciones.verificarRangoNumero(estaturaIdeal, 50f, 250f);
+
+		} catch (NumberFormatException e) {
+			vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.formatoNumero")
+					+ prop.getProperty("ventana.seleccionGustos.estaturaIdeal"));
+			return false;
+		} catch (RangoNumeroException e) {
+			switch (e.getMessage()) {
+			case "min":
+				vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.estatura.min"));
+				return false;
+			case "max":
+				vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.estatura.max"));
+				return false;
+			}
+		}
+
+		try {
+			ingresoIdeal = Float.parseFloat(vf.getSg().getCampoIngresoIdeal().getText());
+			LanzadorExcepciones.verificarRangoNumero(ingresoIdeal, 0f, 100000000f);
+
+		} catch (NumberFormatException e) {
+			vf.getVentanaPrincipal().mostrarError(
+					prop.getProperty("error.formatoNumero") + prop.getProperty("ventana.seleccionGustos.ingresoIdeal"));
+			return false;
+		} catch (RangoNumeroException e) {
+			switch (e.getMessage()) {
+			case "min":
+				vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.ingreso.min"));
+				return false;
+			case "max":
+				vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.ingreso.max"));
+				return false;
+			}
+		}
+
+		usuarioActual.setEdadMinima(edadMinima);
+		usuarioActual.setEdadMaxima(edadMaxima);
+		usuarioActual.setEstaturaIdeal(estaturaIdeal);
+		((Mujer) usuarioActual).setIngresosIdeal(ingresoIdeal);
+		return true;
+	}
+
+	private void mostrarVentanaGustos() {
+		if (usuarioActual == null) {
+			return;
+		}
+
+		if (usuarioActual instanceof Hombre) {
+			vf.getSg().eliminarLabelGustos(prop.getProperty("ventana.seleccionGustos.ingresoIdeal"),
+					prop.getProperty("ventana.seleccionGustos.divorciada"));
+			vf.getSg().limpiarCampos();
+			vf.getSg().mostrarCamposHombre(prop.getProperty("ventana.seleccionGustos.divorciada"));
+			vf.mostrarPanel("seleccionGustos");
+		} else if (usuarioActual instanceof Mujer) {
+			vf.getSg().eliminarLabelGustos(prop.getProperty("ventana.seleccionGustos.ingresoIdeal"),
+					prop.getProperty("ventana.seleccionGustos.divorciada"));
+			vf.getSg().limpiarCampos();
+			vf.getSg().mostrarCamposMujer(prop.getProperty("ventana.seleccionGustos.ingresoIdeal"));
+			vf.mostrarPanel("seleccionGustos");
+		}
+	}
+
+	private void enviarCodigoVerificacion(String correo, int codigo) {
 
 		try {
 			Properties props = new Properties();
 			props.put("mail.smtp.auth", "true");
-			props.put("mail.smtp.host", smtpHost);
-			props.put("mail.smtp.port", String.valueOf(smtpPort));
+			props.put("mail.smtp.host", "smtp.gmail.com");
+			props.put("mail.smtp.port", String.valueOf(587));
 
-			if (usarSSL) {
-				props.put("mail.smtp.ssl.enable", "true");
-				props.put("mail.smtp.starttls.enable", "false");
-			} else {
-				props.put("mail.smtp.ssl.enable", "false");
-				props.put("mail.smtp.starttls.enable", "true");
-				props.put("mail.smtp.starttls.required", "true");
-			}
+			props.put("mail.smtp.ssl.enable", "false");
+			props.put("mail.smtp.starttls.enable", "true");
+			props.put("mail.smtp.starttls.required", "true");
 
 			Session session = Session.getInstance(props, new Authenticator() {
 				@Override
 				protected PasswordAuthentication getPasswordAuthentication() {
-					return new PasswordAuthentication(emailRemitente, contraseña);
+					return new PasswordAuthentication("bostinderueb@gmail.com", "flfy qotq qggz ktlx");
 				}
 			});
 
 			MimeMessage message = new MimeMessage(session);
-			message.setFrom(new InternetAddress(emailRemitente));
+			message.setFrom(new InternetAddress("bostinderueb@gmail.com"));
 			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(correo));
 			message.setSubject("Código de Seguridad de tu Cuenta", "UTF-8");
 
@@ -645,5 +856,12 @@ public class Controlador implements ActionListener {
 				prop.getProperty("ventana.verificarCodigo.instrucciones"),
 				prop.getProperty("ventana.verificarCodigo.codigo"),
 				prop.getProperty("ventana.verificarCodigo.botonConfirmar"));
+		vf.getSg().mostrarTextos(prop.getProperty("ventana.seleccionGustos.edadmin"),
+				prop.getProperty("ventana.seleccionGustos.edadmax"),
+				prop.getProperty("ventana.seleccionGustos.estaturaIdeal"),
+				prop.getProperty("ventana.seleccionGustos.siDivorciada"),
+				prop.getProperty("ventana.seleccionGustos.noDivorciada"),
+				prop.getProperty("ventana.seleccionGustos.botonConfirmar"),
+				prop.getProperty("ventana.seleccionGustos.edad"));
 	}
 }
