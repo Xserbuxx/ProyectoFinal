@@ -1,5 +1,6 @@
 package co.edu.unbosque.view;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Image;
@@ -8,6 +9,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
@@ -23,7 +25,7 @@ public class InicioSesion extends JPanel {
 
 
 		this.setLayout(null);
-		this.setBackground(new Color(36, 41, 46));
+		this.setBackground(new Color(59, 59, 59));
 
 		
 		JPanel derecha = new JPanel();
@@ -40,16 +42,50 @@ public class InicioSesion extends JPanel {
 		imagenLabel.setBounds(0, 0, 640, 720);
 		derecha.add(imagenLabel);
 		
-		
-		
-		
-		campoUsuario = new JTextField();
-		campoUsuario.setBounds(120, 250, 400, 50);
-		campoUsuario.setFont(new Font("Sans", Font.PLAIN, 20));
+		JPanel panelUsuario = new JPanel(new BorderLayout());
+		panelUsuario.setBounds(120, 250, 400, 50);
+		panelUsuario.setBackground(Color.WHITE);
+		panelUsuario.setBorder(null);
 
-		campoContrasena = new JTextField();
-		campoContrasena.setBounds(120, 370, 400, 50);
+		
+		JLabel iconUsuario = new JLabel();
+		ImageIcon imgUsuario = new ImageIcon("Resources/iconUsu.png");
+		Image imgU = imgUsuario.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
+		iconUsuario.setIcon(new ImageIcon(imgU));
+		iconUsuario.setHorizontalAlignment(SwingConstants.CENTER);
+
+		panelUsuario.add(iconUsuario, BorderLayout.WEST);
+
+		campoUsuario = new JTextField();
+		campoUsuario.setFont(new Font("Sans", Font.PLAIN, 20));
+		campoUsuario.setBorder(null);
+
+		panelUsuario.add(campoUsuario, BorderLayout.CENTER);
+
+		this.add(panelUsuario);
+
+		
+		JPanel panelContrasena = new JPanel(new BorderLayout());
+		panelContrasena.setBounds(120, 370, 400, 50);
+		panelContrasena.setBackground(Color.WHITE);
+		panelContrasena.setBorder(null);
+
+		JLabel iconContrasena = new JLabel();
+		ImageIcon imgContrasena = new ImageIcon("Resources/iconLock.png");
+		Image imgC = imgContrasena.getImage().getScaledInstance(30, 30, Image.SCALE_SMOOTH);
+		iconContrasena.setIcon(new ImageIcon(imgC));
+		iconContrasena.setHorizontalAlignment(SwingConstants.CENTER);
+
+	
+		panelContrasena.add(iconContrasena, BorderLayout.WEST);
+
+		campoContrasena = new JPasswordField();
 		campoContrasena.setFont(new Font("Sans", Font.PLAIN, 20));
+		campoContrasena.setBorder(null);
+
+		panelContrasena.add(campoContrasena, BorderLayout.CENTER);
+
+		this.add(panelContrasena);
 
 		Color colorTinder = new Color(255, 51, 102);
 		botonConfirmar = new JButton();
