@@ -3,6 +3,7 @@ package co.edu.unbosque.controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Properties;
 import java.util.Random;
 
@@ -69,6 +70,8 @@ public class Controlador implements ActionListener {
 		vf.getVc().getBotonConfirmar().setActionCommand("BotonConfirmarVerificacion");
 		vf.getSg().getBotonConfirmar().addActionListener(this);
 		vf.getSg().getBotonConfirmar().setActionCommand("BotonConfirmarGustos");
+		vf.getApp().getBotonIncognito().setActionCommand("BotonIncognito");
+		vf.getApp().getBotonIncognito().addActionListener(this);
 	}
 
 	@Override
@@ -157,11 +160,12 @@ public class Controlador implements ActionListener {
 				}
 
 				vf.getVentanaPrincipal()
-						.mostrarMensaje(prop.getProperty("mensaje.bienvenida") + " " + usuarioActual.getAlias());
+						.mostrarMensaje(prop.getProperty("mensaje.bienvenida") + " " + usuarioActual.getNombre());
 				if (usuarioActual.getEstaturaIdeal() == 0) {
 					mostrarVentanaGustos();
 				} else {
-					// mostrar ventana principal del aplicativo
+					vf.mostrarPanel("aplicacion");
+					agregarUsuariosVentanaAplicacion();
 				}
 			} catch (CampoVacioException ex) {
 				vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.campoVacio") + ex.getMessage());
@@ -220,7 +224,21 @@ public class Controlador implements ActionListener {
 			}
 			mf.actualizarPersonas();
 			vf.getVentanaPrincipal().mostrarMensaje(prop.getProperty("mensaje.gustosGuardados"));
-			vf.mostrarPanel("inicioSesion"); // cambiar por ventana principal del aplicativo
+			vf.mostrarPanel("aplicacion");
+			agregarUsuariosVentanaAplicacion();
+			break;
+		case "BotonIncognito":
+			if (usuarioActual.isIncognito()) {
+				usuarioActual.setIncognito(false);
+				vf.getApp().getBotonIncognito().setText(prop.getProperty("ventana.aplicacion.modoIncognito.off"));
+				vf.getVentanaPrincipal().mostrarMensaje(prop.getProperty("mensaje.modoIncognito.off"));
+				vf.getApp().cambiarBotonIncognito(false);
+			} else {
+				usuarioActual.setIncognito(true);
+				vf.getApp().getBotonIncognito().setText(prop.getProperty("ventana.aplicacion.modoIncognito.on"));
+				vf.getVentanaPrincipal().mostrarMensaje(prop.getProperty("mensaje.modoIncognito.on"));
+				vf.getApp().cambiarBotonIncognito(true);
+			}
 			break;
 		default:
 			break;
@@ -799,6 +817,41 @@ public class Controlador implements ActionListener {
 			vf.getSg().mostrarCamposMujer(prop.getProperty("ventana.seleccionGustos.ingresoIdeal"));
 			vf.mostrarPanel("seleccionGustos");
 		}
+	}
+
+	private void agregarUsuariosVentanaAplicacion() {
+		ArrayList<Persona> usuarios = mf.getPersonas();
+		usuarios.removeIf(p -> p.getAlias().equals(usuarioActual.getAlias()));
+		usuarios.removeIf(p -> p.getEstatura() > usuarioActual.getEstaturaIdeal() + 15
+				|| p.getEstatura() < usuarioActual.getEstaturaIdeal() - 15);
+		usuarios.removeIf(p -> p.getEdad() > usuarioActual.getEdadMaxima()
+				|| p.getEdad() < usuarioActual.getEdadMinima());
+		usuarios.removeIf(p -> p instanceof Hombre && usuarioActual instanceof Hombre);
+		usuarios.removeIf(p -> p instanceof Mujer && usuarioActual instanceof Mujer);
+		usuarios.removeIf(p -> !p.isDisponibilidad());
+		usuarios.removeIf(p -> p.isIncognito());
+		
+		
+		Iterator<Persona> iterator = usuarios.iterator();
+		while (iterator.hasNext()) {
+		    Persona p = iterator.next();
+		    if (p instanceof Hombre) {
+		        if (((Hombre)p).getIngresoProm() < ((Mujer)usuarioActual).getIngresosIdeal()) {
+		            iterator.remove();
+		        }
+		    }
+		    if (p instanceof Mujer) {
+		        if (((Mujer)p).isDivorciada() && !((Hombre)usuarioActual).isEstadoDivorcio()) {
+		            iterator.remove();
+		        }
+		        if (!((Mujer)p).isDivorciada() && ((Hombre)usuarioActual).isEstadoDivorcio()) {
+		            iterator.remove();
+		        }
+		    }
+		}
+		
+		usuarios.forEach(p -> vf.getApp().agregarUsuario(p.getAlias()));
+
 	}
 
 	private void enviarCodigoVerificacion(String correo, int codigo) {

@@ -15,6 +15,7 @@ public class ViewFacade {
 	private Registro reg;
 	private VerificarCodigo vc;
 	private SeleccionGustos sg;
+	private Aplicacion app;
 	
 	public ViewFacade() {
 		ventanaPrincipal = new VentanaPrincipal();
@@ -28,12 +29,14 @@ public class ViewFacade {
 		reg = new Registro();
 		vc = new VerificarCodigo();
 		sg = new SeleccionGustos();
+		app = new Aplicacion();
 		
 		paneles.add(idm, "idioma");
 		paneles.add(is, "inicioSesion");
 		paneles.add(reg, "registro");
 		paneles.add(vc, "verificarCodigo");
 		paneles.add(sg, "seleccionGustos");
+		paneles.add(app, "aplicacion");
 		
 		ventanaPrincipal.add(paneles);
 	}
@@ -104,5 +107,14 @@ public class ViewFacade {
 
 	public void setSg(SeleccionGustos sg) {
 		this.sg = sg;
+	}
+
+	public Aplicacion getApp() {
+		return app;
+	}
+
+	public void setApp(Aplicacion app) {
+		this.app = app;
 	}	
+	
 }
