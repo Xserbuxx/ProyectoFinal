@@ -2,7 +2,9 @@ package co.edu.unbosque.view;
 
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -31,7 +33,7 @@ public class Aplicacion extends JPanel{
 		
 		scrollPanel = new JScrollPane(panelUsuarios, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		scrollPanel.setBounds(0, 60, 1260, 660);
+		scrollPanel.setBounds(0, 60, 1260, 640);
 		scrollPanel.setBackground(new Color(36, 41, 46));
 		
 		this.add(scrollPanel);
@@ -46,8 +48,8 @@ public class Aplicacion extends JPanel{
 		}
 	}
 	
-	public void agregarUsuario(String alias) {
-		panelUsuarios.add(new PanelUsuario(alias));
+	public void agregarUsuario(String alias, ImageIcon imagen, int edad, float estatura,int likes, boolean like, ActionListener listener) {
+		panelUsuarios.add(new PanelUsuario(alias, imagen, edad, estatura, likes,like,listener));
 	}
 
 	public JButton getBotonIncognito() {

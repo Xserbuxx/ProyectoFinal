@@ -1,5 +1,6 @@
 package co.edu.unbosque.controller;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -8,6 +9,7 @@ import java.util.Properties;
 import java.util.Random;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 
 import co.edu.unbosque.model.Hombre;
 import co.edu.unbosque.model.HombreDTO;
@@ -76,6 +78,32 @@ public class Controlador implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		
+		if (e.getActionCommand().contains("BotonLike-")) {
+			JButton botonLike = (JButton) e.getSource();
+			if (botonLike.getForeground() == Color.red) {
+				botonLike.setForeground(Color.gray);
+				botonLike.setText("\u2764 " + (Integer.parseInt(botonLike.getText().split(" ")[1]) - 1));
+				usuarioActual.getLikesDados().remove(botonLike.getActionCommand().split("-")[1]);
+				mf.getPersonas().forEach(persona -> {
+					if (persona.getAlias().equals(botonLike.getActionCommand().split("-")[1])) {
+						persona.setLikesRecibidos(persona.getLikesRecibidos() - 1);
+					}
+				});
+				mf.actualizarPersonas();
+			} else {
+				botonLike.setForeground(Color.red);
+				botonLike.setText("\u2764 " + (Integer.parseInt(botonLike.getText().split(" ")[1]) + 1));
+				usuarioActual.getLikesDados().add(botonLike.getActionCommand().split("-")[1]);
+				mf.getPersonas().forEach(persona -> {
+					if (persona.getAlias().equals(botonLike.getActionCommand().split("-")[1])) {
+						persona.setLikesRecibidos(persona.getLikesRecibidos() + 1);
+					}
+				});
+				mf.actualizarPersonas();
+			}
+		}
+		
 		switch (e.getActionCommand()) {
 		case "ConfirmarIdioma":
 			/////////////////////////////////////////////////////////////////
@@ -850,7 +878,13 @@ public class Controlador implements ActionListener {
 		    }
 		}
 		
-		usuarios.forEach(p -> vf.getApp().agregarUsuario(p.getAlias()));
+		for (Persona p : usuarios) {
+			if (usuarioActual.getLikesDados().contains(p.getAlias())) {
+				vf.getApp().agregarUsuario(p.getAlias(),p.getImagen(),p.getEdad(),p.getEstatura(),p.getLikesRecibidos(),true,this);
+			} else {
+				vf.getApp().agregarUsuario(p.getAlias(),p.getImagen(),p.getEdad(),p.getEstatura(),p.getLikesRecibidos(),false,this);
+			}
+		}
 
 	}
 
