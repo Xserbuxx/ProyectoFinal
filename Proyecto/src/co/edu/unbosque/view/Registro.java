@@ -51,193 +51,187 @@ public class Registro extends JPanel {
 
 	public Registro() {
 		
-		this.setLayout(null);
-		this.setBackground(new Color(59, 59, 59));
-		
-		JPanel derecha = new JPanel();
+		 this.setLayout(null);
+	        this.setBackground(new Color(36, 41, 46));
 
-		derecha.setBounds(640, 0, 640, 720);
-		derecha.setBackground(new Color(30, 31, 34));
-		// parametros para la seleccion de disponibilidad
-		disponible = new JRadioButton();
+	        
+	        disponible = new JRadioButton();
+	        disponible.setBounds(370, 940, 200, 20);
+	        disponible.setBackground(new Color(36, 41, 46));
+	        disponible.setForeground(Color.WHITE);
+	        disponible.setFocusable(false);
+	        disponible.setFocusPainted(false);
+	        disponible.setBorderPainted(false);
 
-		disponible.setBounds(50, 940, 200, 20);
-		disponible.setBackground(new Color(36, 41, 46));
-		disponible.setForeground(Color.WHITE);
-		disponible.setFocusable(false);
-		disponible.setFocusPainted(false);
-		disponible.setBorderPainted(false);
+	        noDisponible = new JRadioButton();
+	        noDisponible.setBounds(370, 970, 200, 20);
+	        noDisponible.setBackground(new Color(36, 41, 46));
+	        noDisponible.setForeground(Color.WHITE);
+	        noDisponible.setFocusable(false);
+	        noDisponible.setFocusPainted(false);
+	        noDisponible.setBorderPainted(false);
 
-		noDisponible = new JRadioButton();
+	        grupoDisponibilidad = new ButtonGroup();
+	        grupoDisponibilidad.add(disponible);
+	        grupoDisponibilidad.add(noDisponible);
 
-		noDisponible.setBounds(50, 970, 200, 20);
-		noDisponible.setBackground(new Color(36, 41, 46));
-		noDisponible.setForeground(Color.WHITE);
-		noDisponible.setFocusable(false);
-		noDisponible.setFocusPainted(false);
-		noDisponible.setBorderPainted(false);
+	      
+	        divorciada = new JRadioButton();
+	        divorciada.setBounds(370, 1140, 200, 20);
+	        divorciada.setBackground(new Color(36, 41, 46));
+	        divorciada.setForeground(Color.WHITE);
+	        divorciada.setFocusable(false);
+	        divorciada.setFocusPainted(false);
+	        divorciada.setBorderPainted(false);
+	        divorciada.setVisible(false);
+	        divorciada.setEnabled(false);
 
-		grupoDisponibilidad = new ButtonGroup();
-		grupoDisponibilidad.add(disponible);
-		grupoDisponibilidad.add(noDisponible);
-		// parametros para divorciada
-		divorciada = new JRadioButton();
+	        noDivorciada = new JRadioButton();
+	        noDivorciada.setBounds(370, 1170, 200, 20);
+	        noDivorciada.setBackground(new Color(36, 41, 46));
+	        noDivorciada.setForeground(Color.WHITE);
+	        noDivorciada.setFocusable(false);
+	        noDivorciada.setFocusPainted(false);
+	        noDivorciada.setBorderPainted(false);
+	        noDivorciada.setVisible(false);
+	        noDivorciada.setEnabled(false);
 
-		divorciada.setBounds(50, 1140, 200, 20);
-		divorciada.setBackground(new Color(36, 41, 46));
-		divorciada.setForeground(Color.WHITE);
-		divorciada.setFocusable(false);
-		divorciada.setFocusPainted(false);
-		divorciada.setBorderPainted(false);
+	        grupoSexo = new ButtonGroup();
+	        grupoSexo.add(divorciada);
+	        grupoSexo.add(noDivorciada);
 
-		divorciada.setVisible(false);
-		divorciada.setEnabled(false);
+	        
+	        izquierda = new JPanel();
+	        izquierda.setLayout(null);
+	        izquierda.setPreferredSize(new Dimension(1280, 1380));
+	        izquierda.setBackground(new Color(36, 41, 46));
 
-		noDivorciada = new JRadioButton();
+	        scroll = new JScrollPane(izquierda, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
+	                JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+	        scroll.setBounds(0, 0, 1280, 720);
+	        scroll.getVerticalScrollBar().setBackground(new Color(36, 41, 46));
+	        scroll.setBorder(null);
 
-		noDivorciada.setBounds(50, 1170, 200, 20);
-		noDivorciada.setBackground(new Color(36, 41, 46));
-		noDivorciada.setForeground(Color.WHITE);
-		noDivorciada.setFocusable(false);
-		noDivorciada.setFocusPainted(false);
-		noDivorciada.setBorderPainted(false);
+	      
+	        Color colorTinder = new Color(255, 51, 102);
+	        botonConfirmar = new JButton();
+	        botonConfirmar.setBounds(470, 1220, 330, 50);
+	        botonConfirmar.setBackground(colorTinder);
+	        botonConfirmar.setForeground(Color.white);
+	        botonConfirmar.setFocusable(false);
+	        botonConfirmar.setFocusPainted(false);
+	        botonConfirmar.setBorderPainted(false);
 
-		noDivorciada.setVisible(false);
-		noDivorciada.setEnabled(false);
+	        botonIniciarSesion = new JButton();
+	        botonIniciarSesion.setBounds(540, 1300, 200, 14);
+	        botonIniciarSesion.setFont(new Font("Arial", Font.BOLD, 14));
+	        botonIniciarSesion.setForeground(new Color(255, 51, 102));
+	        botonIniciarSesion.setHorizontalAlignment(JLabel.LEFT);
+	        botonIniciarSesion.setContentAreaFilled(false);
+	        botonIniciarSesion.setBorderPainted(false);
+	        botonIniciarSesion.setFocusPainted(false);
 
-		grupoSexo = new ButtonGroup();
-		grupoSexo.add(divorciada);
-		grupoSexo.add(noDivorciada);
-		// parametros panel izquierdo
-		izquierda = new JPanel();
+	        botonSexoHombre = new JButton("♂");
+	        botonSexoHombre.setFont(new Font("Sans", Font.BOLD, 20));
+	        botonSexoHombre.setBounds(370, 150, 50, 30);
+	        botonSexoHombre.setBackground(new Color(3, 102, 214));
+	        botonSexoHombre.setForeground(Color.white);
+	        botonSexoHombre.setFocusable(false);
+	        botonSexoHombre.setFocusPainted(false);
+	        botonSexoHombre.setBorderPainted(false);
 
-		izquierda.setLayout(null);
-		izquierda.setPreferredSize(new Dimension(640, 1380));
-		izquierda.setBackground(new Color(36, 41, 46));
+	        botonSexoMujer = new JButton("♀");
+	        botonSexoMujer.setFont(new Font("Sans", Font.BOLD, 20));
+	        botonSexoMujer.setBounds(430, 150, 50, 30);
+	        botonSexoMujer.setBackground(new Color(255, 0, 102));
+	        botonSexoMujer.setForeground(Color.white);
+	        botonSexoMujer.setFocusable(false);
+	        botonSexoMujer.setFocusPainted(false);
+	        botonSexoMujer.setBorderPainted(false);
 
-		scroll = new JScrollPane(izquierda, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
-				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+	       
+	        campoNombre = new CampoRedondeado(10, 30);
+	        campoNombre.setBounds(370, 250, 540, 30);
 
-		scroll.setBounds(0, 0, 640, 682);
-		scroll.getVerticalScrollBar().setBackground(new Color(36, 41, 46));
-		scroll.setBorder(null);
-		
+	        campoAlias = new CampoRedondeado(10, 30);
+	        campoAlias.setBounds(370, 350, 540, 30);
 
-        Color colorTinder = new Color(255, 51, 102); 
-		botonConfirmar = new JButton();
-		botonConfirmar.setBounds(150, 1220, 330, 50);
-		botonConfirmar.setBackground(colorTinder);
-		botonConfirmar.setForeground(Color.white);
-		botonConfirmar.setFocusable(false);
-		botonConfirmar.setFocusPainted(false);
-		botonConfirmar.setBorderPainted(false);
+	        campoEdad = new CampoRedondeado(10, 30);
+	        campoEdad.setBounds(370, 450, 540, 30);
 
-		botonIniciarSesion = new JButton();
-		botonIniciarSesion.setBounds(135, 1300, 200, 14);
-		botonIniciarSesion.setFont(new Font("Arial", Font.BOLD, 14));
-		botonIniciarSesion.setForeground(new Color(255, 51, 102));
-		botonIniciarSesion.setHorizontalAlignment(JLabel.LEFT);
-		botonIniciarSesion.setContentAreaFilled(false);
-		botonIniciarSesion.setBorderPainted(false);
-		botonIniciarSesion.setFocusPainted(false);
+	        campoFechaNacimiento = new CampoRedondeado(10, 30);
+	        campoFechaNacimiento.setBounds(370, 550, 540, 30);
 
-		botonSexoHombre = new JButton("♂");
-		botonSexoHombre.setFont(new Font("Sans", Font.BOLD, 20));
-		botonSexoHombre.setBounds(50, 150, 50, 30);
-		botonSexoHombre.setBackground(new Color(3, 102, 214));
-		botonSexoHombre.setForeground(Color.white);
-		botonSexoHombre.setFocusable(false);
-		botonSexoHombre.setFocusPainted(false);
-		botonSexoHombre.setBorderPainted(false);
+	        campoEstatura = new CampoRedondeado(10, 30);
+	        campoEstatura.setBounds(370, 650, 540, 30);
 
-		botonSexoMujer = new JButton("♀");
-		botonSexoMujer.setFont(new Font("Sans", Font.BOLD, 20));
-		botonSexoMujer.setBounds(100, 150, 50, 30);
-		botonSexoMujer.setBackground(new Color(255, 0, 102));
-		botonSexoMujer.setForeground(Color.white);
-		botonSexoMujer.setFocusable(false);
-		botonSexoMujer.setFocusPainted(false);
-		botonSexoMujer.setBorderPainted(false);
+	        campoCorreo = new CampoRedondeado(10, 30);
+	        campoCorreo.setBounds(370, 750, 540, 30);
 
-		campoIngresoProm = new JTextField();
-		campoIngresoProm.setBounds(50, 1150, 540, 30);
-		campoIngresoProm.setVisible(false);
-		campoIngresoProm.setEnabled(false);
-		// campos de texto
-		campoNombre = new JTextField();
-		campoNombre.setBounds(50, 250, 540, 30);
+	        campoImagen = new JTextField(); 
+	        campoImagen.setBounds(370, 850, 540, 30);
+	        campoImagen.setEditable(false);
 
-		campoAlias = new JTextField();
-		campoAlias.setBounds(50, 350, 540, 30);
+	        campoContrasena = new CampoRedondeado(10, 30);
+	        campoContrasena.setBounds(370, 1050, 540, 30);
 
-		campoEdad = new JTextField();
-		campoEdad.setBounds(50, 450, 540, 30);
+	        campoIngresoProm = new CampoRedondeado(10, 30);
+	        campoIngresoProm.setBounds(370, 1150, 540, 30);
+	        campoIngresoProm.setVisible(false);
+	        campoIngresoProm.setEnabled(false);
 
-		campoFechaNacimiento = new JTextField();
-		campoFechaNacimiento.setBounds(50, 550, 540, 30);
+	        botonExaminar = new JButton();
+	        botonExaminar.setBounds(770, 810, 140, 30);
+	        botonExaminar.setFont(new Font("Sans", Font.BOLD, 12));
+	        botonExaminar.setBackground(new Color(3, 102, 214));
+	        botonExaminar.setForeground(Color.white);
+	        botonExaminar.setFocusable(false);
+	        botonExaminar.setFocusPainted(false);
+	        botonExaminar.setBorderPainted(false);
 
-		campoEstatura = new JTextField();
-		campoEstatura.setBounds(50, 650, 540, 30);
+	        izquierda.add(botonExaminar);
+	        izquierda.add(botonSexoMujer);
+	        izquierda.add(botonSexoHombre);
+	        izquierda.add(campoNombre);
+	        izquierda.add(campoAlias);
+	        izquierda.add(campoEdad);
+	        izquierda.add(campoFechaNacimiento);
+	        izquierda.add(campoEstatura);
+	        izquierda.add(campoCorreo);
+	        izquierda.add(campoImagen);
+	        izquierda.add(campoContrasena);
+	        izquierda.add(botonIniciarSesion);
+	        izquierda.add(botonConfirmar);
+	        izquierda.add(disponible);
+	        izquierda.add(noDisponible);
+	        izquierda.add(divorciada);
+	        izquierda.add(noDivorciada);
+	        izquierda.add(campoIngresoProm);
 
-		campoCorreo = new JTextField();
-		campoCorreo.setBounds(50, 750, 540, 30);
-
-		campoImagen = new JTextField();
-		campoImagen.setBounds(50, 850, 540, 30);
-		campoImagen.setEditable(false);
-
-		campoContrasena = new JTextField();
-		campoContrasena.setBounds(50, 1050, 540, 30);
-
-		botonExaminar = new JButton();
-		botonExaminar.setBounds(450, 810, 140, 30);
-		botonExaminar.setFont(new Font("Sans", Font.BOLD, 12));
-		botonExaminar.setBackground(new Color(3, 102, 214));
-		botonExaminar.setForeground(Color.white);
-		botonExaminar.setFocusable(false);
-		botonExaminar.setFocusPainted(false);
-		botonExaminar.setBorderPainted(false);
-
-		izquierda.add(botonExaminar);
-		izquierda.add(botonSexoMujer);
-		izquierda.add(botonSexoHombre);
-		izquierda.add(campoNombre);
-		izquierda.add(campoAlias);
-		izquierda.add(campoEdad);
-		izquierda.add(campoFechaNacimiento);
-		izquierda.add(campoEstatura);
-		izquierda.add(campoCorreo);
-		izquierda.add(campoImagen);
-		izquierda.add(campoContrasena);
-		izquierda.add(botonIniciarSesion);
-		izquierda.add(botonConfirmar);
-		izquierda.add(disponible);
-		izquierda.add(noDisponible);
-		izquierda.add(divorciada);
-		izquierda.add(noDivorciada);
-		izquierda.add(campoIngresoProm);
-		this.add(scroll);
-		this.add(derecha);
-	}
-
+	        this.add(scroll);
+	    }
 	public void mostrarTextos(String labelRegistro, String labelNombre, String labelAlias, String labelEdad,
 			String labelFechaNacimiento, String labelEstatura, String labelCorreo, String labelImagen,
 			String labelDisponibilidad, String labelDisponible, String labelNoDisponible, String labelContrasena,
 			String labelBotonConfirmar, String labelBotonIniciarSesionTexto, String labelYaCuenta, String labelSexo,
 			String labelDivorciada, String labelNoDivorciada, String labelBotonExaminar) {
+		
+		int xCampo = 370; // inicio de los campos
+		int anchoLabel = 540; // mismo ancho del campo
 
-		crearLabel(labelRegistro, Color.WHITE, 200, 20, 300, 50, 30);
-		crearLabel(labelNombre, Color.WHITE, 50, 200, 200, 30, 20);
-		crearLabel(labelAlias, Color.WHITE, 50, 300, 200, 30, 20);
-		crearLabel(labelEdad, Color.WHITE, 50, 400, 200, 30, 20);
-		crearLabel(labelFechaNacimiento, Color.WHITE, 50, 500, 200, 30, 20);
-		crearLabel(labelEstatura, Color.WHITE, 50, 600, 200, 30, 20);
-		crearLabel(labelCorreo, Color.WHITE, 50, 700, 200, 30, 20);
-		crearLabel(labelImagen, Color.WHITE, 50, 800, 200, 30, 20);
-		crearLabel(labelDisponibilidad, Color.WHITE, 50, 900, 300, 30, 20);
-		crearLabel(labelContrasena, Color.WHITE, 50, 1000, 200, 30, 20);
-		crearLabel(labelYaCuenta, Color.WHITE, 150, 1270, 200, 30, 14);
-		crearLabel(labelSexo, Color.WHITE, 50, 100, 200, 30, 20);
+		crearLabel(labelRegistro, Color.WHITE, 520, 20, 300, 50, 30); // título principal centrado
+		crearLabel(labelSexo, Color.WHITE, xCampo, 120, anchoLabel, 30, 20);
+
+		crearLabel(labelNombre, Color.WHITE, xCampo, 220, anchoLabel, 30, 20);
+		crearLabel(labelAlias, Color.WHITE, xCampo, 320, anchoLabel, 30, 20);
+		crearLabel(labelEdad, Color.WHITE, xCampo, 420, anchoLabel, 30, 20);
+		crearLabel(labelFechaNacimiento, Color.WHITE, xCampo, 520, anchoLabel, 30, 20);
+		crearLabel(labelEstatura, Color.WHITE, xCampo, 620, anchoLabel, 30, 20);
+		crearLabel(labelCorreo, Color.WHITE, xCampo, 720, anchoLabel, 30, 20);
+		crearLabel(labelImagen, Color.WHITE, xCampo, 820, anchoLabel, 30, 20);
+		crearLabel(labelDisponibilidad, Color.WHITE, xCampo, 920, anchoLabel, 30, 20);
+		crearLabel(labelContrasena, Color.WHITE, xCampo, 1020, anchoLabel, 30, 20);
+		crearLabel(labelYaCuenta, Color.WHITE, 520, 1270, 300, 30, 14);
 
 		botonConfirmar.setText(labelBotonConfirmar);
 		botonIniciarSesion.setText(labelBotonIniciarSesionTexto);
@@ -250,7 +244,6 @@ public class Registro extends JPanel {
 
 		botonExaminar.setText(labelBotonExaminar);
 	}
-
 	public void mostrarCampoHombre(String labelIngresoProm) {
 		divorciada.setVisible(false);
 		divorciada.setEnabled(false);
