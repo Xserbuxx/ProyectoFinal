@@ -68,7 +68,7 @@ public class Idioma extends JPanel {
         
         
 
-        String[] idiomas = { "Español", "Português", "Русский", "中文", "עברית" };
+        String[] idiomas = { "Español","English", "Português", "Русский", "中文", "עברית" };
         comboBox = new JComboBox<>(idiomas);
         comboBox.setBounds(450, 120, 400, 50);
         comboBox.setFont(new Font("Sans", Font.PLAIN, 20));

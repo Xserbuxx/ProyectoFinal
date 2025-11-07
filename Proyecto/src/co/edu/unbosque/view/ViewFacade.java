@@ -16,6 +16,7 @@ public class ViewFacade {
 	private VerificarCodigo vc;
 	private SeleccionGustos sg;
 	private Aplicacion app;
+	private Perfil per;
 	
 	public ViewFacade() {
 		ventanaPrincipal = new VentanaPrincipal();
@@ -30,6 +31,7 @@ public class ViewFacade {
 		vc = new VerificarCodigo();
 		sg = new SeleccionGustos();
 		app = new Aplicacion();
+		per = new Perfil();
 		
 		paneles.add(idm, "idioma");
 		paneles.add(is, "inicioSesion");
@@ -37,6 +39,7 @@ public class ViewFacade {
 		paneles.add(vc, "verificarCodigo");
 		paneles.add(sg, "seleccionGustos");
 		paneles.add(app, "aplicacion");
+		paneles.add(per, "perfil");
 		
 		ventanaPrincipal.add(paneles);
 	}
@@ -115,6 +118,14 @@ public class ViewFacade {
 
 	public void setApp(Aplicacion app) {
 		this.app = app;
+	}
+
+	public Perfil getPer() {
+		return per;
+	}
+
+	public void setPer(Perfil per) {
+		this.per = per;
 	}	
 	
 }
