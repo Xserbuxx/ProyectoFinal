@@ -1,12 +1,16 @@
 package co.edu.unbosque.controller;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Locale;
 import java.util.Properties;
 import java.util.Random;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 
 import co.edu.unbosque.model.Hombre;
 import co.edu.unbosque.model.HombreDTO;
@@ -69,16 +73,51 @@ public class Controlador implements ActionListener {
 		vf.getVc().getBotonConfirmar().setActionCommand("BotonConfirmarVerificacion");
 		vf.getSg().getBotonConfirmar().addActionListener(this);
 		vf.getSg().getBotonConfirmar().setActionCommand("BotonConfirmarGustos");
+		vf.getApp().getBotonPerfil().addActionListener(this);
+		vf.getApp().getBotonPerfil().setActionCommand("BotonPerfil");
+		vf.getPer().getBotonIncognito().addActionListener(this);
+		vf.getPer().getBotonIncognito().setActionCommand("BotonIncognito");
+		vf.getPer().getBotonVolver().addActionListener(this);
+		vf.getPer().getBotonVolver().setActionCommand("BotonVolverPerfil");
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+
+		if (e.getActionCommand().contains("BotonLike-")) {
+			JButton botonLike = (JButton) e.getSource();
+			if (botonLike.getForeground() == Color.red) {
+				botonLike.setForeground(Color.gray);
+				botonLike.setText("\u2764 " + (Integer.parseInt(botonLike.getText().split(" ")[1]) - 1));
+				usuarioActual.getLikesDados().remove(botonLike.getActionCommand().split("-")[1]);
+				mf.getPersonas().forEach(persona -> {
+					if (persona.getAlias().equals(botonLike.getActionCommand().split("-")[1])) {
+						persona.setLikesRecibidos(persona.getLikesRecibidos() - 1);
+					}
+				});
+				mf.actualizarPersonas();
+			} else {
+				botonLike.setForeground(Color.red);
+				botonLike.setText("\u2764 " + (Integer.parseInt(botonLike.getText().split(" ")[1]) + 1));
+				usuarioActual.getLikesDados().add(botonLike.getActionCommand().split("-")[1]);
+				mf.getPersonas().forEach(persona -> {
+					if (persona.getAlias().equals(botonLike.getActionCommand().split("-")[1])) {
+						persona.setLikesRecibidos(persona.getLikesRecibidos() + 1);
+					}
+				});
+				mf.actualizarPersonas();
+			}
+		}
+
 		switch (e.getActionCommand()) {
 		case "ConfirmarIdioma":
 			/////////////////////////////////////////////////////////////////
 			switch (vf.getIdm().getComboBox().getSelectedItem().toString()) {
 			case "Español":
 				prop = FileHandler.cargarArchivoDePropiedades("es.properties");
+				break;
+			case "English":
+				prop = FileHandler.cargarArchivoDePropiedades("en.properties");
 				break;
 			case "Português":
 				prop = FileHandler.cargarArchivoDePropiedades("pt.properties");
@@ -122,7 +161,6 @@ public class Controlador implements ActionListener {
 			break;
 		case "BotonConfirmarRegistro":
 			registrarUsuario();
-			mf.actualizarPersonas();
 			break;
 		case "BotonConfirmarInicioSesion":
 			try {
@@ -157,11 +195,12 @@ public class Controlador implements ActionListener {
 				}
 
 				vf.getVentanaPrincipal()
-						.mostrarMensaje(prop.getProperty("mensaje.bienvenida") + " " + usuarioActual.getAlias());
+						.mostrarMensaje(prop.getProperty("mensaje.bienvenida") + " " + usuarioActual.getNombre());
 				if (usuarioActual.getEstaturaIdeal() == 0) {
 					mostrarVentanaGustos();
 				} else {
-					// mostrar ventana principal del aplicativo
+					vf.mostrarPanel("aplicacion");
+					agregarUsuariosVentanaAplicacion();
 				}
 			} catch (CampoVacioException ex) {
 				vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.campoVacio") + ex.getMessage());
@@ -220,12 +259,113 @@ public class Controlador implements ActionListener {
 			}
 			mf.actualizarPersonas();
 			vf.getVentanaPrincipal().mostrarMensaje(prop.getProperty("mensaje.gustosGuardados"));
-			vf.mostrarPanel("inicioSesion"); // cambiar por ventana principal del aplicativo
+			vf.mostrarPanel("aplicacion");
+			agregarUsuariosVentanaAplicacion();
+			break;
+		case "BotonIncognito":
+			if (usuarioActual.isIncognito()) {
+				usuarioActual.setIncognito(false);
+				vf.getPer().getBotonIncognito().setText(prop.getProperty("ventana.aplicacion.modoIncognito.off"));
+				vf.getVentanaPrincipal().mostrarMensaje(prop.getProperty("mensaje.modoIncognito.off"));
+				vf.getPer().cambiarBotonIncognito(false);
+				mf.actualizarPersonas();
+			} else {
+				usuarioActual.setIncognito(true);
+				vf.getPer().getBotonIncognito().setText(prop.getProperty("ventana.aplicacion.modoIncognito.on"));
+				vf.getVentanaPrincipal().mostrarMensaje(prop.getProperty("mensaje.modoIncognito.on"));
+				vf.getPer().cambiarBotonIncognito(true);
+				mf.actualizarPersonas();
+			}
+			break;
+		case "BotonPerfil":
+			vf.mostrarPanel("perfil");
+
+			if (usuarioActual.isIncognito()) {
+				vf.getPer().getBotonIncognito().setText(prop.getProperty("ventana.aplicacion.modoIncognito.on"));
+				vf.getPer().cambiarBotonIncognito(true);
+			} else {
+				vf.getPer().getBotonIncognito().setText(prop.getProperty("ventana.aplicacion.modoIncognito.off"));
+				vf.getPer().cambiarBotonIncognito(false);
+			}
+
+			vf.getPer().limpiarLabels();
+
+			if (usuarioActual instanceof Hombre) {
+				vf.getPer().mostrarTextosHombre(prop.getProperty("ventana.perfil.nombreUsuario"),
+						prop.getProperty("ventana.perfil.alias"), prop.getProperty("ventana.perfil.edad"),
+						prop.getProperty("ventana.perfil.fechaNacimiento"), prop.getProperty("ventana.perfil.estatura"),
+						prop.getProperty("ventana.perfil.correo"), prop.getProperty("ventana.perfil.ingresoProm"),
+						prop.getProperty("ventana.perfil.estadoDivorcio"),
+						prop.getProperty("ventana.perfil.edadMinima"), prop.getProperty("ventana.perfil.edadMaxima"),
+						prop.getProperty("ventana.perfil.estaturaIdeal"),
+						prop.getProperty("ventana.perfil.likesRecibidos"));
+				vf.getPer().mostrarPerfilHombre(usuarioActual.getNombre(), usuarioActual.getAlias(),
+						usuarioActual.getEdad() + "", usuarioActual.getFechaNacimiento(),
+						usuarioActual.getEstatura() + "", usuarioActual.getCorreo(),
+						String.format(Locale.US, "%.2f%n",
+								convertirUSDAmoneda(((Hombre) usuarioActual).getIngresoProm())),
+						((Hombre) usuarioActual).isEstadoDivorcio() + "", usuarioActual.getEdadMinima() + "",
+						usuarioActual.getEdadMaxima() + "", usuarioActual.getEstaturaIdeal() + "",
+						usuarioActual.getLikesRecibidos() + "", usuarioActual.getImagen());
+			} else {
+				vf.getPer().mostrarTextosMujer(prop.getProperty("ventana.perfil.nombreUsuario"),
+						prop.getProperty("ventana.perfil.alias"), prop.getProperty("ventana.perfil.edad"),
+						prop.getProperty("ventana.perfil.fechaNacimiento"), prop.getProperty("ventana.perfil.estatura"),
+						prop.getProperty("ventana.perfil.correo"), prop.getProperty("ventana.perfil.estadoCivil"),
+						prop.getProperty("ventana.perfil.ingresoProm"), prop.getProperty("ventana.perfil.edadMinima"),
+						prop.getProperty("ventana.perfil.edadMaxima"), prop.getProperty("ventana.perfil.estaturaIdeal"),
+						prop.getProperty("ventana.perfil.likesRecibidos"));
+				vf.getPer().mostrarPerfilMujer(usuarioActual.getNombre(), usuarioActual.getAlias(),
+						usuarioActual.getEdad() + "", usuarioActual.getFechaNacimiento(),
+						usuarioActual.getEstatura() + "", usuarioActual.getCorreo(),
+						((Mujer) usuarioActual).isDivorciada() + "",
+						String.format(Locale.US, "%.2f%n",
+								convertirUSDAmoneda(((Mujer) usuarioActual).getIngresosIdeal())),
+						usuarioActual.getEdadMinima() + "", usuarioActual.getEdadMaxima() + "",
+						usuarioActual.getEstaturaIdeal() + "", usuarioActual.getLikesRecibidos() + "",
+						usuarioActual.getImagen());
+			}
+
+			break;
+		case "BotonVolverPerfil":
+			vf.mostrarPanel("aplicacion");
 			break;
 		default:
 			break;
 		}
 
+	}
+
+	private float convertirMonedaAUSD(float cantidad) {
+		switch (prop.getProperty("idioma")) {
+		case "Español":
+			return cantidad * 0.00026f;
+		case "Português":
+			return cantidad * 0.19f;
+		case "Русский":
+			return cantidad * 0.012f;
+		case "中国人":
+			return cantidad * 0.14f;
+		case "עברית":
+			return cantidad * 0.31f;
+		}
+		return cantidad;
+	}
+
+	private float convertirUSDAmoneda(float cantidad) {
+		switch (prop.getProperty("idioma")) {
+		case "Español":
+			return cantidad / 0.00026f;
+		case "Português":
+			return cantidad / 0.19f;
+		case "Русский":
+			return cantidad / 0.012f;
+		case "中国人":
+			return cantidad / 0.14f;
+		case "עברית":
+			return cantidad / 0.31f;
+		}
+		return cantidad;
 	}
 
 	private void registrarUsuario() {
@@ -343,8 +483,8 @@ public class Controlador implements ActionListener {
 			float ingresoProm = 0.0f;
 
 			try {
-				ingresoProm = Float.parseFloat(vf.getReg().getCampoIngresoProm().getText());
-				LanzadorExcepciones.verificarRangoNumero(ingresoProm, 0f, 100000000f);
+				ingresoProm = convertirMonedaAUSD(Float.parseFloat(vf.getReg().getCampoIngresoProm().getText()));
+				LanzadorExcepciones.verificarRangoNumero(ingresoProm, 244.85f, 1000000f);
 			} catch (NumberFormatException e) {
 				vf.getVentanaPrincipal().mostrarError(
 						prop.getProperty("error.formatoNumero") + prop.getProperty("ventana.registro.ingresoProm"));
@@ -366,6 +506,7 @@ public class Controlador implements ActionListener {
 					.crear(new HombreDTO(nombre, alias, edad, fechaNacimiento, estatura, correo, imagenIcon,
 							disponibilidad, contrasena, codigo, 0, 0, 0.0f, ingresoProm, false, 0, false,
 							new ArrayList<String>(), false))) {
+				mf.actualizarPersonas();
 				vf.mostrarPanel("inicioSesion");
 				vf.getVentanaPrincipal().mostrarMensaje(prop.getProperty("mensaje.registroExitoso"));
 			} else {
@@ -374,12 +515,16 @@ public class Controlador implements ActionListener {
 
 		} catch (CampoVacioException e) {
 			vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.campoVacio") + e.getMessage());
+			return;
 		} catch (NumberFormatException e) {
 			vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.formatoNumero"));
+			return;
 		} catch (CaracteresEspecialesException e) {
 			vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.caracteresEspeciales") + e.getMessage());
+			return;
 		} catch (FormatoCorreoException e) {
 			vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.formatoCorreo"));
+			return;
 		} catch (FormatoFechaException e) {
 			/////////////////////////////////////////////
 			switch (e.getMessage()) {
@@ -394,6 +539,7 @@ public class Controlador implements ActionListener {
 				break;
 			}
 			/////////////////////////////////////////////
+			return;
 		} catch (EspaciosExcesivosException e) {
 			switch (e.getMessage().split("_")[1]) {
 			case "Inicio-Fin":
@@ -406,16 +552,22 @@ public class Controlador implements ActionListener {
 						.mostrarError(prop.getProperty("error.espaciosExcesivos") + e.getMessage().split("_")[0]);
 				break;
 			}
+			return;
 		} catch (ContieneEspaciosException e) {
 			vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.contieneEspacios") + " " + e.getMessage());
+			return;
 		} catch (CampoCortoException e) {
 			vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.campoCorto") + e.getMessage());
+			return;
 		} catch (CampoLargoException e) {
 			vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.campoLargo") + e.getMessage());
+			return;
 		} catch (ImagenException e) {
 			vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.rutaImagen"));
+			return;
 		} catch (Exception e) {
 			vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.registrarUsuario") + e.getMessage());
+			return;
 		}
 
 	}
@@ -538,6 +690,7 @@ public class Controlador implements ActionListener {
 					.crear(new MujerDTO(nombre, alias, edad, fechaNacimiento, estatura, correo, imagenIcon,
 							disponibilidad, contrasena, codigo, 0, 0, 0.0f, divorciada, 0, 0, false,
 							new ArrayList<String>(), false))) {
+				mf.actualizarPersonas();
 				vf.mostrarPanel("inicioSesion");
 				vf.getVentanaPrincipal().mostrarMensaje(prop.getProperty("mensaje.registroExitoso"));
 			} else {
@@ -546,12 +699,16 @@ public class Controlador implements ActionListener {
 
 		} catch (CampoVacioException e) {
 			vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.campoVacio") + e.getMessage());
+			return;
 		} catch (NumberFormatException e) {
 			vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.formatoNumero"));
+			return;
 		} catch (CaracteresEspecialesException e) {
 			vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.caracteresEspeciales") + e.getMessage());
+			return;
 		} catch (FormatoCorreoException e) {
 			vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.formatoCorreo"));
+			return;
 		} catch (FormatoFechaException e) {
 			/////////////////////////////////////////////
 			switch (e.getMessage()) {
@@ -566,6 +723,7 @@ public class Controlador implements ActionListener {
 				break;
 			}
 			/////////////////////////////////////////////
+			return;
 		} catch (EspaciosExcesivosException e) {
 			switch (e.getMessage().split("_")[1]) {
 			case "Inicio-Fin":
@@ -578,16 +736,22 @@ public class Controlador implements ActionListener {
 						.mostrarError(prop.getProperty("error.espaciosExcesivos") + e.getMessage().split("_")[0]);
 				break;
 			}
+			return;
 		} catch (ContieneEspaciosException e) {
 			vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.contieneEspacios") + " " + e.getMessage());
+			return;
 		} catch (CampoCortoException e) {
 			vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.campoCorto") + e.getMessage());
+			return;
 		} catch (CampoLargoException e) {
 			vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.campoLargo") + e.getMessage());
+			return;
 		} catch (ImagenException e) {
 			vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.rutaImagen"));
+			return;
 		} catch (Exception e) {
 			vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.registrarUsuario") + e.getMessage());
+			return;
 		}
 
 	}
@@ -756,7 +920,7 @@ public class Controlador implements ActionListener {
 		}
 
 		try {
-			ingresoIdeal = Float.parseFloat(vf.getSg().getCampoIngresoIdeal().getText());
+			ingresoIdeal = convertirMonedaAUSD(Float.parseFloat(vf.getSg().getCampoIngresoIdeal().getText()));
 			LanzadorExcepciones.verificarRangoNumero(ingresoIdeal, 0f, 100000000f);
 
 		} catch (NumberFormatException e) {
@@ -766,10 +930,10 @@ public class Controlador implements ActionListener {
 		} catch (RangoNumeroException e) {
 			switch (e.getMessage()) {
 			case "min":
-				vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.ingreso.min"));
+				vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.ingresoProm.min"));
 				return false;
 			case "max":
-				vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.ingreso.max"));
+				vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.ingresoProm.max"));
 				return false;
 			}
 		}
@@ -799,6 +963,60 @@ public class Controlador implements ActionListener {
 			vf.getSg().mostrarCamposMujer(prop.getProperty("ventana.seleccionGustos.ingresoIdeal"));
 			vf.mostrarPanel("seleccionGustos");
 		}
+	}
+
+	private void agregarUsuariosVentanaAplicacion() {
+		ArrayList<Persona> usuarios = mf.getPersonas();
+		usuarios.removeIf(p -> p.getAlias().equals(usuarioActual.getAlias()));
+		usuarios.removeIf(p -> p.getEstatura() > usuarioActual.getEstaturaIdeal() + 15
+				|| p.getEstatura() < usuarioActual.getEstaturaIdeal() - 15);
+		usuarios.removeIf(
+				p -> p.getEdad() > usuarioActual.getEdadMaxima() || p.getEdad() < usuarioActual.getEdadMinima());
+		usuarios.removeIf(p -> p instanceof Hombre && usuarioActual instanceof Hombre);
+		usuarios.removeIf(p -> p instanceof Mujer && usuarioActual instanceof Mujer);
+		usuarios.removeIf(p -> !p.isDisponibilidad());
+		usuarios.removeIf(p -> p.isIncognito());
+
+		Iterator<Persona> iterator = usuarios.iterator();
+		while (iterator.hasNext()) {
+			Persona p = iterator.next();
+			if (p instanceof Hombre) {
+				if (((Hombre) p).getIngresoProm() < ((Mujer) usuarioActual).getIngresosIdeal()) {
+					iterator.remove();
+				}
+			}
+			if (p instanceof Mujer) {
+				if (((Mujer) p).isDivorciada() && !((Hombre) usuarioActual).isEstadoDivorcio()) {
+					iterator.remove();
+				}
+				if (!((Mujer) p).isDivorciada() && ((Hombre) usuarioActual).isEstadoDivorcio()) {
+					iterator.remove();
+				}
+			}
+		}
+
+		for (Persona p : usuarios) {
+			if (usuarioActual instanceof Hombre) {
+				if (usuarioActual.getLikesDados().contains(p.getAlias())) {
+					vf.getApp().agregarUsuario(p.getAlias(), p.getImagen(), p.getEdad(), p.getEstatura(),
+							p.getLikesRecibidos(), true, this);
+				} else {
+					vf.getApp().agregarUsuario(p.getAlias(), p.getImagen(), p.getEdad(), p.getEstatura(),
+							p.getLikesRecibidos(), false, this);
+				}
+			} else {
+				if (usuarioActual.getLikesDados().contains(p.getAlias())) {
+					vf.getApp().agregarUsuario(p.getAlias(), p.getImagen(), p.getEdad(), p.getEstatura(),
+							p.getLikesRecibidos(), true, this,
+							String.format(Locale.US, "%.2f%n", convertirUSDAmoneda(((Hombre) p).getIngresoProm())));
+				} else {
+					vf.getApp().agregarUsuario(p.getAlias(), p.getImagen(), p.getEdad(), p.getEstatura(),
+							p.getLikesRecibidos(), false, this,
+							String.format(Locale.US, "%.2f%n", convertirUSDAmoneda(((Hombre) p).getIngresoProm())));
+				}
+			}
+		}
+
 	}
 
 	private void enviarCodigoVerificacion(String correo, int codigo) {
@@ -863,5 +1081,6 @@ public class Controlador implements ActionListener {
 				prop.getProperty("ventana.seleccionGustos.noDivorciada"),
 				prop.getProperty("ventana.seleccionGustos.botonConfirmar"),
 				prop.getProperty("ventana.seleccionGustos.edad"));
+		vf.getPer().mostrarTextos(prop.getProperty("ventana.perfil.botonCambiarModo"));
 	}
 }
