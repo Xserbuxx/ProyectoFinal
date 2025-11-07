@@ -47,9 +47,9 @@ public class Idioma extends JPanel {
 		this.add(panelContenido);
 
 		Color colorTinder = new Color(255, 51, 102);
-		textoEncabezado = new JLabel("¿Estás preparado para encontrar tu match perfecto?",JLabel.CENTER);
+		textoEncabezado = new JLabel("¿Estás preparado para encontrar tu match perfecto?", JLabel.CENTER);
 		textoEncabezado.setFont(new Font("Sans Serif", Font.BOLD, 30));
-		textoEncabezado.setForeground(Color.WHITE); 
+		textoEncabezado.setForeground(Color.WHITE);
 		textoEncabezado.setBounds(100, 40, 1080, 50);
 		panelContenido.add(textoEncabezado);
 
@@ -67,7 +67,6 @@ public class Idioma extends JPanel {
 		selecIdioma.setForeground(Color.WHITE);
 		panelRecuadro.add(selecIdioma);
 
-
 		JPanel panelComboDecorado = new JPanel();
 		panelComboDecorado.setLayout(null);
 		panelComboDecorado.setBounds(40, 70, 400, 50);
@@ -82,6 +81,9 @@ public class Idioma extends JPanel {
 		panelComboDecorado.add(iconoMundo);
 
 		String[] idiomas = { "Español", "Português", "Русский", "中文", "עברית" };
+		String[] rutasBanderas = { "Resources/bandera_es.png", "Resources/bandera_pt.png", "Resources/bandera_ru.png",
+				"Resources/bandera_cn.png", "Resources/bandera_il.png" };
+
 		comboBox = new JComboBox<>(idiomas);
 		comboBox.setBounds(10, 5, 340, 40);
 		comboBox.setFont(new Font("Sans", Font.PLAIN, 20));
@@ -89,6 +91,32 @@ public class Idioma extends JPanel {
 		comboBox.setForeground(Color.WHITE);
 		comboBox.setFocusable(false);
 		comboBox.setBorder(null);
+
+		comboBox.setRenderer(new javax.swing.ListCellRenderer<String>() {
+			private JLabel label = new JLabel();
+
+			@Override
+			public java.awt.Component getListCellRendererComponent(javax.swing.JList<? extends String> list,
+					String value, int index, boolean isSelected, boolean cellHasFocus) {
+
+				// Índice del idioma
+				int i = java.util.Arrays.asList(idiomas).indexOf(value);
+
+				// Cargar bandera correspondiente
+				ImageIcon icon = new ImageIcon(rutasBanderas[i]);
+				Image img = icon.getImage().getScaledInstance(20, 20, Image.SCALE_SMOOTH);
+				label.setIcon(new ImageIcon(img));
+
+				// Texto del idioma
+				label.setText("  " + value);
+				label.setFont(new Font("Sans", Font.PLAIN, 18));
+				label.setOpaque(true);
+				label.setForeground(Color.WHITE);
+				label.setBackground(isSelected ? new Color(255, 51, 102) : new Color(59, 59, 59));
+				repaint();
+				return label;
+			}
+		});
 		panelComboDecorado.add(comboBox);
 
 		confirmar = new JButton("Confirmar");
