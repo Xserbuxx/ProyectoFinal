@@ -13,81 +13,92 @@ import javax.swing.JPanel;
 public class Idioma extends JPanel {
 
 	private JComboBox<String> comboBox;
-    private JButton confirmar;
-    private JPanel panelEncabezado;
-    private JLabel imagenLogo;
-    private JLabel textoEncabezado;
-    private JPanel panelContenido; 
+	private JButton confirmar;
+	private JPanel panelEncabezado;
+	private JLabel imagenLogo;
+	private JLabel textoEncabezado;
+	private JPanel panelContenido;
 
-    public Idioma() {
-        this.setLayout(null);
-        this.setBounds(0, 0, 1280, 720);
+	public Idioma() {
+		this.setLayout(null);
+		this.setBounds(0, 0, 1280, 720);
 
-        panelEncabezado = new JPanel();
-        panelEncabezado.setLayout(null);
-        panelEncabezado.setBounds(0, 0, 1280, 200);
+		panelEncabezado = new JPanel();
+		panelEncabezado.setLayout(null);
+		panelEncabezado.setBounds(0, 0, 1280, 100);
 
-    
-        ImageIcon headerIcon = new ImageIcon("Resources/fondoEncabezado.png");
-        Image headerImg = headerIcon.getImage().getScaledInstance(1280, 200, Image.SCALE_SMOOTH);
-        JLabel headerBg = new JLabel(new ImageIcon(headerImg));
-        headerBg.setLayout(null);
-        headerBg.setBounds(0, 0, 1280, 200);
-      
+		ImageIcon headerIcon = new ImageIcon("Resources/fondoEncabezado.png");
+		Image headerImg = headerIcon.getImage().getScaledInstance(1280, 100, Image.SCALE_SMOOTH);
+		JLabel headerBg = new JLabel(new ImageIcon(headerImg));
+		headerBg.setLayout(null);
+		headerBg.setBounds(0, 0, 1280, 100);
 
-        imagenLogo = new JLabel(new ImageIcon("Resources/logo.png"));
-        imagenLogo.setBounds(0, 5, 250, 80);
-        headerBg.add(imagenLogo);
+		imagenLogo = new JLabel(new ImageIcon("Resources/logo.png"));
+		imagenLogo.setBounds(0, 5, 250, 80);
+		headerBg.add(imagenLogo);
 
-        textoEncabezado = new JLabel("Experimenta el amor con una persona especial");
-        textoEncabezado.setFont(new Font("Sans Serif", Font.BOLD, 28));
-        textoEncabezado.setForeground(Color.BLACK);
-        textoEncabezado.setBounds(370, 100, 800, 40);
-        headerBg.add(textoEncabezado);
+		panelEncabezado.add(headerBg);
+		this.add(panelEncabezado);
 
-        panelEncabezado.add(headerBg);
-        this.add(panelEncabezado);
+		panelContenido = new JPanel();
+		panelContenido.setLayout(null);
+		panelContenido.setBounds(0, 100, 1280, 620);
+		panelContenido.setBackground(new Color(59, 59, 59));
+		this.add(panelContenido);
 
-        panelContenido = new JPanel();
-        panelContenido.setLayout(null);
-        panelContenido.setBounds(0, 200, 1280, 520);
+		Color colorTinder = new Color(255, 51, 102);
+		textoEncabezado = new JLabel("¿Estás preparado para encontrar tu match perfecto?",JLabel.CENTER);
+		textoEncabezado.setFont(new Font("Sans Serif", Font.BOLD, 30));
+		textoEncabezado.setForeground(Color.WHITE); 
+		textoEncabezado.setBounds(100, 40, 1080, 50);
+		panelContenido.add(textoEncabezado);
 
-        ImageIcon contenidoIcon = new ImageIcon("Resources/fondoContenido.png"); // tu imagen
-        Image contenidoImg = contenidoIcon.getImage().getScaledInstance(1280, 520, Image.SCALE_SMOOTH);
-        JLabel contenidoBg = new JLabel(new ImageIcon(contenidoImg));
-        contenidoBg.setLayout(null);
-        contenidoBg.setBounds(0, 0, 1280, 520);
-        panelContenido.add(contenidoBg);
-        this.add(panelContenido);
-        
-        JLabel selecIdioma = new JLabel("Seleccione el idioma");
-        selecIdioma.setBounds(500, 40, 400, 50);
-        selecIdioma.setFont(new Font("Arial", Font.BOLD, 26));
-        selecIdioma.setForeground(Color.BLACK);
-        contenidoBg.add(selecIdioma);
-        
-        
+		JPanel panelRecuadro = new JPanel();
 
-        String[] idiomas = { "Español","English", "Português", "Русский", "中文", "עברית" };
-        comboBox = new JComboBox<>(idiomas);
-        comboBox.setBounds(450, 120, 400, 50);
-        comboBox.setFont(new Font("Sans", Font.PLAIN, 20));
-        contenidoBg.add(comboBox);
+		panelRecuadro.setLayout(null);
+		panelRecuadro.setBounds(400, 160, 480, 260);
+		panelRecuadro.setBackground(new Color(255, 255, 255, 20));
+		panelRecuadro.setBorder(javax.swing.BorderFactory.createLineBorder(Color.LIGHT_GRAY, 1, true));
+		panelContenido.add(panelRecuadro);
 
-        Color colorTinder = new Color(255, 51, 102); 
+		JLabel selecIdioma = new JLabel("Seleccione  idioma", JLabel.CENTER);
+		selecIdioma.setBounds(0, 10, 480, 40);
+		selecIdioma.setFont(new Font("Arial", Font.BOLD, 26));
+		selecIdioma.setForeground(Color.WHITE);
+		panelRecuadro.add(selecIdioma);
 
-        confirmar = new JButton("Confirmar");
-        confirmar.setBounds(500, 200, 300, 50);
-        confirmar.setFont(new Font("Arial", Font.BOLD, 22));
-        confirmar.setBackground(colorTinder); 
-        confirmar.setForeground(Color.WHITE);
-        confirmar.setFocusPainted(false);
-        contenidoBg.add(confirmar);
 
-      
-        comboBox.setBackground(Color.WHITE);
-        comboBox.setForeground(Color.BLACK);
-       
+		JPanel panelComboDecorado = new JPanel();
+		panelComboDecorado.setLayout(null);
+		panelComboDecorado.setBounds(40, 70, 400, 50);
+		panelComboDecorado.setBackground(new Color(59, 59, 59));
+		panelComboDecorado.setBorder(javax.swing.BorderFactory.createLineBorder(colorTinder, 2, true));
+		panelRecuadro.add(panelComboDecorado);
+
+		JLabel iconoMundo = new JLabel("🌐");
+		iconoMundo.setBounds(355, 5, 40, 40);
+		iconoMundo.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 25));
+		iconoMundo.setForeground(Color.WHITE);
+		panelComboDecorado.add(iconoMundo);
+
+		String[] idiomas = { "Español", "Português", "Русский", "中文", "עברית" };
+		comboBox = new JComboBox<>(idiomas);
+		comboBox.setBounds(10, 5, 340, 40);
+		comboBox.setFont(new Font("Sans", Font.PLAIN, 20));
+		comboBox.setBackground(new Color(59, 59, 59));
+		comboBox.setForeground(Color.WHITE);
+		comboBox.setFocusable(false);
+		comboBox.setBorder(null);
+		panelComboDecorado.add(comboBox);
+
+		confirmar = new JButton("Confirmar");
+		confirmar.setBounds(90, 150, 300, 50);
+		confirmar.setFont(new Font("Arial", Font.BOLD, 22));
+		confirmar.setBackground(colorTinder);
+		confirmar.setForeground(Color.WHITE);
+		confirmar.setFocusPainted(false);
+		panelRecuadro.add(confirmar);
+
 	}
 
 	public JButton getConfirmar() {
