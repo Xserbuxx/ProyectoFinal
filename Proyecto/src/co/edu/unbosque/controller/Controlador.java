@@ -109,6 +109,10 @@ public class Controlador implements ActionListener {
 		vf.getAdmin().getBotonTop().setActionCommand("BotonTopUsuarios");
 		vf.getAdmin().getBotonPDF().addActionListener(this);
 		vf.getAdmin().getBotonPDF().setActionCommand("BotonGenerarPDF");
+		vf.getPer().getCambiarModo().addActionListener(this);
+		vf.getPer().getCambiarModo().setActionCommand("BotonCambiarModo");
+		vf.getAdmin().getCambiarModo().addActionListener(this);
+		vf.getAdmin().getCambiarModo().setActionCommand("BotonCambiarModo");
 	}
 
 	@Override
@@ -1781,6 +1785,6 @@ public class Controlador implements ActionListener {
 				prop.getProperty("ventana.admin.criterio"), prop.getProperty("ventana.admin.labelTop"),
 				prop.getProperty("ventana.admin.pdf"), prop.getProperty("ventana.admin.porEdad"),
 				prop.getProperty("ventana.admin.porLikes"), prop.getProperty("ventana.admin.porIngreso"),
-				prop.getProperty("ventana.admin.porEstatura"));
+				prop.getProperty("ventana.admin.porEstatura"),prop.getProperty("ventana.perfil.botonCambiarModo"));
 	}
 }

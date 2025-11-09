@@ -40,6 +40,7 @@ public class Administrador extends JPanel {
 	private JRadioButton botonIngresosPDF;
 	private JRadioButton botonEstaturaPDF;
 	private ButtonGroup grupoPDF;
+	private JButton cambiarModo;
 
 	public Administrador() {
 		this.setLayout(null);
@@ -130,7 +131,15 @@ public class Administrador extends JPanel {
 		grupoPDF.add(botonLikesPDF);
 		grupoPDF.add(botonIngresosPDF);
 		grupoPDF.add(botonEstaturaPDF);
-
+		
+		cambiarModo = new JButton();
+		cambiarModo.setBounds(330, 10, 200, 50);
+		cambiarModo.setBackground(Color.blue);
+		cambiarModo.setBorderPainted(false);
+		cambiarModo.setFocusPainted(false);
+		cambiarModo.setFocusable(false);
+		
+		this.add(cambiarModo);
 		this.add(botonEdadPDF);
 		this.add(botonLikesPDF);
 		this.add(botonIngresosPDF);
@@ -153,7 +162,7 @@ public class Administrador extends JPanel {
 			String labelBotonPorEdad, String labelBotonNombre, String labelBotonAlias, String labelBotonLikes,
 			String labelBotonTopLikes, String labelBotonTopIngresos, String labelBotonTop, String labelOrdenarPor,
 			String labelCriterio, String labelTop, String labelPDF, String labelBotonEdadPDF, String labelBotonLikesPDF,
-			String labelBotonIngresosPDF, String labelBotonEstaturaPDF) {
+			String labelBotonIngresosPDF, String labelBotonEstaturaPDF, String labelCambiarModo) {
 		botonOrdenar.setText(labelBotonOrdenar);
 		botonTop.setText(labelBotonTop);
 		botonAscendente.setText(labelBotonAscendente);
@@ -172,6 +181,7 @@ public class Administrador extends JPanel {
 		botonLikesPDF.setText(labelBotonLikesPDF);
 		botonIngresosPDF.setText(labelBotonIngresosPDF);
 		botonEstaturaPDF.setText(labelBotonEstaturaPDF);
+		cambiarModo.setText(labelCambiarModo);
 	}
 
 	public void crearLabel(String texto, Color colorFondo, int x, int y, int ancho, int alto, int tamanoLetra) {
@@ -414,4 +424,13 @@ public class Administrador extends JPanel {
 	public void setBotonEdadPDF(JRadioButton botonEdadPDF) {
 		this.botonEdadPDF = botonEdadPDF;
 	}
+
+	public JButton getCambiarModo() {
+		return cambiarModo;
+	}
+
+	public void setCambiarModo(JButton cambiarModo) {
+		this.cambiarModo = cambiarModo;
+	}
+	
 }
