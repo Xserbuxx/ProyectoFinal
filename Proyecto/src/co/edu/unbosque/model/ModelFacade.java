@@ -20,10 +20,21 @@ public class ModelFacade {
 	
 	public void actualizarPersonas() {
 		personas.clear();
-		hombreDAO.getHombres().forEach(h -> personas.add(h));
-		mujerDAO.getMujeres().forEach(m -> personas.add(m));
+		personas = new ArrayList<>();
+		personas.addAll(hombreDAO.getHombres());
+		personas.addAll(mujerDAO.getMujeres());
 		hombreDAO.escribirArchivoSerializado();
 		mujerDAO.escribirArchivoSerializado();
+	}
+	
+	public void eliminarPersona(Persona p) {
+		if (p instanceof Hombre) {
+			hombreDAO.borrar((Hombre) p);
+			personas.remove(p);
+		} else if (p instanceof Mujer) {
+			mujerDAO.borrar((Mujer) p);
+			personas.remove(p);
+		}
 	}
 
 	public HombreDAO getHombreDAO() {

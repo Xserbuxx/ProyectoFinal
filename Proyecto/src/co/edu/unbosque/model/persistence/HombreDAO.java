@@ -36,6 +36,11 @@ public class HombreDAO implements DAO<HombreDTO, Hombre> {
 			return false;
 		}
 	}
+	
+	public void borrar(Hombre datoAEliminar) {
+		hombres.remove(datoAEliminar);
+		escribirArchivoSerializado();
+	}
 
 	@Override
 	public boolean actualizar(HombreDTO datoAnterior, HombreDTO nuevoDato) {

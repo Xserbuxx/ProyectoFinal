@@ -54,6 +54,12 @@ public class Aplicacion extends JPanel {
 			ActionListener listener, String ingresoProm) {
 		panelUsuarios.add(new PanelUsuario(alias, imagen, edad, estatura, likes, like, listener, ingresoProm));
 	}
+	
+	public void limpiarUsuarios() {
+		panelUsuarios.removeAll();
+		panelUsuarios.revalidate();
+		panelUsuarios.repaint();
+	}
 
 	public JScrollPane getScrollPanel() {
 		return scrollPanel;

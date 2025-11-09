@@ -1,6 +1,7 @@
 package co.edu.unbosque.view;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Font;
 import java.awt.Image;
 
@@ -8,7 +9,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
+import javax.swing.ListCellRenderer;
 
 public class Idioma extends JPanel {
 
@@ -80,7 +83,7 @@ public class Idioma extends JPanel {
 		iconoMundo.setForeground(Color.WHITE);
 		panelComboDecorado.add(iconoMundo);
 
-		String[] idiomas = { "Español", "Português", "Русский", "中文", "עברית" };
+		String[] idiomas = { "Español", "English","Português", "Русский", "中文", "עברית" };
 		String[] rutasBanderas = { "Resources/bandera_es.png", "Resources/bandera_pt.png", "Resources/bandera_ru.png",
 				"Resources/bandera_cn.png", "Resources/bandera_il.png" };
 
@@ -92,11 +95,11 @@ public class Idioma extends JPanel {
 		comboBox.setFocusable(false);
 		comboBox.setBorder(null);
 
-		comboBox.setRenderer(new javax.swing.ListCellRenderer<String>() {
+		comboBox.setRenderer(new ListCellRenderer<String>() {
 			private JLabel label = new JLabel();
 
 			@Override
-			public java.awt.Component getListCellRendererComponent(javax.swing.JList<? extends String> list,
+			public Component getListCellRendererComponent(JList<? extends String> list,
 					String value, int index, boolean isSelected, boolean cellHasFocus) {
 
 				// Índice del idioma

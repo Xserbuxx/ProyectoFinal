@@ -108,7 +108,7 @@ public class Registro extends JPanel {
 
 	        scroll = new JScrollPane(izquierda, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 	                JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-	        scroll.setBounds(0, 0, 1280, 720);
+	        scroll.setBounds(0, 0, 1240, 700);
 	        scroll.getVerticalScrollBar().setBackground(new Color(36, 41, 46));
 	        scroll.setBorder(null);
 

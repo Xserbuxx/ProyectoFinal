@@ -17,6 +17,9 @@ public class ViewFacade {
 	private SeleccionGustos sg;
 	private Aplicacion app;
 	private Perfil per;
+	private Administrador admin;
+	private InfoUsuario infoUsuario;
+	private ConfirmarBaja confirmarBaja;
 	
 	public ViewFacade() {
 		ventanaPrincipal = new VentanaPrincipal();
@@ -32,6 +35,9 @@ public class ViewFacade {
 		sg = new SeleccionGustos();
 		app = new Aplicacion();
 		per = new Perfil();
+		admin = new Administrador();
+		infoUsuario = new InfoUsuario();
+		confirmarBaja = new ConfirmarBaja();
 		
 		paneles.add(idm, "idioma");
 		paneles.add(is, "inicioSesion");
@@ -40,6 +46,8 @@ public class ViewFacade {
 		paneles.add(sg, "seleccionGustos");
 		paneles.add(app, "aplicacion");
 		paneles.add(per, "perfil");
+		paneles.add(admin, "administrador");
+		paneles.add(infoUsuario, "infoUsuario");
 		
 		ventanaPrincipal.add(paneles);
 	}
@@ -126,6 +134,30 @@ public class ViewFacade {
 
 	public void setPer(Perfil per) {
 		this.per = per;
+	}
+
+	public Administrador getAdmin() {
+		return admin;
+	}
+
+	public void setAdmin(Administrador admin) {
+		this.admin = admin;
+	}
+
+	public InfoUsuario getInfoUsuario() {
+		return infoUsuario;
+	}
+
+	public void setInfoUsuario(InfoUsuario infoUsuario) {
+		this.infoUsuario = infoUsuario;
+	}
+
+	public ConfirmarBaja getConfirmarBaja() {
+		return confirmarBaja;
+	}
+
+	public void setConfirmarBaja(ConfirmarBaja confirmarBaja) {
+		this.confirmarBaja = confirmarBaja;
 	}	
 	
 }

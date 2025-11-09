@@ -7,8 +7,8 @@ import co.edu.unbosque.model.MujerDTO;
 
 public class MujerDAO implements DAO<MujerDTO, Mujer> {
 
-	private String SERIAL_FILE_NAME = "Mujeres.bin";
-	private ArrayList<Mujer> Mujeres;
+	private String SERIAL_FILE_NAME = "mujeres.bin";
+	private ArrayList<Mujer> mujeres;
 
 	public MujerDAO() {
 		cargarArchivoSerializado();
@@ -17,7 +17,7 @@ public class MujerDAO implements DAO<MujerDTO, Mujer> {
 	@Override
 	public boolean crear(MujerDTO nuevoDato) {
 		if (encontrar(DataMapper.MujerDTOAMujer(nuevoDato)) == null) {
-			Mujeres.add(DataMapper.MujerDTOAMujer(nuevoDato));
+			mujeres.add(DataMapper.MujerDTOAMujer(nuevoDato));
 			escribirArchivoSerializado();
 			return true;
 		} else {
@@ -29,19 +29,24 @@ public class MujerDAO implements DAO<MujerDTO, Mujer> {
 	@Override
 	public boolean borrar(MujerDTO datoAEliminar) {
 		if (encontrar(DataMapper.MujerDTOAMujer(datoAEliminar)) != null) {
-			Mujeres.remove(DataMapper.MujerDTOAMujer(datoAEliminar));
+			mujeres.remove(DataMapper.MujerDTOAMujer(datoAEliminar));
 			escribirArchivoSerializado();
 			return true;
 		} else {
 			return false;
 		}
 	}
+	
+	public void borrar(Mujer datoAEliminar) {
+		mujeres.remove(datoAEliminar);
+		escribirArchivoSerializado();
+	}
 
 	@Override
 	public boolean actualizar(MujerDTO datoAnterior, MujerDTO nuevoDato) {
 		if (encontrar(DataMapper.MujerDTOAMujer(nuevoDato)) != null) {
-			Mujeres.remove(DataMapper.MujerDTOAMujer(nuevoDato));
-			Mujeres.add(DataMapper.MujerDTOAMujer(nuevoDato));
+			mujeres.remove(DataMapper.MujerDTOAMujer(nuevoDato));
+			mujeres.add(DataMapper.MujerDTOAMujer(nuevoDato));
 			escribirArchivoSerializado();
 			return true;
 		} else {
@@ -51,11 +56,11 @@ public class MujerDAO implements DAO<MujerDTO, Mujer> {
 
 	@Override
 	public Mujer encontrar(Mujer datoAEncontrar) {
-		if (Mujeres.isEmpty()) {
+		if (mujeres.isEmpty()) {
 			return null;
 		}
 		
-		for (Mujer mujer : Mujeres) {
+		for (Mujer mujer : mujeres) {
 			if (mujer.getAlias().equals(datoAEncontrar.getAlias())) {
 				return mujer;
 			} else {
@@ -70,7 +75,7 @@ public class MujerDAO implements DAO<MujerDTO, Mujer> {
 	public String mostrar() {
 		String lista = "";
 
-		for (Mujer m : Mujeres) {
+		for (Mujer m : mujeres) {
 			lista += m.toString() + "\n";
 		}
 
@@ -81,23 +86,23 @@ public class MujerDAO implements DAO<MujerDTO, Mujer> {
 	public void cargarArchivoSerializado() {
 		Object contenido = FileHandler.leerArchivoSerializado(SERIAL_FILE_NAME);
 		if (contenido != null) {
-			Mujeres = (ArrayList<Mujer>) contenido;
+			mujeres = (ArrayList<Mujer>) contenido;
 		} else {
-			Mujeres = new ArrayList<>();
+			mujeres = new ArrayList<>();
 		}
 	}
 
 	@Override
 	public void escribirArchivoSerializado() {
-		FileHandler.escribirArchivoSerializado(SERIAL_FILE_NAME, Mujeres);
+		FileHandler.escribirArchivoSerializado(SERIAL_FILE_NAME, mujeres);
 	}
 
 	public ArrayList<Mujer> getMujeres() {
-		return Mujeres;
+		return mujeres;
 	}
 
 	public void setMujeres(ArrayList<Mujer> mujeres) {
-		Mujeres = mujeres;
+		mujeres = mujeres;
 	}
 
 }
