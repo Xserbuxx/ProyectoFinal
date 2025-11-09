@@ -3,6 +3,9 @@ package co.edu.unbosque.controller;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Locale;
@@ -11,6 +14,23 @@ import java.util.Random;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartUtils;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.category.DefaultCategoryDataset;
+import org.jfree.data.statistics.HistogramDataset;
+
+import com.itextpdf.io.image.ImageDataFactory;
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.Image;
+import com.itextpdf.layout.element.Paragraph;
+import com.itextpdf.layout.element.Table;
+import com.itextpdf.layout.properties.TextAlignment;
+import com.itextpdf.layout.properties.UnitValue;
 
 import co.edu.unbosque.model.Hombre;
 import co.edu.unbosque.model.HombreDTO;
@@ -87,6 +107,8 @@ public class Controlador implements ActionListener {
 		vf.getAdmin().getBotonOrdenar().setActionCommand("BotonOrdenarUsuarios");
 		vf.getAdmin().getBotonTop().addActionListener(this);
 		vf.getAdmin().getBotonTop().setActionCommand("BotonTopUsuarios");
+		vf.getAdmin().getBotonPDF().addActionListener(this);
+		vf.getAdmin().getBotonPDF().setActionCommand("BotonGenerarPDF");
 	}
 
 	@Override
@@ -479,14 +501,15 @@ public class Controlador implements ActionListener {
 				break;
 			}
 
-			mf.ordenarPor(orden, criterio);;
+			mf.ordenarPor(orden, criterio);
+			;
 
 			agregarUsuariosVentanaAdmin();
 			break;
 		case "BotonTopUsuarios":
-			
+
 			int seleccionTop = 0;
-			
+
 			if (vf.getAdmin().getBotonTopLikes().isSelected()) {
 				mf.ordenarPor(2, 3);
 				seleccionTop = 1;
@@ -497,9 +520,54 @@ public class Controlador implements ActionListener {
 				vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.topCriterioNoSeleccionado"));
 				break;
 			}
-			
+
 			agregarTopUsuariosVentanaAdmin(seleccionTop);
-			
+
+			break;
+		case "BotonGenerarPDF":
+
+			if (vf.getAdmin().getBotonLikesPDF().isSelected()) {
+				
+				double[] likes = new double[mf.getPersonas().size()];
+				int idx = 0;
+				for (Persona p : mf.getPersonas()) {
+					likes[idx++] = p.getLikesRecibidos();
+				}
+
+				generarInforme(likes, "informe_likes");
+				
+			} else if (vf.getAdmin().getBotonIngresosPDF().isSelected()) {
+				
+				double[] ingreso = new double[mf.getHombreDAO().getHombres().size()];
+				int idx = 0;
+				for (Persona p : mf.getHombreDAO().getHombres()) {
+					ingreso[idx++] = ((Hombre) p).getIngresoProm();
+				}
+
+				generarInforme(ingreso, "informe_ingresos");
+				
+			} else if (vf.getAdmin().getBotonEstaturaPDF().isSelected()) {
+
+				double[] estatura = new double[mf.getPersonas().size()];
+				int idx = 0;
+				for (Persona p : mf.getPersonas()) {
+					estatura[idx++] = p.getEstatura();
+				}
+
+				generarInforme(estatura, "informe_estatura");
+
+			} else if (vf.getAdmin().getBotonEdadPDF().isSelected()) {
+				double[] edades = new double[mf.getPersonas().size()];
+				int idx = 0;
+				for (Persona p : mf.getPersonas()) {
+					edades[idx++] = p.getEdad();
+				}
+
+				generarInforme(edades, "informe_edades");
+			} else {
+				vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.pdfCriterioNoSeleccionado"));
+			}
+
 			break;
 		default:
 			break;
@@ -1210,17 +1278,17 @@ public class Controlador implements ActionListener {
 			}
 		}
 	}
-	
+
 	private void agregarTopUsuariosVentanaAdmin(int seleccionTop) {
 		if (seleccionTop == 1) {
-			
+
 			vf.getAdmin().limpiarUsuarios();
-			
+
 			ArrayList<Persona> usuarios = mf.getPersonas();
 
 			usuarios.removeIf(p -> p.getAlias().equals("admin"));
-			
-			for (int  i = 0; i<10;i++) {
+
+			for (int i = 0; i < 10; i++) {
 				Persona p = usuarios.get(i);
 				if (p instanceof Hombre) {
 					vf.getAdmin().agregarUsuario(p.getAlias(), p.getImagen(), p.getEdad(), p.getEstatura(), this,
@@ -1230,24 +1298,24 @@ public class Controlador implements ActionListener {
 				}
 			}
 		}
-		
+
 		if (seleccionTop == 2) {
-			
+
 			vf.getAdmin().limpiarUsuarios();
-			
+
 			ArrayList<Persona> usuarios = mf.getPersonas();
 
 			usuarios.removeIf(p -> p.getAlias().equals("admin"));
-			
-			for (int i = 0; i<10;i++) {
-				
+
+			for (int i = 0; i < 10; i++) {
+
 				Persona p = mf.getHombreDAO().getHombres().get(i);
-				
+
 				vf.getAdmin().agregarUsuario(p.getAlias(), p.getImagen(), p.getEdad(), p.getEstatura(), this,
 						String.format(Locale.US, "%.2f%n", convertirUSDAmoneda(((Hombre) p).getIngresoProm())));
-				
+
 			}
-			
+
 		}
 	}
 
@@ -1286,6 +1354,396 @@ public class Controlador implements ActionListener {
 		}
 	}
 
+	private double[] ordenarInsercionAscendente(double[] datos) {
+		if (datos == null || datos.length == 0) {
+			return datos;
+		}
+
+		double[] datosOrdenados = new double[datos.length];
+		for (int i = 0; i < datos.length; i++) {
+			datosOrdenados[i] = datos[i];
+		}
+
+		for (int i = 1; i < datosOrdenados.length; i++) {
+			double actual = datosOrdenados[i];
+			int pos = i - 1;
+
+			while (pos >= 0 && datosOrdenados[pos] > actual) {
+				datosOrdenados[pos + 1] = datosOrdenados[pos];
+				pos--;
+			}
+
+			datosOrdenados[pos + 1] = actual;
+		}
+
+		return datosOrdenados;
+	}
+
+	private int contarOcurrencias(double[] datos, double valor) {
+		if (datos == null || datos.length == 0) {
+			return 0;
+		}
+
+		int contador = 0;
+		for (int i = 0; i < datos.length; i++) {
+			if (datos[i] == valor) {
+				contador++;
+			}
+		}
+
+		return contador;
+	}
+
+	private double calcularMedia(double[] datos) {
+		if (datos == null || datos.length == 0) {
+			return 0;
+		}
+		double suma = 0;
+		for (double dato : datos) {
+			suma += dato;
+		}
+		return suma / datos.length;
+	}
+
+	private double calcularMediana(double[] datos) {
+		if (datos == null || datos.length == 0) {
+			return 0;
+		}
+
+		double[] datosOrdenados = ordenarInsercionAscendente(datos);
+		int n = datosOrdenados.length;
+
+		if (n % 2 != 0) {
+			return datosOrdenados[n / 2];
+		} else {
+			int medio1 = n / 2 - 1;
+			int medio2 = n / 2;
+			return (datosOrdenados[medio1] + datosOrdenados[medio2]) / 2.0;
+		}
+	}
+
+	private double[] calcularModa(double[] datos) {
+		if (datos == null || datos.length == 0) {
+			return new double[] { 0 };
+		}
+
+		double[] valoresUnicos = new double[datos.length];
+		int cantidadUnicos = 0;
+
+		for (int i = 0; i < datos.length; i++) {
+			boolean encontrado = false;
+
+			for (int j = 0; j < cantidadUnicos; j++) {
+				if (valoresUnicos[j] == datos[i]) {
+					encontrado = true;
+					break;
+				}
+			}
+
+			if (!encontrado) {
+				valoresUnicos[cantidadUnicos] = datos[i];
+				cantidadUnicos++;
+			}
+		}
+
+		int[] frecuencias = new int[cantidadUnicos];
+		for (int i = 0; i < cantidadUnicos; i++) {
+			frecuencias[i] = contarOcurrencias(datos, valoresUnicos[i]);
+		}
+
+		int maxFrecuencia = 0;
+		for (int i = 0; i < cantidadUnicos; i++) {
+			if (frecuencias[i] > maxFrecuencia) {
+				maxFrecuencia = frecuencias[i];
+			}
+		}
+
+		if (maxFrecuencia == 1) {
+			return new double[] { 0 };
+		}
+
+		int cantidadModas = 0;
+		for (int i = 0; i < cantidadUnicos; i++) {
+			if (frecuencias[i] == maxFrecuencia) {
+				cantidadModas++;
+			}
+		}
+
+		double[] modas = new double[cantidadModas];
+		int indiceModas = 0;
+		for (int i = 0; i < cantidadUnicos; i++) {
+			if (frecuencias[i] == maxFrecuencia) {
+				modas[indiceModas] = valoresUnicos[i];
+				indiceModas++;
+			}
+		}
+
+		return modas;
+	}
+
+	private double calcularVarianza(double[] datos) {
+		if (datos == null || datos.length == 0) {
+			return 0;
+		}
+
+		double media = calcularMedia(datos);
+		double sumaDiferenciasCuadrado = 0;
+
+		for (double dato : datos) {
+			double diferencia = dato - media;
+			double diferenciaAlCuadrado = diferencia * diferencia;
+			sumaDiferenciasCuadrado += diferenciaAlCuadrado;
+		}
+
+		return sumaDiferenciasCuadrado / datos.length;
+	}
+
+	private double calcularDesviacion(double[] datos) {
+		double varianza = calcularVarianza(datos);
+		return Math.sqrt(varianza);
+	}
+
+	private double calcularMinimo(double[] datos) {
+		if (datos == null || datos.length == 0) {
+			return 0;
+		}
+		double minimo = datos[0];
+		for (double dato : datos) {
+			if (dato < minimo) {
+				minimo = dato;
+			}
+		}
+		return minimo;
+	}
+
+	private double calcularMaximo(double[] datos) {
+		if (datos == null || datos.length == 0) {
+			return 0;
+		}
+		double maximo = datos[0];
+		for (double dato : datos) {
+			if (dato > maximo) {
+				maximo = dato;
+			}
+		}
+		return maximo;
+	}
+
+	private double calcularRango(double[] datos) {
+		return calcularMaximo(datos) - calcularMinimo(datos);
+	}
+
+	private String convertirModasAString(double[] modas) {
+		if (modas == null || modas.length == 0) {
+			return prop.getProperty("generarPDF.sinModa");
+		}
+
+		if (modas.length == 1 && modas[0] == 0) {
+			return prop.getProperty("generarPDF.sinModa");
+		}
+
+		StringBuilder sb = new StringBuilder("[");
+		for (int i = 0; i < modas.length; i++) {
+			sb.append(formatearNumero(modas[i]));
+			if (i < modas.length - 1) {
+				sb.append(", ");
+			}
+		}
+		sb.append("]");
+		return sb.toString();
+	}
+
+	private String formatearNumero(double numero) {
+		return String.format(Locale.US, "%.4f", numero);
+	}
+
+	public void generarInforme(double[] datos, String nombreArchivo) {
+		if (datos == null || datos.length == 0) {
+			vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.generarPdf.faltaDatos"));
+			return;
+		}
+
+		try {
+			File dirGraficos = new File("graficos_temp");
+			if (!dirGraficos.exists()) {
+				dirGraficos.mkdir();
+			}
+
+			File graficoBarras = crearGraficoBarras(datos, "graficos_temp/barras.png");
+			File histograma = crearHistograma(datos, "graficos_temp/histograma.png");
+			File graficoLinea = crearGraficoLinea(datos, "graficos_temp/linea.png");
+
+			String rutaPDF = nombreArchivo + ".pdf";
+			PdfWriter writer = new PdfWriter(rutaPDF);
+			PdfDocument pdf = new PdfDocument(writer);
+			Document document = new Document(pdf);
+
+			Paragraph titulo = new Paragraph(prop.getProperty("generarPDF.titulo")).setFontSize(20)
+					.setTextAlignment(TextAlignment.CENTER);
+			document.add(titulo);
+
+			LocalDateTime ahora = LocalDateTime.now();
+			Paragraph fechaHora = new Paragraph(prop.getProperty("generarPDF.generado") + " "
+					+ ahora.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"))).setFontSize(10)
+					.setTextAlignment(TextAlignment.RIGHT);
+			document.add(fechaHora);
+
+			document.add(new Paragraph("\n"));
+
+			Table tabla = new Table(2);
+			tabla.setWidth(UnitValue.createPercentValue(60));
+
+			// Encabezados
+			tabla.addHeaderCell(prop.getProperty("generarPDF.medida"));
+			tabla.addHeaderCell(prop.getProperty("generarPDF.valor"));
+
+			// Datos
+			tabla.addCell(prop.getProperty("generarPDF.media"));
+			tabla.addCell(formatearNumero(calcularMedia(datos)));
+
+			tabla.addCell(prop.getProperty("generarPDF.mediana"));
+			tabla.addCell(formatearNumero(calcularMediana(datos)));
+
+			tabla.addCell(prop.getProperty("generarPDF.moda"));
+			tabla.addCell(convertirModasAString(calcularModa(datos)));
+
+			tabla.addCell(prop.getProperty("generarPDF.desviacion"));
+			tabla.addCell(formatearNumero(calcularDesviacion(datos)));
+
+			tabla.addCell(prop.getProperty("generarPDF.varianza"));
+			tabla.addCell(formatearNumero(calcularVarianza(datos)));
+
+			tabla.addCell(prop.getProperty("generarPDF.minimo"));
+			tabla.addCell(formatearNumero(calcularMinimo(datos)));
+
+			tabla.addCell(prop.getProperty("generarPDF.maximo"));
+			tabla.addCell(formatearNumero(calcularMaximo(datos)));
+
+			tabla.addCell(prop.getProperty("generarPDF.rango"));
+			tabla.addCell(formatearNumero(calcularRango(datos)));
+
+			tabla.addCell(prop.getProperty("generarPDF.cantidad"));
+			tabla.addCell(String.valueOf(datos.length));
+
+			document.add(tabla);
+			document.add(new Paragraph("\n"));
+
+			if (graficoBarras != null) {
+				document.add(new Paragraph(prop.getProperty("generarPDF.grafico.barras")).setFontSize(14));
+				Image imgBarras = new Image(ImageDataFactory.create(graficoBarras.getAbsolutePath()));
+				imgBarras.setWidth(UnitValue.createPercentValue(80));
+				document.add(imgBarras);
+				document.add(new Paragraph("\n"));
+			}
+
+			if (histograma != null) {
+				document.add(new Paragraph(prop.getProperty("generarPDF.grafico.histograma")).setFontSize(14));
+				Image imgHisto = new Image(ImageDataFactory.create(histograma.getAbsolutePath()));
+				imgHisto.setWidth(UnitValue.createPercentValue(80));
+				document.add(imgHisto);
+				document.add(new Paragraph("\n"));
+			}
+
+			if (graficoLinea != null) {
+				document.add(new Paragraph(prop.getProperty("generarPDF.grafico.linea")).setFontSize(14));
+				Image imgLinea = new Image(ImageDataFactory.create(graficoLinea.getAbsolutePath()));
+				imgLinea.setWidth(UnitValue.createPercentValue(80));
+				document.add(imgLinea);
+			}
+
+			document.close();
+
+			limpiarArchivosTemporales(dirGraficos);
+
+			vf.getVentanaPrincipal().mostrarMensaje(prop.getProperty("mensaje.generarPDF.exito") + " " + rutaPDF);
+
+		} catch (Exception e) {
+			vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.generarPDF.creacion") + " " + e.getMessage());
+		}
+	}
+
+	private File crearGraficoBarras(double[] datos, String rutaArchivo) {
+		try {
+			DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+
+			dataset.addValue(calcularMedia(datos), prop.getProperty("generarPDF.valor"),
+					prop.getProperty("generarPDF.media"));
+			dataset.addValue(calcularMediana(datos), prop.getProperty("generarPDF.valor"),
+					prop.getProperty("generarPDF.mediana"));
+			dataset.addValue(calcularDesviacion(datos), prop.getProperty("generarPDF.valor"),
+					prop.getProperty("generarPDF.desviacion1"));
+			dataset.addValue(calcularVarianza(datos), prop.getProperty("generarPDF.valor"),
+					prop.getProperty("generarPDF.varianza"));
+
+			JFreeChart chart = ChartFactory.createBarChart(prop.getProperty("generarPDF.estadisticasDescriptivas"),
+					prop.getProperty("generarPDF.medida"), prop.getProperty("generarPDF.valor"), dataset,
+					PlotOrientation.VERTICAL, true, true, false);
+
+			File chartFile = new File(rutaArchivo);
+			ChartUtils.saveChartAsPNG(chartFile, chart, 600, 400);
+			return chartFile;
+		} catch (Exception e) {
+			vf.getVentanaPrincipal()
+					.mostrarError(prop.getProperty("error.generarPDF.grafico.barras") + " " + e.getMessage());
+			return null;
+		}
+	}
+
+	private File crearHistograma(double[] datos, String rutaArchivo) {
+		try {
+			HistogramDataset dataset = new HistogramDataset();
+			dataset.addSeries(prop.getProperty("generarPDF.frecuencia"), datos, 10);
+
+			JFreeChart chart = ChartFactory.createHistogram(prop.getProperty("generarPDF.distribucion"),
+					prop.getProperty("generarPDF.valores"), prop.getProperty("generarPDF.frecuencia"), dataset,
+					PlotOrientation.VERTICAL, true, true, false);
+
+			File chartFile = new File(rutaArchivo);
+			ChartUtils.saveChartAsPNG(chartFile, chart, 600, 400);
+			return chartFile;
+		} catch (Exception e) {
+			vf.getVentanaPrincipal()
+					.mostrarError(prop.getProperty("error.generarPDF.grafico.histograma") + " " + e.getMessage());
+			return null;
+		}
+	}
+
+	private File crearGraficoLinea(double[] datos, String rutaArchivo) {
+		try {
+			DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+
+			for (int i = 0; i < datos.length; i++) {
+				dataset.addValue(datos[i], prop.getProperty("generarPDF.datos"), String.valueOf(i + 1));
+			}
+
+			JFreeChart chart = ChartFactory.createLineChart(prop.getProperty("generarPDF.tendencia"),
+					prop.getProperty("generarPDF.indice"), prop.getProperty("generarPDF.valor"), dataset,
+					PlotOrientation.VERTICAL, true, true, false);
+
+			File chartFile = new File(rutaArchivo);
+			ChartUtils.saveChartAsPNG(chartFile, chart, 600, 400);
+			return chartFile;
+		} catch (Exception e) {
+			vf.getVentanaPrincipal()
+					.mostrarError(prop.getProperty("error.generarPDF.grafico.linea") + " " + e.getMessage());
+			return null;
+		}
+	}
+
+	private void limpiarArchivosTemporales(File directorio) {
+		if (directorio != null && directorio.isDirectory()) {
+			File[] archivos = directorio.listFiles();
+			if (archivos != null) {
+				for (File archivo : archivos) {
+					if (archivo.isFile()) {
+						archivo.delete();
+					}
+				}
+			}
+			directorio.delete();
+		}
+	}
+
 	private void agregarIdioma() {
 		vf.getIs().mostrarTextos(prop.getProperty("ventana.iniciarSesion.titulo"),
 				prop.getProperty("ventana.iniciarSesion.usuario"), prop.getProperty("ventana.iniciarSesion.contrasena"),
@@ -1320,6 +1778,9 @@ public class Controlador implements ActionListener {
 				prop.getProperty("ventana.admin.porAlias"), prop.getProperty("ventana.admin.porLikes"),
 				prop.getProperty("ventana.admin.porLikes"), prop.getProperty("ventana.admin.porIngreso"),
 				prop.getProperty("ventana.admin.botonTop"), prop.getProperty("ventana.admin.ordenarPor"),
-				prop.getProperty("ventana.admin.criterio"), prop.getProperty("ventana.admin.labelTop"));
+				prop.getProperty("ventana.admin.criterio"), prop.getProperty("ventana.admin.labelTop"),
+				prop.getProperty("ventana.admin.pdf"), prop.getProperty("ventana.admin.porEdad"),
+				prop.getProperty("ventana.admin.porLikes"), prop.getProperty("ventana.admin.porIngreso"),
+				prop.getProperty("ventana.admin.porEstatura"));
 	}
 }

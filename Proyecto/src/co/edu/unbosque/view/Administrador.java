@@ -34,6 +34,13 @@ public class Administrador extends JPanel {
 
 	private JButton botonTop;
 
+	private JButton botonPDF;
+	private JRadioButton botonEdadPDF;
+	private JRadioButton botonLikesPDF;
+	private JRadioButton botonIngresosPDF;
+	private JRadioButton botonEstaturaPDF;
+	private ButtonGroup grupoPDF;
+
 	public Administrador() {
 		this.setLayout(null);
 		this.setBackground(new Color(36, 41, 46));
@@ -99,6 +106,36 @@ public class Administrador extends JPanel {
 		botonTop.setFocusPainted(false);
 		botonTop.setFocusable(false);
 
+		botonPDF = new JButton();
+		botonPDF.setBounds(1100, 250, 100, 30);
+		botonPDF.setBackground(Color.blue);
+		botonPDF.setBorderPainted(false);
+		botonPDF.setFocusPainted(false);
+		botonPDF.setFocusable(false);
+
+		botonEdadPDF = new JRadioButton();
+		botonEdadPDF.setBounds(1100, 350, 100, 30);
+
+		botonLikesPDF = new JRadioButton();
+		botonLikesPDF.setBounds(1100, 400, 100, 30);
+
+		botonIngresosPDF = new JRadioButton();
+		botonIngresosPDF.setBounds(1100, 450, 100, 30);
+
+		botonEstaturaPDF = new JRadioButton();
+		botonEstaturaPDF.setBounds(1100, 300, 100, 30);
+
+		grupoPDF = new ButtonGroup();
+		grupoPDF.add(botonEdadPDF);
+		grupoPDF.add(botonLikesPDF);
+		grupoPDF.add(botonIngresosPDF);
+		grupoPDF.add(botonEstaturaPDF);
+
+		this.add(botonEdadPDF);
+		this.add(botonLikesPDF);
+		this.add(botonIngresosPDF);
+		this.add(botonEstaturaPDF);
+		this.add(botonPDF);
 		this.add(botonOrdenar);
 		this.add(botonAscendente);
 		this.add(botonDescendente);
@@ -114,7 +151,9 @@ public class Administrador extends JPanel {
 
 	public void mostrarTextos(String labelBotonOrdenar, String labelBotonAscendente, String labelBotonDescendente,
 			String labelBotonPorEdad, String labelBotonNombre, String labelBotonAlias, String labelBotonLikes,
-			String labelBotonTopLikes, String labelBotonTopIngresos, String labelBotonTop, String labelOrdenarPor, String labelCriterio,String labelTop) {
+			String labelBotonTopLikes, String labelBotonTopIngresos, String labelBotonTop, String labelOrdenarPor,
+			String labelCriterio, String labelTop, String labelPDF, String labelBotonEdadPDF, String labelBotonLikesPDF,
+			String labelBotonIngresosPDF, String labelBotonEstaturaPDF) {
 		botonOrdenar.setText(labelBotonOrdenar);
 		botonTop.setText(labelBotonTop);
 		botonAscendente.setText(labelBotonAscendente);
@@ -125,9 +164,14 @@ public class Administrador extends JPanel {
 		botonLikes.setText(labelBotonLikes);
 		botonTopLikes.setText(labelBotonTopLikes);
 		botonTopIngresos.setText(labelBotonTopIngresos);
+		botonPDF.setText(labelPDF);
 		crearLabel(labelOrdenarPor, Color.WHITE, 920, 50, 300, 30, 24);
 		crearLabel(labelCriterio, Color.WHITE, 920, 200, 300, 30, 24);
 		crearLabel(labelTop, Color.WHITE, 1100, 50, 300, 30, 24);
+		botonEdadPDF.setText(labelBotonEdadPDF);
+		botonLikesPDF.setText(labelBotonLikesPDF);
+		botonIngresosPDF.setText(labelBotonIngresosPDF);
+		botonEstaturaPDF.setText(labelBotonEstaturaPDF);
 	}
 
 	public void crearLabel(String texto, Color colorFondo, int x, int y, int ancho, int alto, int tamanoLetra) {
@@ -324,4 +368,50 @@ public class Administrador extends JPanel {
 		this.botonTop = botonTop;
 	}
 
+	public JButton getBotonPDF() {
+		return botonPDF;
+	}
+
+	public void setBotonPDF(JButton botonPDF) {
+		this.botonPDF = botonPDF;
+	}
+	public JRadioButton getBotonEdadPDF() {
+		return botonEdadPDF;
+	}
+
+	public JRadioButton getBotonLikesPDF() {
+		return botonLikesPDF;
+	}
+
+	public void setBotonLikesPDF(JRadioButton botonLikesPDF) {
+		this.botonLikesPDF = botonLikesPDF;
+	}
+
+	public JRadioButton getBotonIngresosPDF() {
+		return botonIngresosPDF;
+	}
+
+	public void setBotonIngresosPDF(JRadioButton botonIngresosPDF) {
+		this.botonIngresosPDF = botonIngresosPDF;
+	}
+
+	public JRadioButton getBotonEstaturaPDF() {
+		return botonEstaturaPDF;
+	}
+
+	public void setBotonEstaturaPDF(JRadioButton botonEstaturaPDF) {
+		this.botonEstaturaPDF = botonEstaturaPDF;
+	}
+
+	public ButtonGroup getGrupoPDF() {
+		return grupoPDF;
+	}
+
+	public void setGrupoPDF(ButtonGroup grupoPDF) {
+		this.grupoPDF = grupoPDF;
+	}
+
+	public void setBotonEdadPDF(JRadioButton botonEdadPDF) {
+		this.botonEdadPDF = botonEdadPDF;
+	}
 }
