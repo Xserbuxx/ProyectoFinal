@@ -81,6 +81,12 @@ public class Controlador implements ActionListener {
 		vf.getPer().getBotonVolver().setActionCommand("BotonVolverPerfil");
 		vf.getInfoUsuario().getBotonVolver().addActionListener(this);
 		vf.getInfoUsuario().getBotonVolver().setActionCommand("BotonVolverInfo");
+		vf.getConfirmarBaja().getBotonVolver().addActionListener(this);
+		vf.getConfirmarBaja().getBotonVolver().setActionCommand("BotonVolverCB");
+		vf.getAdmin().getBotonOrdenar().addActionListener(this);
+		vf.getAdmin().getBotonOrdenar().setActionCommand("BotonOrdenarUsuarios");
+		vf.getAdmin().getBotonTop().addActionListener(this);
+		vf.getAdmin().getBotonTop().setActionCommand("BotonTopUsuarios");
 	}
 
 	@Override
@@ -422,6 +428,78 @@ public class Controlador implements ActionListener {
 			break;
 		case "BotonVolverInfo":
 			vf.mostrarPanel("administrador");
+			break;
+		case "BotonVolverCB":
+			vf.getConfirmarBaja().setEnabled(false);
+			vf.getConfirmarBaja().setVisible(false);
+			vf.getAdmin().remove(vf.getConfirmarBaja());
+			vf.getAdmin().setEnabled(true);
+			vf.getAdmin().setOn();
+			break;
+		case "BotonOrdenarUsuarios":
+			int criterio = 0;
+			int orden = 0;
+			if (vf.getAdmin().getBotonAscendente().isSelected()) {
+				switch (ran.nextInt(1)) {
+				case 0:
+					orden = 1;
+					break;
+				case 1:
+					orden = 3;
+					break;
+				default:
+					break;
+				}
+			} else if (vf.getAdmin().getBotonDescendente().isSelected()) {
+				switch (ran.nextInt(1)) {
+				case 0:
+					orden = 2;
+					break;
+				case 1:
+					orden = 4;
+					break;
+				default:
+					break;
+				}
+			} else {
+				vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.ordenNoSeleccionado"));
+				break;
+			}
+
+			if (vf.getAdmin().getBotonNombre().isSelected()) {
+				criterio = 1;
+			} else if (vf.getAdmin().getBotonAlias().isSelected()) {
+				criterio = 2;
+			} else if (vf.getAdmin().getBotonLikes().isSelected()) {
+				criterio = 3;
+			} else if (vf.getAdmin().getBotonPorEdad().isSelected()) {
+				criterio = 4;
+			} else {
+				vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.criterioNoSeleccionado"));
+				break;
+			}
+
+			mf.ordenarPor(orden, criterio);;
+
+			agregarUsuariosVentanaAdmin();
+			break;
+		case "BotonTopUsuarios":
+			
+			int seleccionTop = 0;
+			
+			if (vf.getAdmin().getBotonTopLikes().isSelected()) {
+				mf.ordenarPor(2, 3);
+				seleccionTop = 1;
+			} else if (vf.getAdmin().getBotonTopIngresos().isSelected()) {
+				mf.getHombreDAO().ordenarPor(2, 5);
+				seleccionTop = 2;
+			} else {
+				vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.topCriterioNoSeleccionado"));
+				break;
+			}
+			
+			agregarTopUsuariosVentanaAdmin(seleccionTop);
+			
 			break;
 		default:
 			break;
@@ -1132,6 +1210,46 @@ public class Controlador implements ActionListener {
 			}
 		}
 	}
+	
+	private void agregarTopUsuariosVentanaAdmin(int seleccionTop) {
+		if (seleccionTop == 1) {
+			
+			vf.getAdmin().limpiarUsuarios();
+			
+			ArrayList<Persona> usuarios = mf.getPersonas();
+
+			usuarios.removeIf(p -> p.getAlias().equals("admin"));
+			
+			for (int  i = 0; i<10;i++) {
+				Persona p = usuarios.get(i);
+				if (p instanceof Hombre) {
+					vf.getAdmin().agregarUsuario(p.getAlias(), p.getImagen(), p.getEdad(), p.getEstatura(), this,
+							String.format(Locale.US, "%.2f%n", convertirUSDAmoneda(((Hombre) p).getIngresoProm())));
+				} else {
+					vf.getAdmin().agregarUsuario(p.getAlias(), p.getImagen(), p.getEdad(), p.getEstatura(), this);
+				}
+			}
+		}
+		
+		if (seleccionTop == 2) {
+			
+			vf.getAdmin().limpiarUsuarios();
+			
+			ArrayList<Persona> usuarios = mf.getPersonas();
+
+			usuarios.removeIf(p -> p.getAlias().equals("admin"));
+			
+			for (int i = 0; i<10;i++) {
+				
+				Persona p = mf.getHombreDAO().getHombres().get(i);
+				
+				vf.getAdmin().agregarUsuario(p.getAlias(), p.getImagen(), p.getEdad(), p.getEstatura(), this,
+						String.format(Locale.US, "%.2f%n", convertirUSDAmoneda(((Hombre) p).getIngresoProm())));
+				
+			}
+			
+		}
+	}
 
 	private void enviarCodigoVerificacion(String correo, int codigo) {
 
@@ -1196,5 +1314,12 @@ public class Controlador implements ActionListener {
 				prop.getProperty("ventana.seleccionGustos.botonConfirmar"),
 				prop.getProperty("ventana.seleccionGustos.edad"));
 		vf.getPer().mostrarTextos(prop.getProperty("ventana.perfil.botonCambiarModo"));
+		vf.getAdmin().mostrarTextos(prop.getProperty("ventana.admin.botonOrdenarPor"),
+				prop.getProperty("ventana.admin.botonAscendente"), prop.getProperty("ventana.admin.botonDescendente"),
+				prop.getProperty("ventana.admin.porEdad"), prop.getProperty("ventana.admin.porNombre"),
+				prop.getProperty("ventana.admin.porAlias"), prop.getProperty("ventana.admin.porLikes"),
+				prop.getProperty("ventana.admin.porLikes"), prop.getProperty("ventana.admin.porIngreso"),
+				prop.getProperty("ventana.admin.botonTop"), prop.getProperty("ventana.admin.ordenarPor"),
+				prop.getProperty("ventana.admin.criterio"), prop.getProperty("ventana.admin.labelTop"));
 	}
 }

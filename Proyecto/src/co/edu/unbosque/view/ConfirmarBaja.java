@@ -1,8 +1,11 @@
 package co.edu.unbosque.view;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Font;
+import java.awt.Image;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -10,6 +13,7 @@ import javax.swing.JPanel;
 public class ConfirmarBaja extends JPanel {
 	
 	private JButton botonConfirmar;
+	private JButton botonVolver;
 	
 	public ConfirmarBaja() {
 		this.setBackground(new Color(36, 41, 46,200));
@@ -29,11 +33,24 @@ public class ConfirmarBaja extends JPanel {
 		botonConfirmar.setBorderPainted(false);
 		botonConfirmar.setFocusable(false);
 		
+		ImageIcon imagenPerfil = new ImageIcon("Resources/volver.png");
+		Image imagenRedimensionadaPerfil = imagenPerfil.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+		ImageIcon imagenRedimensionada = new ImageIcon(imagenRedimensionadaPerfil);
+
+		botonVolver = new JButton(imagenRedimensionada);
+		botonVolver.setBounds(10, 10, 50, 50);
+		botonVolver.setBackground(Color.red);
+		botonVolver.setBorderPainted(false);
+		botonVolver.setFocusPainted(false);
+		botonVolver.setFocusable(false);
+		
+		this.add(botonVolver);
 		this.add(botonConfirmar);
 		this.add(panelCentral);
 	}
 	
 	public void mostrarTextos(String texto, String labelBotonConfirmar) {
+		limpiarLabels();
 		botonConfirmar.setText(labelBotonConfirmar);
 		crearLabel(texto, Color.white, 350, 250, 500, 50, 12);
 	}
@@ -47,6 +64,15 @@ public class ConfirmarBaja extends JPanel {
 		this.add(label);
 		this.setComponentZOrder(label, 0);
 	}
+	
+	public void limpiarLabels() {
+		for (Component c : this.getComponents()) {
+		    if (c instanceof JLabel) {
+		        this.remove(c);
+		    }
+			
+		}
+	}
 
 	public JButton getBotonConfirmar() {
 		return botonConfirmar;
@@ -54,6 +80,14 @@ public class ConfirmarBaja extends JPanel {
 
 	public void setBotonConfirmar(JButton botonConfirmar) {
 		this.botonConfirmar = botonConfirmar;
+	}
+
+	public JButton getBotonVolver() {
+		return botonVolver;
+	}
+
+	public void setBotonVolver(JButton botonVolver) {
+		this.botonVolver = botonVolver;
 	}
 	
 }
