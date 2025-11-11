@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.ActionListener;
 
 import javax.swing.ButtonGroup;
@@ -41,10 +42,23 @@ public class Administrador extends JPanel {
 	private JRadioButton botonEstaturaPDF;
 	private ButtonGroup grupoPDF;
 	private JButton cambiarModo;
+	
+	private JButton botonVolver;
 
 	public Administrador() {
 		this.setLayout(null);
 		this.setBackground(new Color(36, 41, 46));
+		
+		ImageIcon imagenVolver = new ImageIcon("Resources/volver.png");
+		Image imagenRedimensionadaVolver = imagenVolver.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+		ImageIcon imagenRedimensionadaVolverv = new ImageIcon(imagenRedimensionadaVolver);
+
+		botonVolver = new JButton(imagenRedimensionadaVolverv);
+		botonVolver.setBounds(10, 10, 50, 50);
+		botonVolver.setBackground(Color.red);
+		botonVolver.setBorderPainted(false);
+		botonVolver.setFocusPainted(false);
+		botonVolver.setFocusable(false);
 
 		panelUsuarios = new JPanel();
 		panelUsuarios.setBackground(new Color(36, 41, 46));
@@ -139,6 +153,7 @@ public class Administrador extends JPanel {
 		cambiarModo.setFocusPainted(false);
 		cambiarModo.setFocusable(false);
 		
+		this.add(botonVolver);
 		this.add(cambiarModo);
 		this.add(botonEdadPDF);
 		this.add(botonLikesPDF);
@@ -431,6 +446,14 @@ public class Administrador extends JPanel {
 
 	public void setCambiarModo(JButton cambiarModo) {
 		this.cambiarModo = cambiarModo;
+	}
+
+	public JButton getBotonVolver() {
+		return botonVolver;
+	}
+
+	public void setBotonVolver(JButton botonVolver) {
+		this.botonVolver = botonVolver;
 	}
 	
 }

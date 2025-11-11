@@ -15,6 +15,7 @@ public class Aplicacion extends JPanel {
 	private JScrollPane scrollPanel;
 	private JPanel panelUsuarios;
 	private JButton botonPerfil;
+	private JButton botonVolver;
 
 	public Aplicacion() {
 		this.setLayout(null);
@@ -25,12 +26,23 @@ public class Aplicacion extends JPanel {
 		ImageIcon imagenRedimensionada = new ImageIcon(imagenRedimensionadaPerfil);
 
 		botonPerfil = new JButton(imagenRedimensionada);
-		botonPerfil.setBounds(0, 0, 50, 50);
+		botonPerfil.setBounds(600, 0, 50, 50);
 		botonPerfil.setBackground(new Color(0, 0, 0, 0));
 		botonPerfil.setContentAreaFilled(false);
 		botonPerfil.setBorderPainted(false);
 		botonPerfil.setFocusPainted(false);
 		botonPerfil.setFocusable(false);
+		
+		ImageIcon imagenVolver = new ImageIcon("Resources/volver.png");
+		Image imagenRedimensionadaVolver = imagenVolver.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+		ImageIcon imagenRedimensionadaVolverv = new ImageIcon(imagenRedimensionadaVolver);
+
+		botonVolver = new JButton(imagenRedimensionadaVolverv);
+		botonVolver.setBounds(10, 10, 50, 50);
+		botonVolver.setBackground(Color.red);
+		botonVolver.setBorderPainted(false);
+		botonVolver.setFocusPainted(false);
+		botonVolver.setFocusable(false);
 
 		panelUsuarios = new JPanel();
 		panelUsuarios.setBackground(new Color(36, 41, 46));
@@ -40,7 +52,8 @@ public class Aplicacion extends JPanel {
 				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		scrollPanel.setBounds(0, 60, 1260, 640);
 		scrollPanel.setBackground(new Color(36, 41, 46));
-
+		
+		this.add(botonVolver);
 		this.add(botonPerfil);
 		this.add(scrollPanel);
 	}
@@ -84,4 +97,13 @@ public class Aplicacion extends JPanel {
 	public void setBotonPerfil(JButton botonPerfil) {
 		this.botonPerfil = botonPerfil;
 	}
+
+	public JButton getBotonVolver() {
+		return botonVolver;
+	}
+
+	public void setBotonVolver(JButton botonVolver) {
+		this.botonVolver = botonVolver;
+	}
+	
 }

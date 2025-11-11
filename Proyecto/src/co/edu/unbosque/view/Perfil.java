@@ -20,9 +20,9 @@ public class Perfil extends JPanel {
 		this.setLayout(null);
 		this.setBackground(new Color(36, 41, 46));
 
-		ImageIcon imagenPerfil = new ImageIcon("Resources/volver.png");
-		Image imagenRedimensionadaPerfil = imagenPerfil.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
-		ImageIcon imagenRedimensionada = new ImageIcon(imagenRedimensionadaPerfil);
+		ImageIcon imagenVolver = new ImageIcon("Resources/volver.png");
+		Image imagenRedimensionadaVolver = imagenVolver.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+		ImageIcon imagenRedimensionada = new ImageIcon(imagenRedimensionadaVolver);
 
 		botonVolver = new JButton(imagenRedimensionada);
 		botonVolver.setBounds(10, 10, 50, 50);

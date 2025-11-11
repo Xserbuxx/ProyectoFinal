@@ -39,16 +39,16 @@ public class HombreDTO extends Persona {
 				edadMaxima, edadMinima, estaturaIdeal, likesRecibidos, incognito, likesDados, verificado);
 		// TODO Auto-generated constructor stub
 	}
+	
 	/*
 	public HombreDTO(String alias, String contrasena) {
 		super("", alias, 0, "", 0f, "", null, false, contrasena, 0, 0, 0, 0f, 0, false, null, false);
 	}
-	
 	mf.getHombreDAO().crear(new HombreDTO("admin", "admin"));
 	
-	borrar esto, es solo para crear el admin temporalmente
+	borrar esto, es solo para crear el admin temporalmente*/
 	
-	*/
+
 
 	public float getIngresoProm() {
 		return ingresoProm;

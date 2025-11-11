@@ -113,6 +113,10 @@ public class Controlador implements ActionListener {
 		vf.getPer().getCambiarModo().setActionCommand("BotonCambiarModo");
 		vf.getAdmin().getCambiarModo().addActionListener(this);
 		vf.getAdmin().getCambiarModo().setActionCommand("BotonCambiarModo");
+		vf.getApp().getBotonVolver().addActionListener(this);
+		vf.getApp().getBotonVolver().setActionCommand("BotonVolverApp");
+		vf.getAdmin().getBotonVolver().addActionListener(this);
+		vf.getAdmin().getBotonVolver().setActionCommand("BotonVolverAdmin");
 	}
 
 	@Override
@@ -280,6 +284,7 @@ public class Controlador implements ActionListener {
 			break;
 		case "BotonConfirmarInicioSesion":
 			try {
+				mf.actualizarPersonas();
 				LanzadorExcepciones.verificarCampoVacio(vf.getIs().getCampoUsuario().getText(),
 						prop.getProperty("ventana.iniciarSesion.usuario"));
 
@@ -531,7 +536,7 @@ public class Controlador implements ActionListener {
 		case "BotonGenerarPDF":
 
 			if (vf.getAdmin().getBotonLikesPDF().isSelected()) {
-				
+
 				double[] likes = new double[mf.getPersonas().size()];
 				int idx = 0;
 				for (Persona p : mf.getPersonas()) {
@@ -539,9 +544,9 @@ public class Controlador implements ActionListener {
 				}
 
 				generarInforme(likes, "informe_likes");
-				
+
 			} else if (vf.getAdmin().getBotonIngresosPDF().isSelected()) {
-				
+
 				double[] ingreso = new double[mf.getHombreDAO().getHombres().size()];
 				int idx = 0;
 				for (Persona p : mf.getHombreDAO().getHombres()) {
@@ -549,7 +554,7 @@ public class Controlador implements ActionListener {
 				}
 
 				generarInforme(ingreso, "informe_ingresos");
-				
+
 			} else if (vf.getAdmin().getBotonEstaturaPDF().isSelected()) {
 
 				double[] estatura = new double[mf.getPersonas().size()];
@@ -572,6 +577,12 @@ public class Controlador implements ActionListener {
 				vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.pdfCriterioNoSeleccionado"));
 			}
 
+			break;
+		case "BotonVolverApp":
+			vf.mostrarPanel("inicioSesion");
+			break;
+		case "BotonVolverAdmin":
+			vf.mostrarPanel("inicioSesion");
 			break;
 		default:
 			break;
@@ -1348,9 +1359,8 @@ public class Controlador implements ActionListener {
 			message.setSubject("Código de Seguridad de tu Cuenta", "UTF-8");
 
 			// cambiar mensaje por un properties
-			message.setContent("Buen dia. "
-					+ "\nle hablamos desde BOSTINDER. \nsu correo electronico fue registrado en uno de nuestros perfiles. \nSu codigo de seguridad es: "
-					+ codigo + "\n\nSi no solicito este código, ignore este correo ", "text/plain; charset=UTF-8");
+			message.setContent("Buen dia. " + prop.getProperty("mensaje.correo.parte1") + codigo
+					+ prop.getProperty("mensaje.correo.parte2"), "text/plain; charset=UTF-8");
 
 			Transport.send(message);
 		} catch (MessagingException e) {
@@ -1785,6 +1795,7 @@ public class Controlador implements ActionListener {
 				prop.getProperty("ventana.admin.criterio"), prop.getProperty("ventana.admin.labelTop"),
 				prop.getProperty("ventana.admin.pdf"), prop.getProperty("ventana.admin.porEdad"),
 				prop.getProperty("ventana.admin.porLikes"), prop.getProperty("ventana.admin.porIngreso"),
-				prop.getProperty("ventana.admin.porEstatura"),prop.getProperty("ventana.perfil.botonCambiarModo"));
+				prop.getProperty("ventana.admin.porEstatura"), prop.getProperty("ventana.perfil.botonCambiarModo"));
 	}
+
 }
