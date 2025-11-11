@@ -871,21 +871,15 @@ public class Controlador implements ActionListener {
 			float estatura = 0.0f;
 
 			try {
-				estatura = Float.parseFloat(vf.getReg().getCampoEstatura().getText());
-				LanzadorExcepciones.verificarRangoNumero(estatura, 50f, 250f);
+				if (vf.getReg().getCampoEstatura().getText().isEmpty()) {
+					estatura = 0;
+				} else {
+					estatura = Float.parseFloat(vf.getReg().getCampoEstatura().getText());
+				}
 			} catch (NumberFormatException e) {
 				vf.getVentanaPrincipal().mostrarError(
 						prop.getProperty("error.formatoNumero") + prop.getProperty("ventana.registro.estatura"));
 				return;
-			} catch (RangoNumeroException e) {
-				switch (e.getMessage()) {
-				case "min":
-					vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.estatura.min"));
-					return;
-				case "max":
-					vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.estatura.max"));
-					return;
-				}
 			}
 
 			String correo = vf.getReg().getCampoCorreo().getText();
