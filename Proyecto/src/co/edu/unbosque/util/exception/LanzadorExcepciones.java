@@ -100,7 +100,7 @@ public class LanzadorExcepciones {
 	 * @throws CaracteresEspecialesException Si el texto contiene caracteres especiales
 	 */
 	public static void verificarCaracterEspecial(String texto, String nombre) throws CaracteresEspecialesException {
-		if (!texto.matches("^[a-zA-Z0-9\s]+$")) {
+		if (!texto.matches("^[a-zA-Z0-9\sñÑ]+$")) {
 			throw new CaracteresEspecialesException(nombre);
 		}
 	}
