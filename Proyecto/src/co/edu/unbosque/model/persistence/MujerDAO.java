@@ -25,11 +25,22 @@ public class MujerDAO implements DAO<MujerDTO, Mujer> {
 		}
 
 	}
+	
+	public boolean crear(Mujer nuevoDato) {
+		if (encontrar(nuevoDato) == null) {
+			mujeres.add(nuevoDato);
+			escribirArchivoSerializado();
+			return true;
+		} else {
+			return false;
+		}
+
+	}
 
 	@Override
 	public boolean borrar(MujerDTO datoAEliminar) {
 		if (encontrar(DataMapper.MujerDTOAMujer(datoAEliminar)) != null) {
-			mujeres.remove(DataMapper.MujerDTOAMujer(datoAEliminar));
+			mujeres.remove(encontrar(DataMapper.MujerDTOAMujer(datoAEliminar)));
 			escribirArchivoSerializado();
 			return true;
 		} else {

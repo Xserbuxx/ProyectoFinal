@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import co.edu.unbosque.model.Hombre;
 import co.edu.unbosque.model.HombreDTO;
-import co.edu.unbosque.model.Persona;
 
 public class HombreDAO implements DAO<HombreDTO, Hombre> {
 
@@ -26,11 +25,22 @@ public class HombreDAO implements DAO<HombreDTO, Hombre> {
 		}
 
 	}
+	
+	public boolean crear(Hombre nuevoDato) {
+		if (encontrar(nuevoDato) == null) {
+			hombres.add(nuevoDato);
+			escribirArchivoSerializado();
+			return true;
+		} else {
+			return false;
+		}
+
+	}
 
 	@Override
 	public boolean borrar(HombreDTO datoAEliminar) {
 		if (encontrar(DataMapper.HombreDTOAHombre(datoAEliminar)) != null) {
-			hombres.remove(DataMapper.HombreDTOAHombre(datoAEliminar));
+			hombres.remove(encontrar(DataMapper.HombreDTOAHombre(datoAEliminar)));
 			escribirArchivoSerializado();
 			return true;
 		} else {
@@ -48,6 +58,17 @@ public class HombreDAO implements DAO<HombreDTO, Hombre> {
 		if (encontrar(DataMapper.HombreDTOAHombre(nuevoDato)) != null) {
 			hombres.remove(DataMapper.HombreDTOAHombre(nuevoDato));
 			hombres.add(DataMapper.HombreDTOAHombre(nuevoDato));
+			escribirArchivoSerializado();
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	public boolean actualizar(Hombre datoAnterior, Hombre nuevoDato) {
+		if (encontrar(nuevoDato) != null) {
+			hombres.remove(nuevoDato);
+			hombres.add(nuevoDato);
 			escribirArchivoSerializado();
 			return true;
 		} else {
