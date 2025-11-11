@@ -10,6 +10,13 @@ import java.io.PrintWriter;
 import java.util.Properties;
 import java.util.Scanner;
 
+/**
+ * Clase utilitaria para el manejo de archivos de texto, serializados y archivos de propiedades.
+ * Proporciona métodos estáticos para leer y escribir diferentes tipos de archivos.
+ * 
+ * @author Sergio Enrique Caballero Neira
+ * @version 1.0
+ */
 public class FileHandler {
 
 	// texto
@@ -23,7 +30,13 @@ public class FileHandler {
 	public static ObjectOutputStream oos;
 	public static Properties prop;
 
-	// texto
+	/**
+	 * Escribe contenido en un archivo de texto.
+	 * Crea el archivo si no existe.
+	 * 
+	 * @param url La ruta del archivo
+	 * @param contenido El contenido a escribir
+	 */
 	public static void escribirEnArchivoTexto(String url, String contenido) {
 		try {
 			archivo = new File(url);
@@ -40,6 +53,13 @@ public class FileHandler {
 		}
 	}
 
+	/**
+	 * Lee el contenido completo de un archivo de texto.
+	 * Crea el archivo si no existe.
+	 * 
+	 * @param url La ruta del archivo
+	 * @return El contenido del archivo como cadena de texto
+	 */
 	public static String leerArchivoTexto(String url) {
 		try {
 			archivo = new File(url);
@@ -64,7 +84,12 @@ public class FileHandler {
 		}
 	}
 
-	// serializado
+	/**
+	 * Escribe un objeto en un archivo serializado.
+	 * 
+	 * @param url La ruta del archivo
+	 * @param contenido El objeto a serializar
+	 */
 	public static void escribirArchivoSerializado(String url, Object contenido) {
 		try {
 			archivo = new File(url);
@@ -84,6 +109,12 @@ public class FileHandler {
 		}
 	}
 
+	/**
+	 * Lee un objeto desde un archivo serializado.
+	 * 
+	 * @param url La ruta del archivo
+	 * @return El objeto deserializado
+	 */
 	public static Object leerArchivoSerializado(String url) {
 		try {
 			archivo = new File(url);
@@ -108,7 +139,12 @@ public class FileHandler {
 		return null;
 	}
 
-	// propiedades
+	/**
+	 * Carga un archivo de propiedades (.properties).
+	 * 
+	 * @param url La ruta del archivo de propiedades
+	 * @return El objeto Properties con las propiedades cargadas
+	 */
 	public static Properties cargarArchivoDePropiedades(String url) {
 		try {
 			archivo = new File(url);
@@ -125,4 +161,5 @@ public class FileHandler {
 		}
 		return null;
 	}
+
 }

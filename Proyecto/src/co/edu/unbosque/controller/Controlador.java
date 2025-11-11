@@ -50,6 +50,14 @@ import jakarta.mail.Transport;
 import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
 
+/**
+ * Controlador principal de la aplicación que gestiona la lógica de negocio
+ * y coordina las interacciones entre el modelo y la vista.
+ * Implementa ActionListener para manejar eventos de la interfaz gráfica.
+ * 
+ * @author Sergio Enrique Caballero Neira
+ * @version 1.0
+ */
 public class Controlador implements ActionListener {
 
 	private ModelFacade mf;
@@ -59,6 +67,10 @@ public class Controlador implements ActionListener {
 
 	private Persona usuarioActual;
 
+	/**
+	 * Constructor de la clase Controlador.
+	 * Inicializa las fachadas del modelo y la vista, las propiedades y el generador de números aleatorios.
+	 */
 	public Controlador() {
 		mf = new ModelFacade();
 		vf = new ViewFacade();
@@ -66,12 +78,20 @@ public class Controlador implements ActionListener {
 		ran = new Random();
 	}
 
+	/**
+	 * Inicia la aplicación agregando los oyentes de eventos,
+	 * actualizando la lista de personas y mostrando la ventana principal.
+	 */
 	public void run() {
 		agregarOyentes();
 		mf.actualizarPersonas();
 		vf.getVentanaPrincipal().mostrarVentana();
 	}
 
+	/**
+	 * Agrega los oyentes de eventos a todos los botones y componentes
+	 * de la interfaz gráfica, configurando sus comandos de acción.
+	 */
 	private void agregarOyentes() {
 		vf.getIdm().getConfirmar().addActionListener(this);
 		vf.getIdm().getConfirmar().setActionCommand("ConfirmarIdioma");
@@ -119,6 +139,12 @@ public class Controlador implements ActionListener {
 		vf.getAdmin().getBotonVolver().setActionCommand("BotonVolverAdmin");
 	}
 
+	/**
+	 * Maneja los eventos de acción generados por los componentes de la interfaz.
+	 * Procesa diferentes comandos según el botón o componente activado.
+	 * 
+	 * @param e El evento de acción generado
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
@@ -590,6 +616,13 @@ public class Controlador implements ActionListener {
 
 	}
 
+	/**
+	 * Convierte una cantidad de dinero de la moneda local a dólares estadounidenses (USD).
+	 * La conversión se realiza según el idioma configurado en las propiedades.
+	 * 
+	 * @param cantidad La cantidad en moneda local a convertir
+	 * @return La cantidad convertida a USD
+	 */
 	private float convertirMonedaAUSD(float cantidad) {
 		switch (prop.getProperty("idioma")) {
 		case "Español":
@@ -606,6 +639,13 @@ public class Controlador implements ActionListener {
 		return cantidad;
 	}
 
+	/**
+	 * Convierte una cantidad de dólares estadounidenses (USD) a la moneda local.
+	 * La conversión se realiza según el idioma configurado en las propiedades.
+	 * 
+	 * @param cantidad La cantidad en USD a convertir
+	 * @return La cantidad convertida a la moneda local
+	 */
 	private float convertirUSDAmoneda(float cantidad) {
 		switch (prop.getProperty("idioma")) {
 		case "Español":
@@ -622,6 +662,10 @@ public class Controlador implements ActionListener {
 		return cantidad;
 	}
 
+	/**
+	 * Registra un nuevo usuario en el sistema.
+	 * Determina si es hombre o mujer según los campos habilitados.
+	 */
 	private void registrarUsuario() {
 		if (vf.getReg().getDivorciada().isEnabled()) {
 			registrarUsuarioMujer();
@@ -636,6 +680,10 @@ public class Controlador implements ActionListener {
 		vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.generoNoSeleccionado"));
 	}
 
+	/**
+	 * Registra un nuevo usuario hombre en el sistema.
+	 * Valida todos los campos del formulario y crea el usuario si los datos son correctos.
+	 */
 	private void registrarUsuarioHombre() {
 
 		try {
@@ -826,6 +874,10 @@ public class Controlador implements ActionListener {
 
 	}
 
+	/**
+	 * Registra un nuevo usuario mujer en el sistema.
+	 * Valida todos los campos del formulario y crea el usuario si los datos son correctos.
+	 */
 	private void registrarUsuarioMujer() {
 		try {
 			String nombre = vf.getReg().getCampoNombre().getText();
@@ -1004,6 +1056,12 @@ public class Controlador implements ActionListener {
 
 	}
 
+	/**
+	 * Registra los gustos y preferencias del usuario actual.
+	 * Determina si es hombre o mujer y llama al método correspondiente.
+	 * 
+	 * @return true si los gustos se registraron correctamente, false en caso contrario
+	 */
 	private boolean registrarGustosUsuario() {
 		if (usuarioActual == null) {
 			return false;
@@ -1020,6 +1078,12 @@ public class Controlador implements ActionListener {
 		return false;
 	}
 
+	/**
+	 * Registra los gustos y preferencias específicos de un usuario hombre.
+	 * Incluye rango de edad, estatura ideal y preferencia de estado civil.
+	 * 
+	 * @return true si los gustos se registraron correctamente, false en caso contrario
+	 */
 	private boolean registrarGustosHombre() {
 		int edadMinima = 0;
 		int edadMaxima = 0;
@@ -1104,6 +1168,12 @@ public class Controlador implements ActionListener {
 		return true;
 	}
 
+	/**
+	 * Registra los gustos y preferencias específicos de una usuario mujer.
+	 * Incluye rango de edad, estatura ideal e ingresos ideales.
+	 * 
+	 * @return true si los gustos se registraron correctamente, false en caso contrario
+	 */
 	private boolean registrarGustosMujer() {
 		int edadMinima = 0;
 		int edadMaxima = 0;
@@ -1193,6 +1263,10 @@ public class Controlador implements ActionListener {
 		return true;
 	}
 
+	/**
+	 * Muestra la ventana de selección de gustos según el tipo de usuario.
+	 * Configura los campos específicos para hombres o mujeres.
+	 */
 	private void mostrarVentanaGustos() {
 		if (usuarioActual == null) {
 			return;
@@ -1213,6 +1287,10 @@ public class Controlador implements ActionListener {
 		}
 	}
 
+	/**
+	 * Agrega los usuarios compatibles a la ventana de aplicación.
+	 * Filtra los usuarios según las preferencias del usuario actual.
+	 */
 	private void agregarUsuariosVentanaAplicacion() {
 		vf.getApp().limpiarUsuarios();
 		ArrayList<Persona> usuarios = mf.getPersonas();
@@ -1268,6 +1346,10 @@ public class Controlador implements ActionListener {
 
 	}
 
+	/**
+	 * Agrega todos los usuarios a la ventana de administrador.
+	 * Excluye al usuario administrador de la lista.
+	 */
 	private void agregarUsuariosVentanaAdmin() {
 
 		vf.getAdmin().limpiarUsuarios();
@@ -1288,6 +1370,11 @@ public class Controlador implements ActionListener {
 		}
 	}
 
+	/**
+	 * Agrega el top 10 de usuarios a la ventana de administrador según el criterio seleccionado.
+	 * 
+	 * @param seleccionTop El criterio de selección (1: por likes, 2: por ingresos)
+	 */
 	private void agregarTopUsuariosVentanaAdmin(int seleccionTop) {
 		if (seleccionTop == 1) {
 
@@ -1328,6 +1415,13 @@ public class Controlador implements ActionListener {
 		}
 	}
 
+	/**
+	 * Envía un código de verificación al correo electrónico especificado.
+	 * Utiliza el servicio de correo SMTP de Gmail.
+	 * 
+	 * @param correo El correo electrónico del destinatario
+	 * @param codigo El código de verificación a enviar
+	 */
 	private void enviarCodigoVerificacion(String correo, int codigo) {
 
 		try {
@@ -1362,6 +1456,12 @@ public class Controlador implements ActionListener {
 		}
 	}
 
+	/**
+	 * Ordena un arreglo de números en forma ascendente utilizando el algoritmo de inserción.
+	 * 
+	 * @param datos El arreglo de datos a ordenar
+	 * @return Un nuevo arreglo con los datos ordenados
+	 */
 	private double[] ordenarInsercionAscendente(double[] datos) {
 		if (datos == null || datos.length == 0) {
 			return datos;
@@ -1387,6 +1487,13 @@ public class Controlador implements ActionListener {
 		return datosOrdenados;
 	}
 
+	/**
+	 * Cuenta el número de ocurrencias de un valor específico en un arreglo.
+	 * 
+	 * @param datos El arreglo de datos donde buscar
+	 * @param valor El valor a contar
+	 * @return El número de veces que aparece el valor
+	 */
 	private int contarOcurrencias(double[] datos, double valor) {
 		if (datos == null || datos.length == 0) {
 			return 0;
@@ -1402,6 +1509,12 @@ public class Controlador implements ActionListener {
 		return contador;
 	}
 
+	/**
+	 * Calcula la media aritmética de un conjunto de datos.
+	 * 
+	 * @param datos El arreglo de datos
+	 * @return La media aritmética
+	 */
 	private double calcularMedia(double[] datos) {
 		if (datos == null || datos.length == 0) {
 			return 0;
@@ -1413,6 +1526,13 @@ public class Controlador implements ActionListener {
 		return suma / datos.length;
 	}
 
+	/**
+	 * Calcula la mediana de un conjunto de datos.
+	 * Ordena los datos y encuentra el valor central.
+	 * 
+	 * @param datos El arreglo de datos
+	 * @return La mediana
+	 */
 	private double calcularMediana(double[] datos) {
 		if (datos == null || datos.length == 0) {
 			return 0;
@@ -1430,6 +1550,12 @@ public class Controlador implements ActionListener {
 		}
 	}
 
+	/**
+	 * Calcula la moda (valor o valores más frecuentes) de un conjunto de datos.
+	 * 
+	 * @param datos El arreglo de datos
+	 * @return Un arreglo con los valores de la moda
+	 */
 	private double[] calcularModa(double[] datos) {
 		if (datos == null || datos.length == 0) {
 			return new double[] { 0 };
@@ -1489,6 +1615,12 @@ public class Controlador implements ActionListener {
 		return modas;
 	}
 
+	/**
+	 * Calcula la varianza de un conjunto de datos.
+	 * 
+	 * @param datos El arreglo de datos
+	 * @return La varianza
+	 */
 	private double calcularVarianza(double[] datos) {
 		if (datos == null || datos.length == 0) {
 			return 0;
@@ -1506,11 +1638,23 @@ public class Controlador implements ActionListener {
 		return sumaDiferenciasCuadrado / datos.length;
 	}
 
+	/**
+	 * Calcula la desviación estándar de un conjunto de datos.
+	 * 
+	 * @param datos El arreglo de datos
+	 * @return La desviación estándar
+	 */
 	private double calcularDesviacion(double[] datos) {
 		double varianza = calcularVarianza(datos);
 		return Math.sqrt(varianza);
 	}
 
+	/**
+	 * Encuentra el valor mínimo en un conjunto de datos.
+	 * 
+	 * @param datos El arreglo de datos
+	 * @return El valor mínimo
+	 */
 	private double calcularMinimo(double[] datos) {
 		if (datos == null || datos.length == 0) {
 			return 0;
@@ -1524,23 +1668,41 @@ public class Controlador implements ActionListener {
 		return minimo;
 	}
 
+	/**
+	 * Encuentra el valor máximo en un conjunto de datos.
+	 * 
+	 * @param datos El arreglo de datos
+	 * @return El valor máximo
+	 */
 	private double calcularMaximo(double[] datos) {
 		if (datos == null || datos.length == 0) {
 			return 0;
 		}
 		double maximo = datos[0];
 		for (double dato : datos) {
-			if (dato > maximo) {
+		 if (dato > maximo) {
 				maximo = dato;
 			}
 		}
 		return maximo;
 	}
 
+	/**
+	 * Calcula el rango (diferencia entre máximo y mínimo) de un conjunto de datos.
+	 * 
+	 * @param datos El arreglo de datos
+	 * @return El rango
+	 */
 	private double calcularRango(double[] datos) {
 		return calcularMaximo(datos) - calcularMinimo(datos);
 	}
 
+	/**
+	 * Convierte un arreglo de modas a una representación de texto.
+	 * 
+	 * @param modas El arreglo de valores de la moda
+	 * @return Una cadena de texto representando las modas
+	 */
 	private String convertirModasAString(double[] modas) {
 		if (modas == null || modas.length == 0) {
 			return prop.getProperty("generarPDF.sinModa");
@@ -1561,10 +1723,22 @@ public class Controlador implements ActionListener {
 		return sb.toString();
 	}
 
+	/**
+	 * Formatea un número decimal con 4 decimales usando configuración regional US.
+	 * 
+	 * @param numero El número a formatear
+	 * @return El número formateado como cadena de texto
+	 */
 	private String formatearNumero(double numero) {
 		return String.format(Locale.US, "%.4f", numero);
 	}
 
+	/**
+	 * Genera un informe PDF con estadísticas descriptivas y gráficos de los datos proporcionados.
+	 * 
+	 * @param datos El arreglo de datos para analizar
+	 * @param nombreArchivo El nombre del archivo PDF a generar
+	 */
 	public void generarInforme(double[] datos, String nombreArchivo) {
 		if (datos == null || datos.length == 0) {
 			vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.generarPdf.faltaDatos"));
@@ -1670,6 +1844,13 @@ public class Controlador implements ActionListener {
 		}
 	}
 
+	/**
+	 * Crea un gráfico de barras con las estadísticas descriptivas principales.
+	 * 
+	 * @param datos El arreglo de datos
+	 * @param rutaArchivo La ruta donde guardar el gráfico
+	 * @return El archivo del gráfico creado, o null si hubo un error
+	 */
 	private File crearGraficoBarras(double[] datos, String rutaArchivo) {
 		try {
 			DefaultCategoryDataset dataset = new DefaultCategoryDataset();
@@ -1697,6 +1878,13 @@ public class Controlador implements ActionListener {
 		}
 	}
 
+	/**
+	 * Crea un histograma mostrando la distribución de frecuencias de los datos.
+	 * 
+	 * @param datos El arreglo de datos
+	 * @param rutaArchivo La ruta donde guardar el histograma
+	 * @return El archivo del histograma creado, o null si hubo un error
+	 */
 	private File crearHistograma(double[] datos, String rutaArchivo) {
 		try {
 			HistogramDataset dataset = new HistogramDataset();
@@ -1716,6 +1904,13 @@ public class Controlador implements ActionListener {
 		}
 	}
 
+	/**
+	 * Crea un gráfico de línea mostrando la tendencia de los datos.
+	 * 
+	 * @param datos El arreglo de datos
+	 * @param rutaArchivo La ruta donde guardar el gráfico
+	 * @return El archivo del gráfico creado, o null si hubo un error
+	 */
 	private File crearGraficoLinea(double[] datos, String rutaArchivo) {
 		try {
 			DefaultCategoryDataset dataset = new DefaultCategoryDataset();
@@ -1738,6 +1933,11 @@ public class Controlador implements ActionListener {
 		}
 	}
 
+	/**
+	 * Elimina los archivos temporales creados durante la generación de informes.
+	 * 
+	 * @param directorio El directorio que contiene los archivos temporales
+	 */
 	private void limpiarArchivosTemporales(File directorio) {
 		if (directorio != null && directorio.isDirectory()) {
 			File[] archivos = directorio.listFiles();
@@ -1752,6 +1952,10 @@ public class Controlador implements ActionListener {
 		}
 	}
 
+	/**
+	 * Aplica los textos del idioma seleccionado a todos los componentes de la interfaz.
+	 * Carga las etiquetas y mensajes desde el archivo de propiedades correspondiente.
+	 */
 	private void agregarIdioma() {
 		vf.getIs().mostrarTextos(prop.getProperty("ventana.iniciarSesion.titulo"),
 				prop.getProperty("ventana.iniciarSesion.usuario"), prop.getProperty("ventana.iniciarSesion.contrasena"),
