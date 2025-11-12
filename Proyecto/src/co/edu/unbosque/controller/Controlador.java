@@ -147,7 +147,8 @@ public class Controlador implements ActionListener {
 		vf.getSg().getCambiarModo().setActionCommand("BotonCambiarModo");
 		vf.getInfoUsuario().getCambiarModo().addActionListener(this);
 		vf.getInfoUsuario().getCambiarModo().setActionCommand("BotonCambiarModo");
-
+		vf.getAdmin().getBotonBuscar().addActionListener(this);
+		vf.getAdmin().getBotonBuscar().setActionCommand("BotonBuscarUsuario");
 	}
 
 	/**
@@ -191,7 +192,7 @@ public class Controlador implements ActionListener {
 			vf.getInfoUsuario().limpiarLabels();
 
 			Persona usuarioInfo = null;
-			
+
 			String aliasBuscado = e.getActionCommand().split("-")[1];
 			String aliasEncontrado = aliasBuscado.split(" ")[1];
 
@@ -201,7 +202,7 @@ public class Controlador implements ActionListener {
 					break;
 				}
 			}
-			
+
 			if (usuarioInfo == null) {
 				return;
 			}
@@ -254,15 +255,13 @@ public class Controlador implements ActionListener {
 			vf.getAdmin().setOff();
 			vf.getConfirmarBaja().setEnabled(true);
 			vf.getConfirmarBaja().setVisible(true);
-			
+
 			String aliasBuscado = e.getActionCommand().split("-")[1];
 			String aliasEncontrado = aliasBuscado.split(" ")[1];
 
-			vf.getConfirmarBaja().mostrarTextos(
-					prop.getProperty("ventana.baja.confirmar") + " " + aliasEncontrado,
+			vf.getConfirmarBaja().mostrarTextos(prop.getProperty("ventana.baja.confirmar") + " " + aliasEncontrado,
 					prop.getProperty("ventana.baja.botonConfirmar"));
-			vf.getConfirmarBaja().getBotonConfirmar()
-					.setActionCommand("botonConfirmarBaja-" + aliasEncontrado);
+			vf.getConfirmarBaja().getBotonConfirmar().setActionCommand("botonConfirmarBaja-" + aliasEncontrado);
 			vf.getConfirmarBaja().getBotonConfirmar().addActionListener(this);
 			vf.cambiarModo();
 			vf.cambiarModo();
@@ -664,6 +663,43 @@ public class Controlador implements ActionListener {
 			break;
 		case "BotonCambiarModo":
 			vf.cambiarModo();
+			break;
+		case "BotonBuscarUsuario":
+			
+			mf.actualizarPersonas();
+
+			vf.getAdmin().limpiarUsuarios();
+			
+			if(vf.getAdmin().getTxtBuscar().getText().isEmpty()) {
+				agregarUsuariosVentanaAdmin();
+				vf.cambiarModo();
+				vf.cambiarModo();
+				return;
+			}
+
+			for (Persona p : mf.getPersonas()) {
+				if (p.getAlias().equals(vf.getAdmin().getTxtBuscar().getText())) {
+					if (p instanceof Hombre) {
+						vf.getAdmin().agregarUsuario(prop.getProperty("ventana.perfil.alias") + " " + p.getAlias(),
+								p.getImagen(), prop.getProperty("ventana.perfil.edad") + " " + p.getEdad(),
+								prop.getProperty("ventana.perfil.estatura") + " " + p.getEstatura(), this,
+								prop.getProperty("ventana.perfil.ingreso") + " " + String.format(Locale.US, "%.2f%n",
+										convertirUSDAmoneda(((Hombre) p).getIngresoProm())));
+						vf.cambiarModo();
+						vf.cambiarModo();
+						return;
+					} else {
+						vf.getAdmin().agregarUsuario(prop.getProperty("ventana.perfil.alias") + " " + p.getAlias(),
+								p.getImagen(), prop.getProperty("ventana.perfil.edad") + " " + p.getEdad(),
+								prop.getProperty("ventana.perfil.estatura") + " " + p.getEstatura(), this);
+						vf.cambiarModo();
+						vf.cambiarModo();
+						return;
+					}
+				}
+			}
+			
+			vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.usuarioNoEncontrado"));;
 			break;
 		default:
 			break;
@@ -2084,7 +2120,8 @@ public class Controlador implements ActionListener {
 				prop.getProperty("ventana.admin.criterio"), prop.getProperty("ventana.admin.labelTop"),
 				prop.getProperty("ventana.admin.pdf"), prop.getProperty("ventana.admin.porEdad"),
 				prop.getProperty("ventana.admin.porLikes"), prop.getProperty("ventana.admin.porIngreso"),
-				prop.getProperty("ventana.admin.porEstatura"), prop.getProperty("ventana.perfil.botonCambiarModo"));
+				prop.getProperty("ventana.admin.porEstatura"), prop.getProperty("ventana.perfil.botonCambiarModo"),
+				prop.getProperty("ventana.admin.buscar"));
 		vf.getInfoUsuario().mostrarTextos(prop.getProperty("ventana.perfil.botonCambiarModo"));
 	}
 

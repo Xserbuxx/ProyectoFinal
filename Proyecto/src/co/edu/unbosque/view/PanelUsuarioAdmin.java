@@ -27,7 +27,7 @@ public class PanelUsuarioAdmin extends JPanel {
 
 		crearLabel(alias, Color.black, 200, 20, 200, 30, 20);
 		crearLabel(edad + "", Color.black, 200, 50, 200, 30, 20);
-		crearLabel(estatura + "", Color.black, 200, 80, 200, 30, 20);
+		crearLabel(estatura + "", Color.black, 200, 80, 250, 30, 20);
 
 		ImageIcon infoI = new ImageIcon("Resources/info.png");
 		Image imagenEscaladaInfo = infoI.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
@@ -87,7 +87,7 @@ public class PanelUsuarioAdmin extends JPanel {
 
 		crearLabel(alias, Color.black, 200, 20, 200, 30, 20);
 		crearLabel(edad + "", Color.black, 200, 50, 200, 30, 20);
-		crearLabel(estatura + "", Color.black, 200, 80, 200, 30, 20);
+		crearLabel(estatura + "", Color.black, 200, 80, 250, 30, 20);
 		crearLabel(ingresoProm, Color.black, 200, 110, 200, 30, 15);
 
 		ImageIcon infoI = new ImageIcon("Resources/info.png");

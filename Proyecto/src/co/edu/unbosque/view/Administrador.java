@@ -14,6 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 
 public class Administrador extends JPanel {
 
@@ -44,6 +45,9 @@ public class Administrador extends JPanel {
 	private JButton cambiarModo;
 	
 	private JButton botonVolver;
+	
+	private JTextField txtBuscar;
+	private JButton botonBuscar;
 
 	public Administrador() {
 		this.setLayout(null);
@@ -163,6 +167,15 @@ public class Administrador extends JPanel {
 		cambiarModo.setBounds(1060, 15, 180, 40);
 		CampoRedondeado.aplicarRedondeado(cambiarModo, 25, new Color(255, 51, 102), Color.WHITE);
 		
+		txtBuscar = new JTextField();
+		txtBuscar.setBounds(400, 15, 400, 40);
+		
+		botonBuscar = new JButton();
+		botonBuscar.setBounds(820, 15, 100, 40);
+		CampoRedondeado.aplicarRedondeado(botonBuscar, 25, new Color(74,144,226), Color.WHITE);
+		
+		this.add(txtBuscar);
+		this.add(botonBuscar);
 		this.add(botonVolver);
 		this.add(cambiarModo);
 		this.add(botonEdadPDF);
@@ -188,7 +201,7 @@ public class Administrador extends JPanel {
 			String labelBotonPorEdad, String labelBotonNombre, String labelBotonAlias, String labelBotonLikes,
 			String labelBotonTopLikes, String labelBotonTopIngresos, String labelBotonTop, String labelOrdenarPor,
 			String labelCriterio, String labelTop, String labelPDF, String labelBotonEdadPDF, String labelBotonLikesPDF,
-			String labelBotonIngresosPDF, String labelBotonEstaturaPDF, String labelCambiarModo) {
+			String labelBotonIngresosPDF, String labelBotonEstaturaPDF, String labelCambiarModo, String labelBotonBuscar) {
 		botonOrdenar.setText(labelBotonOrdenar);
 		botonTop.setText(labelBotonTop);
 		botonAscendente.setText(labelBotonAscendente);
@@ -208,17 +221,24 @@ public class Administrador extends JPanel {
 		botonIngresosPDF.setText(labelBotonIngresosPDF);
 		botonEstaturaPDF.setText(labelBotonEstaturaPDF);
 		cambiarModo.setText(labelCambiarModo);
+		botonBuscar.setText(labelBotonBuscar);
 	}
 	
 	public void cambiarModo() {
 		Color fondo;
 		Color texto;
+		Color fondoI;
+		Color textoI;
 		if (this.getBackground().equals(Color.WHITE)) {
 			fondo = new Color(36, 41, 46);
+			fondoI = Color.WHITE;
 			texto = Color.WHITE;
+			textoI = Color.BLACK;
 		} else {
 			fondo = Color.WHITE;
+			fondoI = new Color(36, 41, 46);
 			texto = Color.BLACK;
+			textoI = Color.WHITE;
 		}
 		this.setBackground(fondo);
 		panelUsuarios.setBackground(fondo);
@@ -228,6 +248,8 @@ public class Administrador extends JPanel {
 				((PanelUsuarioAdmin) comp).cambiarModo(fondo, texto);
 			}
 		}
+		txtBuscar.setBackground(fondoI);
+		txtBuscar.setForeground(textoI);
 		this.revalidate();
 		this.repaint();
 	}
@@ -499,6 +521,22 @@ public class Administrador extends JPanel {
 
 	public void setBotonVolver(JButton botonVolver) {
 		this.botonVolver = botonVolver;
+	}
+
+	public JTextField getTxtBuscar() {
+		return txtBuscar;
+	}
+
+	public void setTxtBuscar(JTextField txtBuscar) {
+		this.txtBuscar = txtBuscar;
+	}
+
+	public JButton getBotonBuscar() {
+		return botonBuscar;
+	}
+
+	public void setBotonBuscar(JButton botonBuscar) {
+		this.botonBuscar = botonBuscar;
 	}
 	
 }
