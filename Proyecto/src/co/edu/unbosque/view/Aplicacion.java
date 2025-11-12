@@ -19,8 +19,9 @@ public class Aplicacion extends JPanel {
 
 	public Aplicacion() {
 		this.setLayout(null);
-		this.setBackground(new Color(36, 41, 46));
+		this.setBackground(new Color(59, 59, 59));
 
+		
 		ImageIcon imagenPerfil = new ImageIcon("Resources/perfil.png");
 		Image imagenRedimensionadaPerfil = imagenPerfil.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
 		ImageIcon imagenRedimensionada = new ImageIcon(imagenRedimensionadaPerfil);
@@ -45,7 +46,7 @@ public class Aplicacion extends JPanel {
 		botonVolver.setFocusable(false);
 
 		panelUsuarios = new JPanel();
-		panelUsuarios.setBackground(new Color(36, 41, 46));
+		panelUsuarios.setBackground(Color.WHITE);
 		panelUsuarios.setLayout(new GridLayout(0, 1, 10, 10));
 
 		scrollPanel = new JScrollPane(panelUsuarios, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,

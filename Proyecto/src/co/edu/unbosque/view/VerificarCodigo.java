@@ -8,54 +8,62 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class VerificarCodigo extends JPanel{
-	
+import javax.swing.SwingConstants;
+import javax.swing.border.LineBorder;
+
+public class VerificarCodigo extends JPanel {
+
 	private JTextField campoCodigo;
-	
+
 	private JButton botonConfirmar;
-	
+
 	public VerificarCodigo() {
 		this.setLayout(null);
-		this.setBackground(new Color(36, 41, 46));
-		
+		this.setBackground(new Color(59, 59, 59));
+
 		JPanel panel = new JPanel();
-		
-		panel.setBounds(150, 130, 950, 420);
-		panel.setBackground( new Color(30,31,34));
-		
-		campoCodigo = new JTextField();
-		
-		campoCodigo.setBounds(300, 350, 400, 50);
-		campoCodigo.setFont(new Font("Sans", Font.PLAIN, 20));
-		
-		botonConfirmar = new JButton();
-		
-		botonConfirmar.setBounds(450, 450, 300, 50);
-		botonConfirmar.setFont(new Font("Sans", Font.BOLD, 25));
-		botonConfirmar.setBackground(new Color(3, 102, 214));
-		botonConfirmar.setForeground(Color.white);
-		botonConfirmar.setFocusable(false);
-		botonConfirmar.setFocusPainted(false);
-		botonConfirmar.setBorderPainted(false);
-		
-		this.add(botonConfirmar);
-		this.add(campoCodigo);
+		panel.setBounds(0, 0, 1280, 720); 
+		panel.setBackground(new Color(59, 59, 59));
+		panel.setLayout(null);
+
+		Font campoFuente = new Font("Segoe UI", Font.PLAIN, 14);
+		Color colorTinder = new Color(255, 51, 102);
+
+		JPanel panelBorde = new JPanel();
+		panelBorde.setLayout(null);
+		panelBorde.setBounds(355, 140, 570, 400);
+		panelBorde.setBackground(new Color(59, 59, 59));
+		panelBorde.setBorder(new LineBorder(new Color(255, 51, 102), 4, true));
+
+		campoCodigo = new CampoRedondeado(15, 45);
+		campoCodigo.setBounds(85, 200, 400, 50); 
+		campoCodigo.setFont(campoFuente);
+
+		botonConfirmar = new JButton("Confirmar");
+		botonConfirmar.setBounds(135, 270, 300, 50);
+		CampoRedondeado.aplicarRedondeado(botonConfirmar, 25, colorTinder, Color.WHITE);
+
+		panelBorde.add(campoCodigo);
+		panelBorde.add(botonConfirmar);
+		panel.add(panelBorde);
 		this.add(panel);
 	}
-	
-	public void mostrarTextos(String labelVerificarCodigo, String labelInstrucciones, String labelCodigo, String labelBotonConfirmar) {
-		crearLabel(labelVerificarCodigo, Color.WHITE, 500, 180, 400, 50, 30);
-		crearLabel(labelInstrucciones, Color.WHITE, 300, 220, 800, 50, 20);
-		crearLabel(labelCodigo, Color.WHITE, 300, 310, 300, 30, 20);
-		
+
+	public void mostrarTextos(String labelVerificarCodigo, String labelInstrucciones, String labelCodigo,
+			String labelBotonConfirmar) {
+
+		crearLabel(labelVerificarCodigo, Color.WHITE, 435, 180, 400, 50, 30);
+		crearLabel(labelInstrucciones, Color.WHITE, 285, 230, 700, 50, 20);
+		crearLabel(labelCodigo, Color.WHITE, 435, 310, 400, 30, 20);
+
 		botonConfirmar.setText(labelBotonConfirmar);
 	}
-	
+
 	public void crearLabel(String texto, Color colorFondo, int x, int y, int ancho, int alto, int tamanoLetra) {
-		JLabel label = new JLabel(texto);
-		label.setForeground(colorFondo);
+		JLabel label = new JLabel(texto.toUpperCase(), SwingConstants.CENTER);
+		label.setForeground(new Color(200, 200, 200));
 		label.setBounds(x, y, ancho, alto);
-		label.setFont(new Font("Sans", Font.BOLD, tamanoLetra));
+		label.setFont(new Font("Segoe UI", Font.PLAIN, tamanoLetra - 4));
 		this.add(label);
 		this.setComponentZOrder(label, 0);
 	}
@@ -75,5 +83,5 @@ public class VerificarCodigo extends JPanel{
 	public void setBotonConfirmar(JButton botonConfirmar) {
 		this.botonConfirmar = botonConfirmar;
 	}
-	
+
 }
