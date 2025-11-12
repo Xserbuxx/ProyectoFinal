@@ -52,6 +52,18 @@ public class ViewFacade {
 		ventanaPrincipal.add(paneles);
 	}
 	
+	public void cambiarModo() {
+		app.cambiarModo();
+		per.cambiarModo();
+		admin.cambiarModo();
+		confirmarBaja.cambiarModo();
+		infoUsuario.cambiarModo();
+		is.cambiarModo();
+		reg.cambiarModo();
+		vc.cambiarModo();
+		sg.cambiarModo();
+	}
+	
 	public void mostrarPanel(String panel) {
 		cl.show(paneles, panel);
 	}

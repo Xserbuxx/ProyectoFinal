@@ -19,6 +19,8 @@ public class InicioSesion extends JPanel {
 
 	private JButton botonConfirmar;
 	private JButton botonRegistrarse;
+	
+	private JButton cambiarModo;
 
 	public InicioSesion() {
 
@@ -70,7 +72,15 @@ public class InicioSesion extends JPanel {
 		botonRegistrarse.setContentAreaFilled(false);
 		botonRegistrarse.setBorderPainted(false);
 		botonRegistrarse.setFocusPainted(false);
-
+		
+		cambiarModo = new JButton();
+		cambiarModo.setBounds(1000, 10, 200, 50);
+		cambiarModo.setBackground(colorTinder);
+		cambiarModo.setBorderPainted(false);
+		cambiarModo.setFocusPainted(false);
+		cambiarModo.setFocusable(false);
+		
+		this.add(cambiarModo);
 		this.add(derecha);
 		this.add(campoUsuario);
 		this.add(campoContrasena);
@@ -78,9 +88,35 @@ public class InicioSesion extends JPanel {
 		this.add(botonRegistrarse);
 
 	}
+	
+	public void cambiarModo() {
+		if (this.getBackground().equals(new Color(59, 59, 59))) {
+			this.setBackground(Color.white);
+			for (int i = 0; i < this.getComponentCount(); i++) {
+				if (this.getComponent(i) instanceof JLabel) {
+					((JLabel) this.getComponent(i)).setForeground(Color.black);
+				}
+				if (this.getComponent(i) instanceof JTextField) {
+					this.getComponent(i).setBackground(new Color(59, 59, 59));
+					this.getComponent(i).setForeground(Color.white);
+				}
+			}
+		} else {
+			this.setBackground(new Color(59, 59, 59));
+			for (int i = 0; i < this.getComponentCount(); i++) {
+				if (this.getComponent(i) instanceof JLabel) {
+					((JLabel) this.getComponent(i)).setForeground(Color.white);
+				}
+				if (this.getComponent(i) instanceof JTextField) {
+					this.getComponent(i).setBackground(Color.white);
+					this.getComponent(i).setForeground(Color.black);
+				}
+			}
+		}
+	}
 
 	public void mostrarTextos(String labelIniciarSesion, String labelUsuario, String labelContrasena,
-			String labelBotonConfirmar, String labelBotonRegistrarse, String labelSinCuenta) {
+			String labelBotonConfirmar, String labelBotonRegistrarse, String labelSinCuenta, String labelCambiarModo) {
 
 		crearLabel(labelIniciarSesion, new Color(255, 255, 255, 200), 120, 100, 400, 50, 40);
 
@@ -102,7 +138,9 @@ public class InicioSesion extends JPanel {
 		crearLabel(labelContrasena, new Color(255, 255, 255, 200), 160, 320, 400, 50, 30);
 
 		crearLabel(labelSinCuenta, new Color(255, 255, 255, 200), 150, 550, 200, 30, 14);
-
+		
+		cambiarModo.setText(labelCambiarModo);
+		
 		botonConfirmar.setText(labelBotonConfirmar);
 		botonRegistrarse.setText(labelBotonRegistrarse);
 	}
@@ -151,6 +189,14 @@ public class InicioSesion extends JPanel {
 
 	public void setBotonRegistrarse(JButton botonRegistrarse) {
 		this.botonRegistrarse = botonRegistrarse;
+	}
+
+	public JButton getCambiarModo() {
+		return cambiarModo;
+	}
+
+	public void setCambiarModo(JButton cambiarModo) {
+		this.cambiarModo = cambiarModo;
 	}
 
 }

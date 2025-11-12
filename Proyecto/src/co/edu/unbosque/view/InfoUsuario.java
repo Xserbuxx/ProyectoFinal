@@ -120,6 +120,35 @@ public class InfoUsuario extends JPanel {
 		crearLabel(labelLikesRecibidos, Color.LIGHT_GRAY, 300, 625, 400, 30, 16);
 
 	}
+	
+	public void cambiarModo() {
+		if (this.getBackground().equals(new Color(36, 41, 46))) {
+			this.setBackground(Color.white);
+			for (Component c : this.getComponents()) {
+				if (c instanceof JLabel) {
+					((JLabel) c).setForeground(Color.black);
+				}
+			}
+		} else {
+			this.setBackground(new Color(36, 41, 46));
+			for (Component c : this.getComponents()) {
+				if (c instanceof JLabel) {
+					((JLabel) c).setForeground(Color.white);
+				}
+			}
+		}
+		
+		for (Component c: this.getComponents()) {
+			if (c instanceof JLabel) {
+				JLabel label = (JLabel) c;
+				if (this.getBackground().equals(new Color(36, 41, 46))) {
+					label.setForeground(Color.WHITE);
+				} else {
+					label.setForeground(Color.BLACK);
+				}
+			}
+		}
+	}
 
 	public void limpiarLabels() {
 		for (Component c : this.getComponents()) {

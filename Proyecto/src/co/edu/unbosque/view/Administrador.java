@@ -198,6 +198,58 @@ public class Administrador extends JPanel {
 		botonEstaturaPDF.setText(labelBotonEstaturaPDF);
 		cambiarModo.setText(labelCambiarModo);
 	}
+	
+	public void cambiarModo() {
+		Color fondo;
+		Color texto;
+		if (this.getBackground().equals(Color.WHITE)) {
+			fondo = new Color(36, 41, 46);
+			texto = Color.WHITE;
+		} else {
+			fondo = Color.WHITE;
+			texto = Color.BLACK;
+		}
+		this.setBackground(fondo);
+		panelUsuarios.setBackground(fondo);
+		for (int i = 0; i < panelUsuarios.getComponentCount(); i++) {
+			Component comp = panelUsuarios.getComponent(i);
+			if (comp instanceof PanelUsuarioAdmin) {
+				((PanelUsuarioAdmin) comp).cambiarModo(fondo, texto);
+			}
+		}
+		for (Component c : this.getComponents()) {
+			if (c instanceof JLabel) {
+				JLabel label = (JLabel) c;
+				label.setForeground(texto);
+			}
+		}
+		botonAscendente.setForeground(texto);
+		botonDescendente.setForeground(texto);
+		botonPorEdad.setForeground(texto);
+		botonNombre.setForeground(texto);
+		botonAlias.setForeground(texto);
+		botonLikes.setForeground(texto);
+		botonTopLikes.setForeground(texto);
+		botonTopIngresos.setForeground(texto);
+		botonEdadPDF.setForeground(texto);
+		botonLikesPDF.setForeground(texto);
+		botonIngresosPDF.setForeground(texto);
+		botonEstaturaPDF.setForeground(texto);
+		botonAscendente.setBackground(fondo);
+		botonDescendente.setBackground(fondo);
+		botonPorEdad.setBackground(fondo);
+		botonNombre.setBackground(fondo);
+		botonAlias.setBackground(fondo);
+		botonLikes.setBackground(fondo);
+		botonTopLikes.setBackground(fondo);
+		botonTopIngresos.setBackground(fondo);
+		botonEdadPDF.setBackground(fondo);
+		botonLikesPDF.setBackground(fondo);
+		botonIngresosPDF.setBackground(fondo);
+		botonEstaturaPDF.setBackground(fondo);
+		this.revalidate();
+		this.repaint();
+	}
 
 	public void crearLabel(String texto, Color colorFondo, int x, int y, int ancho, int alto, int tamanoLetra) {
 		JLabel label = new JLabel(texto);
@@ -245,6 +297,12 @@ public class Administrador extends JPanel {
 		botonTopLikes.setEnabled(false);
 		botonTopIngresos.setEnabled(false);
 		botonTop.setEnabled(false);
+		botonPDF.setEnabled(false);
+		botonEdadPDF.setEnabled(false);
+		botonLikesPDF.setEnabled(false);
+		botonIngresosPDF.setEnabled(false);
+		botonEstaturaPDF.setEnabled(false);
+		cambiarModo.setEnabled(false);
 	}
 
 	public void setOn() {
@@ -271,6 +329,12 @@ public class Administrador extends JPanel {
 		botonTopLikes.setEnabled(true);
 		botonTopIngresos.setEnabled(true);
 		botonTop.setEnabled(true);
+		botonPDF.setEnabled(true);
+		botonEdadPDF.setEnabled(true);
+		botonLikesPDF.setEnabled(true);
+		botonIngresosPDF.setEnabled(true);
+		botonEstaturaPDF.setEnabled(true);
+		cambiarModo.setEnabled(true);
 	}
 
 	public JScrollPane getScrollPanel() {

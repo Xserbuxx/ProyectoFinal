@@ -51,6 +51,15 @@ public class PanelUsuario extends JPanel {
 
         this.add(botonLike);
     }
+    
+    public void cambiarModo(Color colorFondo, Color colorTexto) {
+		this.setBackground(colorFondo);
+		for (int i = 0; i < this.getComponentCount(); i++) {
+			if (this.getComponent(i) instanceof JLabel) {
+				((JLabel) this.getComponent(i)).setForeground(colorTexto);
+			}
+		}
+	}
 
     public PanelUsuario(String alias, ImageIcon imagen, int edad, float estatura, int likes, boolean like,
             ActionListener listener, String ingresoProm) {

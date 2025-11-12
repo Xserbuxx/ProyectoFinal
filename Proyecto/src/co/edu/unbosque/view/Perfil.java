@@ -137,6 +137,30 @@ public class Perfil extends JPanel {
 		crearLabel(labelLikesRecibidos, Color.LIGHT_GRAY, 300, 625, 400, 30, 16);
 
 	}
+	
+	public void cambiarModo() {
+		Color fondo = this.getBackground();
+		if (fondo.equals(new Color(36, 41, 46))) {
+			this.setBackground(Color.WHITE);
+		} else {
+			this.setBackground(new Color(36, 41, 46));
+		}
+		
+		for (Component c: this.getComponents()) {
+			if (c instanceof JLabel) {
+				JLabel label = (JLabel) c;
+				if (fondo.equals(new Color(36, 41, 46))) {
+					label.setForeground(Color.BLACK);
+				} else {
+					label.setForeground(Color.WHITE);
+				}
+			}
+			
+		}
+		
+		this.revalidate();
+		this.repaint();
+	}
 
 	public void mostrarTextos(String labelBotonCambiarModo) {
 		cambiarModo.setText(labelBotonCambiarModo);

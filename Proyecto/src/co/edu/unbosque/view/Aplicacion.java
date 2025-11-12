@@ -1,6 +1,7 @@
 package co.edu.unbosque.view;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.ActionListener;
@@ -57,6 +58,26 @@ public class Aplicacion extends JPanel {
 		this.add(botonVolver);
 		this.add(botonPerfil);
 		this.add(scrollPanel);
+	}
+	
+	public void cambiarModo() {
+		Color fondo;
+		Color texto;
+		if (this.getBackground().equals(Color.WHITE)) {
+			fondo = new Color(36, 41, 46);
+			texto = Color.WHITE;
+		} else {
+			fondo = Color.WHITE;
+			texto = Color.BLACK;
+		}
+		this.setBackground(fondo);
+		panelUsuarios.setBackground(fondo);
+		for (int i = 0; i < panelUsuarios.getComponentCount(); i++) {
+			Component comp = panelUsuarios.getComponent(i);
+			if (comp instanceof PanelUsuario) {
+				((PanelUsuario) comp).cambiarModo(fondo, texto);
+			}
+		}
 	}
 
 	public void agregarUsuario(String alias, ImageIcon imagen, int edad, float estatura, int likes, boolean like,

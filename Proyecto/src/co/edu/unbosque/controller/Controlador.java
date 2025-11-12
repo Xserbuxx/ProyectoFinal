@@ -51,9 +51,9 @@ import jakarta.mail.internet.InternetAddress;
 import jakarta.mail.internet.MimeMessage;
 
 /**
- * Controlador principal de la aplicación que gestiona la lógica de negocio
- * y coordina las interacciones entre el modelo y la vista.
- * Implementa ActionListener para manejar eventos de la interfaz gráfica.
+ * Controlador principal de la aplicación que gestiona la lógica de negocio y
+ * coordina las interacciones entre el modelo y la vista. Implementa
+ * ActionListener para manejar eventos de la interfaz gráfica.
  * 
  * @author Sergio Enrique Caballero Neira
  * @version 1.0
@@ -68,8 +68,8 @@ public class Controlador implements ActionListener {
 	private Persona usuarioActual;
 
 	/**
-	 * Constructor de la clase Controlador.
-	 * Inicializa las fachadas del modelo y la vista, las propiedades y el generador de números aleatorios.
+	 * Constructor de la clase Controlador. Inicializa las fachadas del modelo y la
+	 * vista, las propiedades y el generador de números aleatorios.
 	 */
 	public Controlador() {
 		mf = new ModelFacade();
@@ -79,8 +79,8 @@ public class Controlador implements ActionListener {
 	}
 
 	/**
-	 * Inicia la aplicación agregando los oyentes de eventos,
-	 * actualizando la lista de personas y mostrando la ventana principal.
+	 * Inicia la aplicación agregando los oyentes de eventos, actualizando la lista
+	 * de personas y mostrando la ventana principal.
 	 */
 	public void run() {
 		agregarOyentes();
@@ -89,8 +89,8 @@ public class Controlador implements ActionListener {
 	}
 
 	/**
-	 * Agrega los oyentes de eventos a todos los botones y componentes
-	 * de la interfaz gráfica, configurando sus comandos de acción.
+	 * Agrega los oyentes de eventos a todos los botones y componentes de la
+	 * interfaz gráfica, configurando sus comandos de acción.
 	 */
 	private void agregarOyentes() {
 		vf.getIdm().getConfirmar().addActionListener(this);
@@ -137,6 +137,15 @@ public class Controlador implements ActionListener {
 		vf.getApp().getBotonVolver().setActionCommand("BotonVolverApp");
 		vf.getAdmin().getBotonVolver().addActionListener(this);
 		vf.getAdmin().getBotonVolver().setActionCommand("BotonVolverAdmin");
+		vf.getIs().getCambiarModo().addActionListener(this);
+		vf.getIs().getCambiarModo().setActionCommand("BotonCambiarModo");
+		vf.getReg().getCambiarModo().addActionListener(this);
+		vf.getReg().getCambiarModo().setActionCommand("BotonCambiarModo");
+		vf.getVc().getCambiarModo().addActionListener(this);
+		vf.getVc().getCambiarModo().setActionCommand("BotonCambiarModo");
+		vf.getSg().getCambiarModo().addActionListener(this);
+		vf.getSg().getCambiarModo().setActionCommand("BotonCambiarModo");
+
 	}
 
 	/**
@@ -221,6 +230,9 @@ public class Controlador implements ActionListener {
 						usuarioInfo.getEstaturaIdeal() + "", usuarioInfo.getLikesRecibidos() + "",
 						usuarioInfo.getImagen());
 			}
+
+			vf.cambiarModo();
+			vf.cambiarModo();
 		}
 
 		if (e.getActionCommand().contains("botonBaja-")) {
@@ -237,6 +249,8 @@ public class Controlador implements ActionListener {
 			vf.getConfirmarBaja().getBotonConfirmar()
 					.setActionCommand("botonConfirmarBaja-" + e.getActionCommand().split("-")[1]);
 			vf.getConfirmarBaja().getBotonConfirmar().addActionListener(this);
+			vf.cambiarModo();
+			vf.cambiarModo();
 		}
 
 		if (e.getActionCommand().contains("botonConfirmarBaja-")) {
@@ -252,7 +266,8 @@ public class Controlador implements ActionListener {
 			vf.getAdmin().remove(vf.getConfirmarBaja());
 			vf.getAdmin().setEnabled(true);
 			vf.getAdmin().setOn();
-
+			vf.cambiarModo();
+			vf.cambiarModo();
 		}
 
 		switch (e.getActionCommand()) {
@@ -299,11 +314,15 @@ public class Controlador implements ActionListener {
 			vf.getReg().eliminarLabelSexos(prop.getProperty("ventana.registro.ingresoProm"),
 					prop.getProperty("ventana.registro.divorciada"));
 			vf.getReg().mostrarCampoHombre(prop.getProperty("ventana.registro.ingresoProm"));
+			vf.cambiarModo();
+			vf.cambiarModo();
 			break;
 		case "BotonSexoMujer":
 			vf.getReg().eliminarLabelSexos(prop.getProperty("ventana.registro.ingresoProm"),
 					prop.getProperty("ventana.registro.divorciada"));
 			vf.getReg().mostrarCampoMujer(prop.getProperty("ventana.registro.divorciada"));
+			vf.cambiarModo();
+			vf.cambiarModo();
 			break;
 		case "BotonConfirmarRegistro":
 			registrarUsuario();
@@ -336,6 +355,8 @@ public class Controlador implements ActionListener {
 				if (usuarioActual.getAlias().equals("admin")) {
 					vf.mostrarPanel("administrador");
 					agregarUsuariosVentanaAdmin();
+					vf.cambiarModo();
+					vf.cambiarModo();
 					break;
 				}
 
@@ -344,6 +365,8 @@ public class Controlador implements ActionListener {
 							prop.getProperty("mensaje.verificarCorreo") + " " + usuarioActual.getCorreo());
 					enviarCodigoVerificacion(usuarioActual.getCorreo(), usuarioActual.getCodigo());
 					vf.mostrarPanel("verificarCodigo");
+					vf.cambiarModo();
+					vf.cambiarModo();
 					break;
 				}
 
@@ -355,6 +378,9 @@ public class Controlador implements ActionListener {
 					vf.mostrarPanel("aplicacion");
 					agregarUsuariosVentanaAplicacion();
 				}
+
+				vf.cambiarModo();
+				vf.cambiarModo();
 			} catch (CampoVacioException ex) {
 				vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.campoVacio") + ex.getMessage());
 			}
@@ -371,7 +397,8 @@ public class Controlador implements ActionListener {
 					vf.getVentanaPrincipal().mostrarMensaje(prop.getProperty("mensaje.cuentaVerificada"));
 
 					mostrarVentanaGustos();
-
+					vf.cambiarModo();
+					vf.cambiarModo();
 				} else {
 					vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.codigoInvalido"));
 
@@ -414,6 +441,8 @@ public class Controlador implements ActionListener {
 			vf.getVentanaPrincipal().mostrarMensaje(prop.getProperty("mensaje.gustosGuardados"));
 			vf.mostrarPanel("aplicacion");
 			agregarUsuariosVentanaAplicacion();
+			vf.cambiarModo();
+			vf.cambiarModo();
 			break;
 		case "BotonIncognito":
 			if (usuarioActual.isIncognito()) {
@@ -479,6 +508,9 @@ public class Controlador implements ActionListener {
 						usuarioActual.getImagen());
 			}
 
+			vf.cambiarModo();
+			vf.cambiarModo();
+
 			break;
 		case "BotonVolverPerfil":
 			vf.mostrarPanel("aplicacion");
@@ -540,6 +572,8 @@ public class Controlador implements ActionListener {
 			;
 
 			agregarUsuariosVentanaAdmin();
+			vf.cambiarModo();
+			vf.cambiarModo();
 			break;
 		case "BotonTopUsuarios":
 
@@ -557,7 +591,8 @@ public class Controlador implements ActionListener {
 			}
 
 			agregarTopUsuariosVentanaAdmin(seleccionTop);
-
+			vf.cambiarModo();
+			vf.cambiarModo();
 			break;
 		case "BotonGenerarPDF":
 
@@ -610,6 +645,9 @@ public class Controlador implements ActionListener {
 		case "BotonVolverAdmin":
 			vf.mostrarPanel("inicioSesion");
 			break;
+		case "BotonCambiarModo":
+			vf.cambiarModo();
+			break;
 		default:
 			break;
 		}
@@ -617,8 +655,9 @@ public class Controlador implements ActionListener {
 	}
 
 	/**
-	 * Convierte una cantidad de dinero de la moneda local a dólares estadounidenses (USD).
-	 * La conversión se realiza según el idioma configurado en las propiedades.
+	 * Convierte una cantidad de dinero de la moneda local a dólares estadounidenses
+	 * (USD). La conversión se realiza según el idioma configurado en las
+	 * propiedades.
 	 * 
 	 * @param cantidad La cantidad en moneda local a convertir
 	 * @return La cantidad convertida a USD
@@ -640,8 +679,8 @@ public class Controlador implements ActionListener {
 	}
 
 	/**
-	 * Convierte una cantidad de dólares estadounidenses (USD) a la moneda local.
-	 * La conversión se realiza según el idioma configurado en las propiedades.
+	 * Convierte una cantidad de dólares estadounidenses (USD) a la moneda local. La
+	 * conversión se realiza según el idioma configurado en las propiedades.
 	 * 
 	 * @param cantidad La cantidad en USD a convertir
 	 * @return La cantidad convertida a la moneda local
@@ -663,8 +702,8 @@ public class Controlador implements ActionListener {
 	}
 
 	/**
-	 * Registra un nuevo usuario en el sistema.
-	 * Determina si es hombre o mujer según los campos habilitados.
+	 * Registra un nuevo usuario en el sistema. Determina si es hombre o mujer según
+	 * los campos habilitados.
 	 */
 	private void registrarUsuario() {
 		if (vf.getReg().getDivorciada().isEnabled()) {
@@ -681,8 +720,8 @@ public class Controlador implements ActionListener {
 	}
 
 	/**
-	 * Registra un nuevo usuario hombre en el sistema.
-	 * Valida todos los campos del formulario y crea el usuario si los datos son correctos.
+	 * Registra un nuevo usuario hombre en el sistema. Valida todos los campos del
+	 * formulario y crea el usuario si los datos son correctos.
 	 */
 	private void registrarUsuarioHombre() {
 
@@ -875,8 +914,8 @@ public class Controlador implements ActionListener {
 	}
 
 	/**
-	 * Registra un nuevo usuario mujer en el sistema.
-	 * Valida todos los campos del formulario y crea el usuario si los datos son correctos.
+	 * Registra un nuevo usuario mujer en el sistema. Valida todos los campos del
+	 * formulario y crea el usuario si los datos son correctos.
 	 */
 	private void registrarUsuarioMujer() {
 		try {
@@ -1057,10 +1096,11 @@ public class Controlador implements ActionListener {
 	}
 
 	/**
-	 * Registra los gustos y preferencias del usuario actual.
-	 * Determina si es hombre o mujer y llama al método correspondiente.
+	 * Registra los gustos y preferencias del usuario actual. Determina si es hombre
+	 * o mujer y llama al método correspondiente.
 	 * 
-	 * @return true si los gustos se registraron correctamente, false en caso contrario
+	 * @return true si los gustos se registraron correctamente, false en caso
+	 *         contrario
 	 */
 	private boolean registrarGustosUsuario() {
 		if (usuarioActual == null) {
@@ -1079,10 +1119,11 @@ public class Controlador implements ActionListener {
 	}
 
 	/**
-	 * Registra los gustos y preferencias específicos de un usuario hombre.
-	 * Incluye rango de edad, estatura ideal y preferencia de estado civil.
+	 * Registra los gustos y preferencias específicos de un usuario hombre. Incluye
+	 * rango de edad, estatura ideal y preferencia de estado civil.
 	 * 
-	 * @return true si los gustos se registraron correctamente, false en caso contrario
+	 * @return true si los gustos se registraron correctamente, false en caso
+	 *         contrario
 	 */
 	private boolean registrarGustosHombre() {
 		int edadMinima = 0;
@@ -1169,10 +1210,11 @@ public class Controlador implements ActionListener {
 	}
 
 	/**
-	 * Registra los gustos y preferencias específicos de una usuario mujer.
-	 * Incluye rango de edad, estatura ideal e ingresos ideales.
+	 * Registra los gustos y preferencias específicos de una usuario mujer. Incluye
+	 * rango de edad, estatura ideal e ingresos ideales.
 	 * 
-	 * @return true si los gustos se registraron correctamente, false en caso contrario
+	 * @return true si los gustos se registraron correctamente, false en caso
+	 *         contrario
 	 */
 	private boolean registrarGustosMujer() {
 		int edadMinima = 0;
@@ -1264,8 +1306,8 @@ public class Controlador implements ActionListener {
 	}
 
 	/**
-	 * Muestra la ventana de selección de gustos según el tipo de usuario.
-	 * Configura los campos específicos para hombres o mujeres.
+	 * Muestra la ventana de selección de gustos según el tipo de usuario. Configura
+	 * los campos específicos para hombres o mujeres.
 	 */
 	private void mostrarVentanaGustos() {
 		if (usuarioActual == null) {
@@ -1288,8 +1330,8 @@ public class Controlador implements ActionListener {
 	}
 
 	/**
-	 * Agrega los usuarios compatibles a la ventana de aplicación.
-	 * Filtra los usuarios según las preferencias del usuario actual.
+	 * Agrega los usuarios compatibles a la ventana de aplicación. Filtra los
+	 * usuarios según las preferencias del usuario actual.
 	 */
 	private void agregarUsuariosVentanaAplicacion() {
 		vf.getApp().limpiarUsuarios();
@@ -1347,8 +1389,8 @@ public class Controlador implements ActionListener {
 	}
 
 	/**
-	 * Agrega todos los usuarios a la ventana de administrador.
-	 * Excluye al usuario administrador de la lista.
+	 * Agrega todos los usuarios a la ventana de administrador. Excluye al usuario
+	 * administrador de la lista.
 	 */
 	private void agregarUsuariosVentanaAdmin() {
 
@@ -1371,7 +1413,8 @@ public class Controlador implements ActionListener {
 	}
 
 	/**
-	 * Agrega el top 10 de usuarios a la ventana de administrador según el criterio seleccionado.
+	 * Agrega el top 10 de usuarios a la ventana de administrador según el criterio
+	 * seleccionado.
 	 * 
 	 * @param seleccionTop El criterio de selección (1: por likes, 2: por ingresos)
 	 */
@@ -1416,8 +1459,8 @@ public class Controlador implements ActionListener {
 	}
 
 	/**
-	 * Envía un código de verificación al correo electrónico especificado.
-	 * Utiliza el servicio de correo SMTP de Gmail.
+	 * Envía un código de verificación al correo electrónico especificado. Utiliza
+	 * el servicio de correo SMTP de Gmail.
 	 * 
 	 * @param correo El correo electrónico del destinatario
 	 * @param codigo El código de verificación a enviar
@@ -1444,11 +1487,12 @@ public class Controlador implements ActionListener {
 			MimeMessage message = new MimeMessage(session);
 			message.setFrom(new InternetAddress("bostinderueb@gmail.com"));
 			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(correo));
-			message.setSubject("Código de Seguridad de tu Cuenta", "UTF-8");
+			message.setSubject(prop.getProperty("mensaje.correo.asunto"), "UTF-8");
 
 			// cambiar mensaje por un properties
-			message.setContent("Buen dia. " + prop.getProperty("mensaje.correo.parte1") + codigo
-					+ prop.getProperty("mensaje.correo.parte2"), "text/plain; charset=UTF-8");
+			message.setContent(
+					prop.getProperty("mensaje.correo.parte1") + codigo + prop.getProperty("mensaje.correo.parte2"),
+					"text/plain; charset=UTF-8");
 
 			Transport.send(message);
 		} catch (MessagingException e) {
@@ -1457,7 +1501,8 @@ public class Controlador implements ActionListener {
 	}
 
 	/**
-	 * Ordena un arreglo de números en forma ascendente utilizando el algoritmo de inserción.
+	 * Ordena un arreglo de números en forma ascendente utilizando el algoritmo de
+	 * inserción.
 	 * 
 	 * @param datos El arreglo de datos a ordenar
 	 * @return Un nuevo arreglo con los datos ordenados
@@ -1527,8 +1572,8 @@ public class Controlador implements ActionListener {
 	}
 
 	/**
-	 * Calcula la mediana de un conjunto de datos.
-	 * Ordena los datos y encuentra el valor central.
+	 * Calcula la mediana de un conjunto de datos. Ordena los datos y encuentra el
+	 * valor central.
 	 * 
 	 * @param datos El arreglo de datos
 	 * @return La mediana
@@ -1680,7 +1725,7 @@ public class Controlador implements ActionListener {
 		}
 		double maximo = datos[0];
 		for (double dato : datos) {
-		 if (dato > maximo) {
+			if (dato > maximo) {
 				maximo = dato;
 			}
 		}
@@ -1734,9 +1779,10 @@ public class Controlador implements ActionListener {
 	}
 
 	/**
-	 * Genera un informe PDF con estadísticas descriptivas y gráficos de los datos proporcionados.
+	 * Genera un informe PDF con estadísticas descriptivas y gráficos de los datos
+	 * proporcionados.
 	 * 
-	 * @param datos El arreglo de datos para analizar
+	 * @param datos         El arreglo de datos para analizar
 	 * @param nombreArchivo El nombre del archivo PDF a generar
 	 */
 	public void generarInforme(double[] datos, String nombreArchivo) {
@@ -1847,7 +1893,7 @@ public class Controlador implements ActionListener {
 	/**
 	 * Crea un gráfico de barras con las estadísticas descriptivas principales.
 	 * 
-	 * @param datos El arreglo de datos
+	 * @param datos       El arreglo de datos
 	 * @param rutaArchivo La ruta donde guardar el gráfico
 	 * @return El archivo del gráfico creado, o null si hubo un error
 	 */
@@ -1881,7 +1927,7 @@ public class Controlador implements ActionListener {
 	/**
 	 * Crea un histograma mostrando la distribución de frecuencias de los datos.
 	 * 
-	 * @param datos El arreglo de datos
+	 * @param datos       El arreglo de datos
 	 * @param rutaArchivo La ruta donde guardar el histograma
 	 * @return El archivo del histograma creado, o null si hubo un error
 	 */
@@ -1907,7 +1953,7 @@ public class Controlador implements ActionListener {
 	/**
 	 * Crea un gráfico de línea mostrando la tendencia de los datos.
 	 * 
-	 * @param datos El arreglo de datos
+	 * @param datos       El arreglo de datos
 	 * @param rutaArchivo La ruta donde guardar el gráfico
 	 * @return El archivo del gráfico creado, o null si hubo un error
 	 */
@@ -1953,15 +1999,17 @@ public class Controlador implements ActionListener {
 	}
 
 	/**
-	 * Aplica los textos del idioma seleccionado a todos los componentes de la interfaz.
-	 * Carga las etiquetas y mensajes desde el archivo de propiedades correspondiente.
+	 * Aplica los textos del idioma seleccionado a todos los componentes de la
+	 * interfaz. Carga las etiquetas y mensajes desde el archivo de propiedades
+	 * correspondiente.
 	 */
 	private void agregarIdioma() {
 		vf.getIs().mostrarTextos(prop.getProperty("ventana.iniciarSesion.titulo"),
 				prop.getProperty("ventana.iniciarSesion.usuario"), prop.getProperty("ventana.iniciarSesion.contrasena"),
 				prop.getProperty("ventana.iniciarSesion.botonConfirmar"),
 				prop.getProperty("ventana.iniciarSesion.botonRegistrarse"),
-				prop.getProperty("ventana.iniciarSesion.sinCuenta"));
+				prop.getProperty("ventana.iniciarSesion.sinCuenta"),
+				prop.getProperty("ventana.perfil.botonCambiarModo"));
 		vf.getReg().mostrarTextos(prop.getProperty("ventana.registro.titulo"),
 				prop.getProperty("ventana.registro.nombre"), prop.getProperty("ventana.registro.usuario"),
 				prop.getProperty("ventana.registro.edad"), prop.getProperty("ventana.registro.fechaNacimiento"),
@@ -1971,18 +2019,22 @@ public class Controlador implements ActionListener {
 				prop.getProperty("ventana.registro.contrasena"), prop.getProperty("ventana.registro.botonConfirmar"),
 				prop.getProperty("ventana.registro.botonIniciarSesion"), prop.getProperty("ventana.registro.yaCuenta"),
 				prop.getProperty("ventana.registro.sexo"), prop.getProperty("ventana.registro.siDivorciada"),
-				prop.getProperty("ventana.registro.noDivorciada"), prop.getProperty("ventana.registro.botonExaminar"));
+				prop.getProperty("ventana.registro.noDivorciada"), prop.getProperty("ventana.registro.botonExaminar"),
+				prop.getProperty("ventana.perfil.botonCambiarModo"));
 		vf.getVc().mostrarTextos(prop.getProperty("ventana.verificarCodigo.titulo"),
 				prop.getProperty("ventana.verificarCodigo.instrucciones"),
 				prop.getProperty("ventana.verificarCodigo.codigo"),
-				prop.getProperty("ventana.verificarCodigo.botonConfirmar"));
+				prop.getProperty("ventana.verificarCodigo.botonConfirmar"),
+				prop.getProperty("ventana.perfil.botonCambiarModo"));
 		vf.getSg().mostrarTextos(prop.getProperty("ventana.seleccionGustos.edadmin"),
 				prop.getProperty("ventana.seleccionGustos.edadmax"),
 				prop.getProperty("ventana.seleccionGustos.estaturaIdeal"),
 				prop.getProperty("ventana.seleccionGustos.siDivorciada"),
 				prop.getProperty("ventana.seleccionGustos.noDivorciada"),
 				prop.getProperty("ventana.seleccionGustos.botonConfirmar"),
-				prop.getProperty("ventana.seleccionGustos.edad"));
+				prop.getProperty("ventana.seleccionGustos.edad"),
+				prop.getProperty("ventana.seleccionGustos.personaIdeal"),
+				prop.getProperty("ventana.perfil.botonCambiarModo"));
 		vf.getPer().mostrarTextos(prop.getProperty("ventana.perfil.botonCambiarModo"));
 		vf.getAdmin().mostrarTextos(prop.getProperty("ventana.admin.botonOrdenarPor"),
 				prop.getProperty("ventana.admin.botonAscendente"), prop.getProperty("ventana.admin.botonDescendente"),
