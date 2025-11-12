@@ -3,13 +3,17 @@ package co.edu.unbosque.view;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
+import java.awt.Image;
 
+import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
 public class SeleccionGustos extends JPanel {
 
@@ -26,76 +30,83 @@ public class SeleccionGustos extends JPanel {
 	ButtonGroup estadoDivorcio;
 
 	public SeleccionGustos() {
-
-		this.setBackground(new Color(36, 41, 46));
+	
+		this.setBackground(new Color(59, 59, 59));
 		this.setLayout(null);
 
-		JPanel panel = new JPanel();
-
-		panel.setBounds(150, 130, 950, 420);
+		JPanel panel = new JPanel(null);
+		panel.setBounds(0, 0, 600, 800);
 		panel.setBackground(new Color(30, 31, 34));
-		// botones de estado de divorcio
+
+		ImageIcon originalIcon = new ImageIcon("Resources/fondo_panel.png");
+
+
+		Image imagenEscalada = originalIcon.getImage().getScaledInstance(600, 800, Image.SCALE_SMOOTH);
+		ImageIcon iconoEscalado = new ImageIcon(imagenEscalada);
+
+		JLabel imagenPanel = new JLabel(iconoEscalado);
+		imagenPanel.setBounds(0, 0, 600, 800);
+
+		panel.add(imagenPanel);
+		panel.setComponentZOrder(imagenPanel, panel.getComponentCount() - 1);
+
+		this.add(panel);
+
+		Color colorTinder = new Color(255, 51, 102);
+
+		JPanel panelFormulario = new JPanel(null);
+		panelFormulario.setBounds(760, 100, 400, 500);
+		panelFormulario.setBackground(new Color(59, 59, 59));
+		panelFormulario.setBorder(BorderFactory.createLineBorder(colorTinder, 4, true)); // borde redondeado
+
+		JLabel tituloFormulario = new JLabel("Describe tu persona ideal", SwingConstants.CENTER);
+		tituloFormulario.setBounds(0, 20, 400, 40);
+		tituloFormulario.setForeground(Color.WHITE);
+		tituloFormulario.setFont(new Font("Segoe UI", Font.BOLD, 18)); 
+		panelFormulario.add(tituloFormulario);
+		int baseX = 850;
+		int baseY = 200;
+
+		Font campoFuente = new Font("Segoe UI", Font.PLAIN, 14);
+
+		campoEdadMinima = new CampoRedondeado(10, 30);
+		campoEdadMinima.setBounds(baseX, baseY + 40, 90, 30);
+		campoEdadMinima.setFont(campoFuente);
+
+		campoEdadMaxima = new CampoRedondeado(10, 30);
+		campoEdadMaxima.setBounds(baseX + 120, baseY + 40, 90, 30);
+		campoEdadMaxima.setFont(campoFuente);
+
+		campoEstaturaIdeal = new CampoRedondeado(10, 30);
+		campoEstaturaIdeal.setBounds(baseX, baseY + 120, 210, 30);
+		campoEstaturaIdeal.setFont(campoFuente);
+
+		campoIngresoIdeal = new CampoRedondeado(10, 30);
+		campoIngresoIdeal.setBounds(baseX, baseY + 220, 210, 30);
+		campoIngresoIdeal.setFont(campoFuente);
+		campoIngresoIdeal.setVisible(false);
+		campoIngresoIdeal.setEnabled(false);
+
+		botonConfirmar = new JButton("Confirmar");
+		botonConfirmar.setBounds(baseX + 45, baseY + 320, 130, 35);
+		CampoRedondeado.aplicarRedondeado(botonConfirmar, 20, colorTinder, Color.WHITE);
+
 		divorciada = new JRadioButton();
-
-		divorciada.setBounds(600, 350, 200, 20);
-		divorciada.setBackground(new Color(30, 31, 34));
+		divorciada.setBounds(baseX, baseY + 230, 200, 20);
+		divorciada.setBackground(new Color(59, 59, 59));
 		divorciada.setForeground(Color.WHITE);
-		divorciada.setFocusable(false);
-		divorciada.setFocusPainted(false);
-		divorciada.setBorderPainted(false);
-
-		divorciada.setVisible(false);
-		divorciada.setEnabled(false);
+		divorciada.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 
 		noDivorciada = new JRadioButton();
-
-		noDivorciada.setBounds(600, 370, 200, 20);
-		noDivorciada.setBackground(new Color(30, 31, 34));
+		noDivorciada.setBounds(baseX, baseY + 250, 200, 20);
+		noDivorciada.setBackground(new Color(59, 59, 59));
 		noDivorciada.setForeground(Color.WHITE);
-		noDivorciada.setFocusable(false);
-		noDivorciada.setFocusPainted(false);
-		noDivorciada.setBorderPainted(false);
-
+		noDivorciada.setFont(new Font("Segoe UI", Font.PLAIN, 14));
 		noDivorciada.setVisible(false);
-		noDivorciada.setEnabled(false);
 
 		estadoDivorcio = new ButtonGroup();
 		estadoDivorcio.add(divorciada);
 		estadoDivorcio.add(noDivorciada);
-		// campos
-		campoEdadMinima = new JTextField();
-		campoEdadMinima.setBounds(200, 300, 100, 30);
-		campoEdadMinima.setBackground(new Color(50, 50, 50));
-		campoEdadMinima.setForeground(Color.WHITE);
-		campoEdadMinima.setBorder(null);
-
-		campoEdadMaxima = new JTextField();
-		campoEdadMaxima.setBounds(350, 300, 100, 30);
-		campoEdadMaxima.setBackground(new Color(50, 50, 50));
-		campoEdadMaxima.setForeground(Color.WHITE);
-		campoEdadMaxima.setBorder(null);
-
-		campoEstaturaIdeal = new JTextField();
-		campoEstaturaIdeal.setBounds(200, 400, 200, 30);
-		campoEstaturaIdeal.setBackground(new Color(50, 50, 50));
-		campoEstaturaIdeal.setForeground(Color.WHITE);
-		campoEstaturaIdeal.setBorder(null);
-
-		campoIngresoIdeal = new JTextField();
-		campoIngresoIdeal.setBounds(600, 300, 200, 30);
-		campoIngresoIdeal.setBackground(new Color(50, 50, 50));
-		campoIngresoIdeal.setForeground(Color.WHITE);
-		campoIngresoIdeal.setBorder(null);
-		campoIngresoIdeal.setVisible(false);
-		campoIngresoIdeal.setEnabled(false);
-
-		botonConfirmar = new JButton();
-		botonConfirmar.setBounds(425, 380, 100, 30);
-		botonConfirmar.setBackground(new Color(70, 130, 180));
-		botonConfirmar.setForeground(Color.WHITE);
-		botonConfirmar.setFocusable(false);
-		botonConfirmar.setFocusPainted(false);
-		botonConfirmar.setBorderPainted(false);
 
 		this.add(divorciada);
 		this.add(noDivorciada);
@@ -105,74 +116,77 @@ public class SeleccionGustos extends JPanel {
 		this.add(campoIngresoIdeal);
 		this.add(botonConfirmar);
 		this.add(panel);
+		this.add(panelFormulario);
 	}
 
-	public void mostrarCamposMujer(String labelIngresoIdeal) {
-		campoIngresoIdeal.setVisible(true);
-		campoIngresoIdeal.setEnabled(true);
-		divorciada.setVisible(false);
-		divorciada.setEnabled(false);
-		noDivorciada.setVisible(false);
-		noDivorciada.setEnabled(false);
-		estadoDivorcio.clearSelection();
+		public void mostrarCamposMujer(String labelIngresoIdeal) {
+			campoIngresoIdeal.setVisible(true);
+			campoIngresoIdeal.setEnabled(true);
+			divorciada.setVisible(false);
+			divorciada.setEnabled(false);
+			noDivorciada.setVisible(false);
+			noDivorciada.setEnabled(false);
+			estadoDivorcio.clearSelection();
 
-		crearLabel(labelIngresoIdeal, Color.WHITE, 600, 270, 200, 30, 16);
-	}
-
-	public void mostrarCamposHombre(String labelDivorciada) {
-		campoIngresoIdeal.setVisible(false);
-		campoIngresoIdeal.setEnabled(false);
-		divorciada.setVisible(true);
-		divorciada.setEnabled(true);
-		noDivorciada.setVisible(true);
-		noDivorciada.setEnabled(true);
-		campoIngresoIdeal.setText("");
-
-		crearLabel(labelDivorciada, Color.WHITE, 600, 270, 200, 30, 16);
-	}
-
-	public void mostrarTextos(String labelEdadMinima, String labelEdadMaxima, String labelEstaturaIdeal,
-			String labelDivorciada, String labelNoDivorciada, String labelConfirmar, String labelEdad) {
-		crearLabel(labelEdadMinima, Color.WHITE, 200, 250, 200, 30, 16);
-		crearLabel(labelEdadMaxima, Color.WHITE, 400, 250, 200, 30, 16);
-		crearLabel(labelEstaturaIdeal, Color.WHITE, 200, 350, 200, 30, 16);
-		crearLabel(labelEdad, Color.WHITE, 200, 200, 200, 30, 16);
-
-		divorciada.setText(labelDivorciada);
-		noDivorciada.setText(labelNoDivorciada);
-		botonConfirmar.setText(labelConfirmar);
-	}
-
-	public void eliminarLabelGustos(String labelIngresoProm, String labelEstadoDivorcio) {
-		for (Component c : this.getComponents()) {
-			if (!(c instanceof JLabel)) {
-				continue;
-			}
-			if (((JLabel) c).getText().equals(labelIngresoProm) || ((JLabel) c).getText().equals(labelEstadoDivorcio)) {
-				this.remove(c);
-				this.revalidate();
-				this.repaint();
-			}
-
+			crearLabel(labelIngresoIdeal, Color.WHITE, 850, 190 + 200, 200, 30, 16);
 		}
-	}
-	
-	public void limpiarCampos() {
-		campoEdadMinima.setText("");
-		campoEdadMaxima.setText("");
-		campoEstaturaIdeal.setText("");
-		campoIngresoIdeal.setText("");
-		estadoDivorcio.clearSelection();
-	}
 
-	public void crearLabel(String texto, Color colorFondo, int x, int y, int ancho, int alto, int tamanoLetra) {
-		JLabel label = new JLabel(texto);
-		label.setForeground(colorFondo);
-		label.setBounds(x, y, ancho, alto);
-		label.setFont(new Font("Sans", Font.BOLD, tamanoLetra));
-		this.add(label);
-		this.setComponentZOrder(label, 0);
-	}
+		public void mostrarCamposHombre(String labelDivorciada) {
+			campoIngresoIdeal.setVisible(false);
+			campoIngresoIdeal.setEnabled(false);
+			divorciada.setVisible(true);
+			divorciada.setEnabled(true);
+			noDivorciada.setVisible(true);
+			noDivorciada.setEnabled(true);
+			campoIngresoIdeal.setText("");
+
+			crearLabel(labelDivorciada, Color.WHITE, 850, 190 + 200, 200, 30, 16);
+		}
+
+		public void mostrarTextos(String labelEdadMinima, String labelEdadMaxima, String labelEstaturaIdeal,
+				String labelDivorciada, String labelNoDivorciada, String labelConfirmar, String labelEdad) {
+			int baseX = 850;
+			int baseY = 200;
+
+			crearLabel(labelEdad, Color.WHITE, baseX, baseY - 30, 200, 30, 16);
+			crearLabel(labelEdadMinima, Color.WHITE, baseX, baseY + 10, 200, 30, 16);
+			crearLabel(labelEdadMaxima, Color.WHITE, baseX + 120, baseY + 10, 200, 30, 16);
+			crearLabel(labelEstaturaIdeal, Color.WHITE, baseX, baseY + 90, 200, 30, 16);
+
+			divorciada.setText(labelDivorciada);
+			noDivorciada.setText(labelNoDivorciada);
+			botonConfirmar.setText(labelConfirmar);
+		}
+
+		public void eliminarLabelGustos(String labelIngresoProm, String labelEstadoDivorcio) {
+			for (Component c : this.getComponents()) {
+				if (!(c instanceof JLabel)) {
+					continue;
+				}
+				if (((JLabel) c).getText().equals(labelIngresoProm) || ((JLabel) c).getText().equals(labelEstadoDivorcio)) {
+					this.remove(c);
+					this.revalidate();
+					this.repaint();
+				}
+			}
+		}
+
+		public void limpiarCampos() {
+			campoEdadMinima.setText("");
+			campoEdadMaxima.setText("");
+			campoEstaturaIdeal.setText("");
+			campoIngresoIdeal.setText("");
+			estadoDivorcio.clearSelection();
+		}
+
+		public void crearLabel(String texto, Color colorFondo, int x, int y, int ancho, int alto, int tamanoLetra) {
+			JLabel label = new JLabel(texto);
+			label.setForeground(colorFondo);
+			label.setBounds(x, y, ancho, alto);
+			label.setFont(new Font("Segoe UI", Font.PLAIN, tamanoLetra));
+			this.add(label);
+			this.setComponentZOrder(label, 0);
+		}
 
 	public JTextField getCampoEdadMinima() {
 		return campoEdadMinima;
@@ -237,5 +251,5 @@ public class SeleccionGustos extends JPanel {
 	public void setEstadoDivorcio(ButtonGroup estadoDivorcio) {
 		this.estadoDivorcio = estadoDivorcio;
 	}
-	
+
 }

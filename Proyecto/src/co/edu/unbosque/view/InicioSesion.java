@@ -13,7 +13,7 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
 public class InicioSesion extends JPanel {
-
+	private Font campoFuente = new Font("Segoe UI", Font.PLAIN, 30);
 	private JTextField campoUsuario;
 	private JTextField campoContrasena;
 
@@ -40,14 +40,14 @@ public class InicioSesion extends JPanel {
 
 		campoUsuario = new JTextField();
 		campoUsuario.setBounds(120, 250, 400, 50);
-		campoUsuario.setFont(new Font("Sans", Font.PLAIN, 20));
+		campoUsuario.setFont(campoFuente);
 		campoUsuario.setBorder(null);
 		campoUsuario.setBackground(Color.WHITE);
 		this.add(campoUsuario);
 
 		campoContrasena = new JPasswordField();
 		campoContrasena.setBounds(120, 370, 400, 50);
-		campoContrasena.setFont(new Font("Sans", Font.PLAIN, 20));
+		campoContrasena.setFont(campoFuente);
 		campoContrasena.setBorder(null);
 		campoContrasena.setBackground(Color.WHITE);
 		this.add(campoContrasena);
@@ -55,7 +55,7 @@ public class InicioSesion extends JPanel {
 		Color colorTinder = new Color(255, 51, 102);
 		botonConfirmar = new JButton();
 		botonConfirmar.setBounds(150, 500, 330, 50);
-		botonConfirmar.setFont(new Font("Sans", Font.BOLD, 25));
+		botonConfirmar.setFont(campoFuente);
 		botonConfirmar.setBackground(colorTinder);
 		botonConfirmar.setForeground(Color.white);
 		botonConfirmar.setFocusable(false);
