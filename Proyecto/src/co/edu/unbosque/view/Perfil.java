@@ -30,7 +30,7 @@ public class Perfil extends JPanel {
 		logo.setBounds(60, 0, 180, 75);
 		barraLateral.add(logo);
 		
-		ImageIcon imagenVolver = new ImageIcon("Resources/volver.png");
+		ImageIcon imagenVolver = new ImageIcon("Resources/volver3.png");
 		Image imagenRedimensionadaVolver = imagenVolver.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
 		ImageIcon imagenRedimensionada = new ImageIcon(imagenRedimensionadaVolver);
 
