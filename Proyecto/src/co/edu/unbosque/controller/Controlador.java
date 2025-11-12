@@ -145,7 +145,10 @@ public class Controlador implements ActionListener {
 		vf.getVc().getCambiarModo().setActionCommand("BotonCambiarModo");
 		vf.getSg().getCambiarModo().addActionListener(this);
 		vf.getSg().getCambiarModo().setActionCommand("BotonCambiarModo");
-
+		vf.getInfoUsuario().getCambiarModo().addActionListener(this);
+		vf.getInfoUsuario().getCambiarModo().setActionCommand("BotonCambiarModo");
+		vf.getAdmin().getBotonBuscar().addActionListener(this);
+		vf.getAdmin().getBotonBuscar().setActionCommand("BotonBuscarUsuario");
 	}
 
 	/**
@@ -183,17 +186,25 @@ public class Controlador implements ActionListener {
 		}
 
 		if (e.getActionCommand().contains("botonInfo-")) {
+			mf.actualizarPersonas();
 			vf.mostrarPanel("infoUsuario");
 
 			vf.getInfoUsuario().limpiarLabels();
 
 			Persona usuarioInfo = null;
 
+			String aliasBuscado = e.getActionCommand().split("-")[1];
+			String aliasEncontrado = aliasBuscado.split(" ")[1];
+
 			for (Persona persona : mf.getPersonas()) {
-				if (persona.getAlias().equals(e.getActionCommand().split("-")[1])) {
+				if (persona.getAlias().equals(aliasEncontrado)) {
 					usuarioInfo = persona;
 					break;
 				}
+			}
+
+			if (usuarioInfo == null) {
+				return;
 			}
 
 			if (usuarioInfo instanceof Hombre) {
@@ -212,7 +223,8 @@ public class Controlador implements ActionListener {
 								convertirUSDAmoneda(((Hombre) usuarioInfo).getIngresoProm())),
 						((Hombre) usuarioInfo).isEstadoDivorcio() + "", usuarioInfo.getEdadMinima() + "",
 						usuarioInfo.getEdadMaxima() + "", usuarioInfo.getEstaturaIdeal() + "",
-						usuarioInfo.getLikesRecibidos() + "", usuarioInfo.getImagen());
+						usuarioInfo.getLikesRecibidos() + "", usuarioInfo.getImagen(),
+						prop.getProperty("ventana.perfil.datos"), prop.getProperty("ventana.perfil.gustos"));
 			} else {
 				vf.getInfoUsuario().mostrarTextosMujer(prop.getProperty("ventana.perfil.nombreUsuario"),
 						prop.getProperty("ventana.perfil.alias"), prop.getProperty("ventana.perfil.edad"),
@@ -228,7 +240,8 @@ public class Controlador implements ActionListener {
 								convertirUSDAmoneda(((Mujer) usuarioInfo).getIngresosIdeal())),
 						usuarioInfo.getEdadMinima() + "", usuarioInfo.getEdadMaxima() + "",
 						usuarioInfo.getEstaturaIdeal() + "", usuarioInfo.getLikesRecibidos() + "",
-						usuarioInfo.getImagen());
+						usuarioInfo.getImagen(), prop.getProperty("ventana.perfil.datos"),
+						prop.getProperty("ventana.perfil.gustos"));
 			}
 
 			vf.cambiarModo();
@@ -243,11 +256,12 @@ public class Controlador implements ActionListener {
 			vf.getConfirmarBaja().setEnabled(true);
 			vf.getConfirmarBaja().setVisible(true);
 
-			vf.getConfirmarBaja().mostrarTextos(
-					prop.getProperty("ventana.baja.confirmar") + " " + e.getActionCommand().split("-")[1],
+			String aliasBuscado = e.getActionCommand().split("-")[1];
+			String aliasEncontrado = aliasBuscado.split(" ")[1];
+
+			vf.getConfirmarBaja().mostrarTextos(prop.getProperty("ventana.baja.confirmar") + " " + aliasEncontrado,
 					prop.getProperty("ventana.baja.botonConfirmar"));
-			vf.getConfirmarBaja().getBotonConfirmar()
-					.setActionCommand("botonConfirmarBaja-" + e.getActionCommand().split("-")[1]);
+			vf.getConfirmarBaja().getBotonConfirmar().setActionCommand("botonConfirmarBaja-" + aliasEncontrado);
 			vf.getConfirmarBaja().getBotonConfirmar().addActionListener(this);
 			vf.cambiarModo();
 			vf.cambiarModo();
@@ -488,7 +502,8 @@ public class Controlador implements ActionListener {
 								convertirUSDAmoneda(((Hombre) usuarioActual).getIngresoProm())),
 						((Hombre) usuarioActual).isEstadoDivorcio() + "", usuarioActual.getEdadMinima() + "",
 						usuarioActual.getEdadMaxima() + "", usuarioActual.getEstaturaIdeal() + "",
-						usuarioActual.getLikesRecibidos() + "", usuarioActual.getImagen());
+						usuarioActual.getLikesRecibidos() + "", usuarioActual.getImagen(),
+						prop.getProperty("ventana.perfil.datos"), prop.getProperty("ventana.perfil.gustos"));
 			} else {
 				vf.getPer().mostrarTextosMujer(prop.getProperty("ventana.perfil.nombreUsuario"),
 						prop.getProperty("ventana.perfil.alias"), prop.getProperty("ventana.perfil.edad"),
@@ -505,7 +520,8 @@ public class Controlador implements ActionListener {
 								convertirUSDAmoneda(((Mujer) usuarioActual).getIngresosIdeal())),
 						usuarioActual.getEdadMinima() + "", usuarioActual.getEdadMaxima() + "",
 						usuarioActual.getEstaturaIdeal() + "", usuarioActual.getLikesRecibidos() + "",
-						usuarioActual.getImagen());
+						usuarioActual.getImagen(), prop.getProperty("ventana.perfil.datos"),
+						prop.getProperty("ventana.perfil.gustos"));
 			}
 
 			vf.cambiarModo();
@@ -647,6 +663,43 @@ public class Controlador implements ActionListener {
 			break;
 		case "BotonCambiarModo":
 			vf.cambiarModo();
+			break;
+		case "BotonBuscarUsuario":
+			
+			mf.actualizarPersonas();
+
+			vf.getAdmin().limpiarUsuarios();
+			
+			if(vf.getAdmin().getTxtBuscar().getText().isEmpty()) {
+				agregarUsuariosVentanaAdmin();
+				vf.cambiarModo();
+				vf.cambiarModo();
+				return;
+			}
+
+			for (Persona p : mf.getPersonas()) {
+				if (p.getAlias().equals(vf.getAdmin().getTxtBuscar().getText())) {
+					if (p instanceof Hombre) {
+						vf.getAdmin().agregarUsuario(prop.getProperty("ventana.perfil.alias") + " " + p.getAlias(),
+								p.getImagen(), prop.getProperty("ventana.perfil.edad") + " " + p.getEdad(),
+								prop.getProperty("ventana.perfil.estatura") + " " + p.getEstatura(), this,
+								prop.getProperty("ventana.perfil.ingreso") + " " + String.format(Locale.US, "%.2f%n",
+										convertirUSDAmoneda(((Hombre) p).getIngresoProm())));
+						vf.cambiarModo();
+						vf.cambiarModo();
+						return;
+					} else {
+						vf.getAdmin().agregarUsuario(prop.getProperty("ventana.perfil.alias") + " " + p.getAlias(),
+								p.getImagen(), prop.getProperty("ventana.perfil.edad") + " " + p.getEdad(),
+								prop.getProperty("ventana.perfil.estatura") + " " + p.getEstatura(), this);
+						vf.cambiarModo();
+						vf.cambiarModo();
+						return;
+					}
+				}
+			}
+			
+			vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.usuarioNoEncontrado"));;
 			break;
 		default:
 			break;
@@ -1367,21 +1420,29 @@ public class Controlador implements ActionListener {
 		for (Persona p : usuarios) {
 			if (usuarioActual instanceof Hombre) {
 				if (usuarioActual.getLikesDados().contains(p.getAlias())) {
-					vf.getApp().agregarUsuario(p.getAlias(), p.getImagen(), p.getEdad(), p.getEstatura(),
-							p.getLikesRecibidos(), true, this);
+					vf.getApp().agregarUsuario(prop.getProperty("ventana.perfil.alias") + " " + p.getAlias(),
+							p.getImagen(), prop.getProperty("ventana.perfil.edad") + " " + p.getEdad(),
+							prop.getProperty("ventana.perfil.estatura") + " " + p.getEstatura(), p.getLikesRecibidos(),
+							true, this);
 				} else {
-					vf.getApp().agregarUsuario(p.getAlias(), p.getImagen(), p.getEdad(), p.getEstatura(),
-							p.getLikesRecibidos(), false, this);
+					vf.getApp().agregarUsuario(prop.getProperty("ventana.perfil.alias") + " " + p.getAlias(),
+							p.getImagen(), prop.getProperty("ventana.perfil.edad") + " " + p.getEdad(),
+							prop.getProperty("ventana.perfil.estatura") + " " + p.getEstatura(), p.getLikesRecibidos(),
+							false, this);
 				}
 			} else {
 				if (usuarioActual.getLikesDados().contains(p.getAlias())) {
-					vf.getApp().agregarUsuario(p.getAlias(), p.getImagen(), p.getEdad(), p.getEstatura(),
-							p.getLikesRecibidos(), true, this,
-							String.format(Locale.US, "%.2f%n", convertirUSDAmoneda(((Hombre) p).getIngresoProm())));
+					vf.getApp().agregarUsuario(prop.getProperty("ventana.perfil.alias") + " " + p.getAlias(),
+							p.getImagen(), prop.getProperty("ventana.perfil.edad") + " " + p.getEdad(),
+							prop.getProperty("ventana.perfil.estatura") + " " + p.getEstatura(), p.getLikesRecibidos(),
+							true, this, prop.getProperty("ventana.perfil.ingreso") + " " + String.format(Locale.US,
+									"%.2f%n", convertirUSDAmoneda(((Hombre) p).getIngresoProm())));
 				} else {
-					vf.getApp().agregarUsuario(p.getAlias(), p.getImagen(), p.getEdad(), p.getEstatura(),
-							p.getLikesRecibidos(), false, this,
-							String.format(Locale.US, "%.2f%n", convertirUSDAmoneda(((Hombre) p).getIngresoProm())));
+					vf.getApp().agregarUsuario(prop.getProperty("ventana.perfil.alias") + " " + p.getAlias(),
+							p.getImagen(), prop.getProperty("ventana.perfil.edad") + " " + p.getEdad(),
+							prop.getProperty("ventana.perfil.estatura") + " " + p.getEstatura(), p.getLikesRecibidos(),
+							false, this, prop.getProperty("ventana.perfil.ingreso") + " " + String.format(Locale.US,
+									"%.2f%n", convertirUSDAmoneda(((Hombre) p).getIngresoProm())));
 				}
 			}
 		}
@@ -1403,10 +1464,15 @@ public class Controlador implements ActionListener {
 		for (Persona p : usuarios) {
 
 			if (p instanceof Hombre) {
-				vf.getAdmin().agregarUsuario(p.getAlias(), p.getImagen(), p.getEdad(), p.getEstatura(), this,
-						String.format(Locale.US, "%.2f%n", convertirUSDAmoneda(((Hombre) p).getIngresoProm())));
+				vf.getAdmin().agregarUsuario(prop.getProperty("ventana.perfil.alias") + " " + p.getAlias(),
+						p.getImagen(), prop.getProperty("ventana.perfil.edad") + " " + p.getEdad(),
+						prop.getProperty("ventana.perfil.estatura") + " " + p.getEstatura(), this,
+						prop.getProperty("ventana.perfil.ingreso") + " " + String.format(Locale.US, "%.2f%n",
+								convertirUSDAmoneda(((Hombre) p).getIngresoProm())));
 			} else {
-				vf.getAdmin().agregarUsuario(p.getAlias(), p.getImagen(), p.getEdad(), p.getEstatura(), this);
+				vf.getAdmin().agregarUsuario(prop.getProperty("ventana.perfil.alias") + " " + p.getAlias(),
+						p.getImagen(), prop.getProperty("ventana.perfil.edad") + " " + p.getEdad(),
+						prop.getProperty("ventana.perfil.estatura") + " " + p.getEstatura(), this);
 
 			}
 		}
@@ -1430,10 +1496,16 @@ public class Controlador implements ActionListener {
 			for (int i = 0; i < 10; i++) {
 				Persona p = usuarios.get(i);
 				if (p instanceof Hombre) {
-					vf.getAdmin().agregarUsuario(p.getAlias(), p.getImagen(), p.getEdad(), p.getEstatura(), this,
-							String.format(Locale.US, "%.2f%n", convertirUSDAmoneda(((Hombre) p).getIngresoProm())));
+					vf.getAdmin().agregarUsuario(prop.getProperty("ventana.perfil.alias") + " " + p.getAlias(),
+							p.getImagen(), prop.getProperty("ventana.perfil.edad") + " " + p.getEdad(),
+							prop.getProperty("ventana.perfil.estatura") + " " + p.getEstatura(), this,
+							prop.getProperty("ventana.perfil.ingreso") + " " + String.format(Locale.US, "%.2f%n",
+									convertirUSDAmoneda(((Hombre) p).getIngresoProm())));
 				} else {
-					vf.getAdmin().agregarUsuario(p.getAlias(), p.getImagen(), p.getEdad(), p.getEstatura(), this);
+					vf.getAdmin().agregarUsuario(prop.getProperty("ventana.perfil.alias") + " " + p.getAlias(),
+							p.getImagen(), prop.getProperty("ventana.perfil.edad") + " " + p.getEdad(),
+							prop.getProperty("ventana.perfil.estatura") + " " + p.getEstatura(), this);
+
 				}
 			}
 		}
@@ -1450,8 +1522,11 @@ public class Controlador implements ActionListener {
 
 				Persona p = mf.getHombreDAO().getHombres().get(i);
 
-				vf.getAdmin().agregarUsuario(p.getAlias(), p.getImagen(), p.getEdad(), p.getEstatura(), this,
-						String.format(Locale.US, "%.2f%n", convertirUSDAmoneda(((Hombre) p).getIngresoProm())));
+				vf.getAdmin().agregarUsuario(prop.getProperty("ventana.perfil.alias") + " " + p.getAlias(),
+						p.getImagen(), prop.getProperty("ventana.perfil.edad") + " " + p.getEdad(),
+						prop.getProperty("ventana.perfil.estatura") + " " + p.getEstatura(), this,
+						prop.getProperty("ventana.perfil.ingreso") + " " + String.format(Locale.US, "%.2f%n",
+								convertirUSDAmoneda(((Hombre) p).getIngresoProm())));
 
 			}
 
@@ -2045,7 +2120,9 @@ public class Controlador implements ActionListener {
 				prop.getProperty("ventana.admin.criterio"), prop.getProperty("ventana.admin.labelTop"),
 				prop.getProperty("ventana.admin.pdf"), prop.getProperty("ventana.admin.porEdad"),
 				prop.getProperty("ventana.admin.porLikes"), prop.getProperty("ventana.admin.porIngreso"),
-				prop.getProperty("ventana.admin.porEstatura"), prop.getProperty("ventana.perfil.botonCambiarModo"));
+				prop.getProperty("ventana.admin.porEstatura"), prop.getProperty("ventana.perfil.botonCambiarModo"),
+				prop.getProperty("ventana.admin.buscar"));
+		vf.getInfoUsuario().mostrarTextos(prop.getProperty("ventana.perfil.botonCambiarModo"));
 	}
 
 }

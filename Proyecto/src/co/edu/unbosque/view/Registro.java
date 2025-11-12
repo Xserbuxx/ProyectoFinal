@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class Registro extends JPanel {
@@ -55,7 +56,7 @@ public class Registro extends JPanel {
 		this.setLayout(null);
 
 		Color colorTinder = new Color(255, 51, 102);
-		disponible = new JRadioButton("Disponible");
+		disponible = new JRadioButton();
 		disponible.setBounds(370, 770, 140, 25);
 		disponible.setBackground(new Color(59, 59, 59));
 		disponible.setForeground(Color.WHITE);
@@ -63,7 +64,7 @@ public class Registro extends JPanel {
 		disponible.setFocusPainted(false);
 		disponible.setBorderPainted(false);
 
-		noDisponible = new JRadioButton("No disponible");
+		noDisponible = new JRadioButton();
 		noDisponible.setBounds(520, 770, 160, 25);
 		noDisponible.setBackground(new Color(59, 59, 59));
 		noDisponible.setForeground(Color.WHITE);
@@ -75,7 +76,7 @@ public class Registro extends JPanel {
 		grupoDisponibilidad.add(disponible);
 		grupoDisponibilidad.add(noDisponible);
 
-		divorciada = new JRadioButton("Divorciada");
+		divorciada = new JRadioButton();
 		divorciada.setBounds(370, 890, 200, 20);
 		divorciada.setBackground(new Color(59, 59, 59));
 		divorciada.setForeground(Color.WHITE);
@@ -85,7 +86,7 @@ public class Registro extends JPanel {
 		divorciada.setVisible(false);
 		divorciada.setEnabled(false);
 
-		noDivorciada = new JRadioButton("No divorciada");
+		noDivorciada = new JRadioButton();
 		noDivorciada.setBounds(370, 915, 200, 20);
 		noDivorciada.setBackground(new Color(59, 59, 59));
 		noDivorciada.setForeground(Color.WHITE);
@@ -108,7 +109,7 @@ public class Registro extends JPanel {
 				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
 		scroll.setBounds(0, 0, 1280, 720);
 		scroll.getVerticalScrollBar().setBackground(new Color(36, 41, 46));
-		scroll.setBorder(null);
+		scroll.getVerticalScrollBar().setUnitIncrement(24);
 
 		botonSexoHombre = new JButton("♂");
 		botonSexoHombre.setBounds(370, 200, 50, 30);
@@ -149,7 +150,7 @@ public class Registro extends JPanel {
 		campoImagen.setFont(campoFuente);
 		campoImagen.setEditable(false);
 
-		botonExaminar = new JButton("Examinar");
+		botonExaminar = new JButton();
 		botonExaminar.setBounds(760, 670, 110, 45);
 		botonExaminar.setFont(new Font("Segoe UI", Font.BOLD, 12));
 		CampoRedondeado.aplicarRedondeado(botonExaminar, 25, colorTinder, Color.WHITE);
@@ -164,12 +165,13 @@ public class Registro extends JPanel {
 		campoIngresoProm.setVisible(false);
 		campoIngresoProm.setEnabled(false);
 
-		botonConfirmar = new JButton("Confirmar");
+		botonConfirmar = new JButton();
 		botonConfirmar.setBounds(470, 1020, 330, 50);
 		CampoRedondeado.aplicarRedondeado(botonConfirmar, 25, colorTinder, Color.WHITE);
 
-		botonIniciarSesion = new JButton("Iniciar sesión");
-		botonIniciarSesion.setBounds(540, 1120, 200, 30);
+		botonIniciarSesion = new JButton();
+		botonIniciarSesion.setBounds(460, 1100, 200, 18);
+		botonIniciarSesion.setHorizontalAlignment(SwingConstants.LEFT);
 		botonIniciarSesion.setFont(new Font("Segoe UI", Font.BOLD, 14));
 		botonIniciarSesion.setForeground(colorTinder);
 		botonIniciarSesion.setContentAreaFilled(false);
@@ -177,12 +179,8 @@ public class Registro extends JPanel {
 		botonIniciarSesion.setFocusPainted(false);
 		
 		cambiarModo = new JButton();
-		cambiarModo.setBounds(1000, 100, 200, 50);
-		cambiarModo.setBackground(colorTinder);
-		cambiarModo.setForeground(Color.WHITE);
-		cambiarModo.setBorderPainted(false);
-		cambiarModo.setFocusPainted(false);
-		cambiarModo.setFocusable(false);
+		cambiarModo.setBounds(10, 10, 180, 40);
+		CampoRedondeado.aplicarRedondeado(cambiarModo, 25, new Color(255, 51, 102), Color.WHITE);
 		
 		izquierda.add(cambiarModo);
 		izquierda.add(botonExaminar);
@@ -232,7 +230,7 @@ public class Registro extends JPanel {
 		crearLabel(labelDisponibilidad, Color.WHITE, xCampo, 745, anchoLabel, 30, 20);
 		crearLabel(labelContrasena, Color.WHITE, xCampo, 805, anchoLabel, 30, 20);
 
-		crearLabel(labelYaCuenta, Color.WHITE, 520, 1080, 300, 30, 14);
+		crearLabel(labelYaCuenta,  new Color(255, 255, 255, 200), 470, 1070, 200, 30, 18);
 
 		botonConfirmar.setText(labelBotonConfirmar);
 		botonIniciarSesion.setText(labelBotonIniciarSesionTexto);
@@ -344,7 +342,7 @@ public class Registro extends JPanel {
 		JLabel label = new JLabel(texto);
 		label.setForeground(new Color(200, 200, 200));
 		label.setBounds(x, y, ancho, alto);
-		label.setFont(new Font("Segoe UI", Font.PLAIN, tamanoLetra - 4));
+		label.setFont(new Font("Segoe UI", Font.BOLD, tamanoLetra - 4));
 		izquierda.add(label);
 	}
 

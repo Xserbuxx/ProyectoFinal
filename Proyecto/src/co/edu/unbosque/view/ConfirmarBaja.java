@@ -26,7 +26,7 @@ public class ConfirmarBaja extends JPanel {
 		panelCentral.setBounds(300, 200, 600, 300);
 
 		botonConfirmar = new JButton();
-		botonConfirmar.setBounds(500, 350, 150, 50);
+		botonConfirmar.setBounds(500, 370, 200, 50);
 		botonConfirmar.setBackground(new Color(70, 130, 180));
 		botonConfirmar.setForeground(Color.white);
 		botonConfirmar.setFont(new Font("Sans", Font.BOLD, 18));
@@ -40,7 +40,7 @@ public class ConfirmarBaja extends JPanel {
 
 		botonVolver = new JButton(imagenRedimensionada);
 		botonVolver.setBounds(10, 10, 50, 50);
-		botonVolver.setBackground(Color.red);
+		botonVolver.setBackground(new Color(255, 51, 102));
 		botonVolver.setBorderPainted(false);
 		botonVolver.setFocusPainted(false);
 		botonVolver.setFocusable(false);
@@ -71,7 +71,7 @@ public class ConfirmarBaja extends JPanel {
 	public void mostrarTextos(String texto, String labelBotonConfirmar) {
 		limpiarLabels();
 		botonConfirmar.setText(labelBotonConfirmar);
-		crearLabel(texto, Color.white, 350, 250, 500, 50, 12);
+		crearLabel(texto, Color.white, 350, 250, 500, 50, 16);
 	}
 
 	public void crearLabel(String texto, Color colorFondo, int x, int y, int ancho, int alto, int tamanoLetra) {

@@ -14,6 +14,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
+import javax.swing.JTextField;
 
 public class Administrador extends JPanel {
 
@@ -44,18 +45,31 @@ public class Administrador extends JPanel {
 	private JButton cambiarModo;
 	
 	private JButton botonVolver;
+	
+	private JTextField txtBuscar;
+	private JButton botonBuscar;
 
 	public Administrador() {
 		this.setLayout(null);
 		this.setBackground(new Color(36, 41, 46));
 		
+		JPanel barraLateral = new JPanel();
+		barraLateral.setLayout(null);
+		barraLateral.setBackground(new Color(255, 51, 102));
+		barraLateral.setBounds(0, 0, 350, 720);
+
+		ImageIcon imgLogo = new ImageIcon("Resources/logo.png");
+		JLabel logo = new JLabel(new ImageIcon(imgLogo.getImage().getScaledInstance(180, 60, Image.SCALE_SMOOTH)));
+		logo.setBounds(60, 0, 180, 75);
+		barraLateral.add(logo);
+		
 		ImageIcon imagenVolver = new ImageIcon("Resources/volver.png");
 		Image imagenRedimensionadaVolver = imagenVolver.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
-		ImageIcon imagenRedimensionadaVolverv = new ImageIcon(imagenRedimensionadaVolver);
+		ImageIcon imagenRedimensionada = new ImageIcon(imagenRedimensionadaVolver);
 
-		botonVolver = new JButton(imagenRedimensionadaVolverv);
+		botonVolver = new JButton(imagenRedimensionada);
 		botonVolver.setBounds(10, 10, 50, 50);
-		botonVolver.setBackground(Color.red);
+		botonVolver.setBackground(new Color(255, 51, 102));
 		botonVolver.setBorderPainted(false);
 		botonVolver.setFocusPainted(false);
 		botonVolver.setFocusable(false);
@@ -66,37 +80,40 @@ public class Administrador extends JPanel {
 
 		scrollPanel = new JScrollPane(panelUsuarios, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
 				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		scrollPanel.setBounds(0, 60, 900, 640);
+		scrollPanel.setBounds(350, 60, 900, 640);
 		scrollPanel.setBackground(new Color(36, 41, 46));
 
 		botonOrdenar = new JButton();
-		botonOrdenar.setBounds(920, 10, 100, 30);
-		botonOrdenar.setBackground(Color.blue);
-		botonOrdenar.setFocusable(false);
-		botonOrdenar.setFocusPainted(false);
-		botonOrdenar.setBorderPainted(false);
+		botonOrdenar.setBounds(10, 100, 100, 30);
+		CampoRedondeado.aplicarRedondeado(botonOrdenar, 25, new Color(74,144,226), Color.WHITE);
 
 		botonAscendente = new JRadioButton();
-		botonAscendente.setBounds(920, 100, 100, 30);
+		botonAscendente.setBounds(10, 200, 140, 30);
+		botonAscendente.setBackground(new Color(255, 51, 102));
 
 		botonDescendente = new JRadioButton();
-		botonDescendente.setBounds(920, 150, 100, 30);
+		botonDescendente.setBounds(10, 250, 140, 30);
+		botonDescendente.setBackground(new Color(255, 51, 102));
 
 		grupoOrdenamientos = new ButtonGroup();
 		grupoOrdenamientos.add(botonAscendente);
 		grupoOrdenamientos.add(botonDescendente);
 
 		botonPorEdad = new JRadioButton();
-		botonPorEdad.setBounds(920, 250, 100, 30);
+		botonPorEdad.setBounds(10, 350, 100, 30);
+		botonPorEdad.setBackground(new Color(255, 51, 102));
 
 		botonNombre = new JRadioButton();
-		botonNombre.setBounds(920, 300, 100, 30);
+		botonNombre.setBounds(10, 400, 100, 30);
+		botonNombre.setBackground(new Color(255, 51, 102));
 
 		botonAlias = new JRadioButton();
-		botonAlias.setBounds(920, 350, 100, 30);
+		botonAlias.setBounds(10, 450, 100, 30);
+		botonAlias.setBackground(new Color(255, 51, 102));
 
 		botonLikes = new JRadioButton();
-		botonLikes.setBounds(920, 400, 100, 30);
+		botonLikes.setBounds(10, 500, 100, 30);
+		botonLikes.setBackground(new Color(255, 51, 102));
 
 		grupoCriterios = new ButtonGroup();
 		grupoCriterios.add(botonPorEdad);
@@ -105,40 +122,40 @@ public class Administrador extends JPanel {
 		grupoCriterios.add(botonLikes);
 
 		botonTopLikes = new JRadioButton();
-		botonTopLikes.setBounds(1100, 100, 100, 30);
+		botonTopLikes.setBounds(150, 200, 200, 30);
+		botonTopLikes.setBackground(new Color(255, 51, 102));
 
 		botonTopIngresos = new JRadioButton();
-		botonTopIngresos.setBounds(1100, 150, 120, 30);
+		botonTopIngresos.setBounds(150, 250, 120, 30);
+		botonTopIngresos.setBackground(new Color(255, 51, 102));
 
 		grupoTop = new ButtonGroup();
 		grupoTop.add(botonTopLikes);
 		grupoTop.add(botonTopIngresos);
 
 		botonTop = new JButton();
-		botonTop.setBounds(1100, 10, 200, 30);
-		botonTop.setBackground(Color.blue);
-		botonTop.setBorderPainted(false);
-		botonTop.setFocusPainted(false);
-		botonTop.setFocusable(false);
+		botonTop.setBounds(150, 100, 200, 30);
+		CampoRedondeado.aplicarRedondeado(botonTop, 25, new Color(74,144,226), Color.WHITE);
 
 		botonPDF = new JButton();
-		botonPDF.setBounds(1100, 250, 100, 30);
-		botonPDF.setBackground(Color.blue);
-		botonPDF.setBorderPainted(false);
-		botonPDF.setFocusPainted(false);
-		botonPDF.setFocusable(false);
+		botonPDF.setBounds(150, 350, 150, 30);
+		CampoRedondeado.aplicarRedondeado(botonPDF, 25, new Color(74,144,226), Color.WHITE);
 
 		botonEdadPDF = new JRadioButton();
-		botonEdadPDF.setBounds(1100, 350, 100, 30);
+		botonEdadPDF.setBounds(150, 400, 100, 30);
+		botonEdadPDF.setBackground(new Color(255, 51, 102));
 
 		botonLikesPDF = new JRadioButton();
-		botonLikesPDF.setBounds(1100, 400, 100, 30);
+		botonLikesPDF.setBounds(150, 450, 200, 30);
+		botonLikesPDF.setBackground(new Color(255, 51, 102));
 
 		botonIngresosPDF = new JRadioButton();
-		botonIngresosPDF.setBounds(1100, 450, 100, 30);
+		botonIngresosPDF.setBounds(150, 500, 100, 30);
+		botonIngresosPDF.setBackground(new Color(255, 51, 102));
 
 		botonEstaturaPDF = new JRadioButton();
-		botonEstaturaPDF.setBounds(1100, 300, 100, 30);
+		botonEstaturaPDF.setBounds(150, 550, 100, 30);
+		botonEstaturaPDF.setBackground(new Color(255, 51, 102));
 
 		grupoPDF = new ButtonGroup();
 		grupoPDF.add(botonEdadPDF);
@@ -147,12 +164,18 @@ public class Administrador extends JPanel {
 		grupoPDF.add(botonEstaturaPDF);
 		
 		cambiarModo = new JButton();
-		cambiarModo.setBounds(330, 10, 200, 50);
-		cambiarModo.setBackground(Color.blue);
-		cambiarModo.setBorderPainted(false);
-		cambiarModo.setFocusPainted(false);
-		cambiarModo.setFocusable(false);
+		cambiarModo.setBounds(1060, 15, 180, 40);
+		CampoRedondeado.aplicarRedondeado(cambiarModo, 25, new Color(255, 51, 102), Color.WHITE);
 		
+		txtBuscar = new JTextField();
+		txtBuscar.setBounds(400, 15, 400, 40);
+		
+		botonBuscar = new JButton();
+		botonBuscar.setBounds(820, 15, 100, 40);
+		CampoRedondeado.aplicarRedondeado(botonBuscar, 25, new Color(74,144,226), Color.WHITE);
+		
+		this.add(txtBuscar);
+		this.add(botonBuscar);
 		this.add(botonVolver);
 		this.add(cambiarModo);
 		this.add(botonEdadPDF);
@@ -171,13 +194,14 @@ public class Administrador extends JPanel {
 		this.add(botonTopIngresos);
 		this.add(scrollPanel);
 		this.add(botonTop);
+		this.add(barraLateral);
 	}
 
 	public void mostrarTextos(String labelBotonOrdenar, String labelBotonAscendente, String labelBotonDescendente,
 			String labelBotonPorEdad, String labelBotonNombre, String labelBotonAlias, String labelBotonLikes,
 			String labelBotonTopLikes, String labelBotonTopIngresos, String labelBotonTop, String labelOrdenarPor,
 			String labelCriterio, String labelTop, String labelPDF, String labelBotonEdadPDF, String labelBotonLikesPDF,
-			String labelBotonIngresosPDF, String labelBotonEstaturaPDF, String labelCambiarModo) {
+			String labelBotonIngresosPDF, String labelBotonEstaturaPDF, String labelCambiarModo, String labelBotonBuscar) {
 		botonOrdenar.setText(labelBotonOrdenar);
 		botonTop.setText(labelBotonTop);
 		botonAscendente.setText(labelBotonAscendente);
@@ -189,25 +213,32 @@ public class Administrador extends JPanel {
 		botonTopLikes.setText(labelBotonTopLikes);
 		botonTopIngresos.setText(labelBotonTopIngresos);
 		botonPDF.setText(labelPDF);
-		crearLabel(labelOrdenarPor, Color.WHITE, 920, 50, 300, 30, 24);
-		crearLabel(labelCriterio, Color.WHITE, 920, 200, 300, 30, 24);
-		crearLabel(labelTop, Color.WHITE, 1100, 50, 300, 30, 24);
+		crearLabel(labelOrdenarPor, Color.WHITE, 10, 150, 300, 30, 24);
+		crearLabel(labelCriterio, Color.WHITE, 10, 300, 300, 30, 24);
+		crearLabel(labelTop, Color.WHITE, 150, 150, 300, 30, 24);
 		botonEdadPDF.setText(labelBotonEdadPDF);
 		botonLikesPDF.setText(labelBotonLikesPDF);
 		botonIngresosPDF.setText(labelBotonIngresosPDF);
 		botonEstaturaPDF.setText(labelBotonEstaturaPDF);
 		cambiarModo.setText(labelCambiarModo);
+		botonBuscar.setText(labelBotonBuscar);
 	}
 	
 	public void cambiarModo() {
 		Color fondo;
 		Color texto;
+		Color fondoI;
+		Color textoI;
 		if (this.getBackground().equals(Color.WHITE)) {
 			fondo = new Color(36, 41, 46);
+			fondoI = Color.WHITE;
 			texto = Color.WHITE;
+			textoI = Color.BLACK;
 		} else {
 			fondo = Color.WHITE;
+			fondoI = new Color(36, 41, 46);
 			texto = Color.BLACK;
+			textoI = Color.WHITE;
 		}
 		this.setBackground(fondo);
 		panelUsuarios.setBackground(fondo);
@@ -217,36 +248,8 @@ public class Administrador extends JPanel {
 				((PanelUsuarioAdmin) comp).cambiarModo(fondo, texto);
 			}
 		}
-		for (Component c : this.getComponents()) {
-			if (c instanceof JLabel) {
-				JLabel label = (JLabel) c;
-				label.setForeground(texto);
-			}
-		}
-		botonAscendente.setForeground(texto);
-		botonDescendente.setForeground(texto);
-		botonPorEdad.setForeground(texto);
-		botonNombre.setForeground(texto);
-		botonAlias.setForeground(texto);
-		botonLikes.setForeground(texto);
-		botonTopLikes.setForeground(texto);
-		botonTopIngresos.setForeground(texto);
-		botonEdadPDF.setForeground(texto);
-		botonLikesPDF.setForeground(texto);
-		botonIngresosPDF.setForeground(texto);
-		botonEstaturaPDF.setForeground(texto);
-		botonAscendente.setBackground(fondo);
-		botonDescendente.setBackground(fondo);
-		botonPorEdad.setBackground(fondo);
-		botonNombre.setBackground(fondo);
-		botonAlias.setBackground(fondo);
-		botonLikes.setBackground(fondo);
-		botonTopLikes.setBackground(fondo);
-		botonTopIngresos.setBackground(fondo);
-		botonEdadPDF.setBackground(fondo);
-		botonLikesPDF.setBackground(fondo);
-		botonIngresosPDF.setBackground(fondo);
-		botonEstaturaPDF.setBackground(fondo);
+		txtBuscar.setBackground(fondoI);
+		txtBuscar.setForeground(textoI);
 		this.revalidate();
 		this.repaint();
 	}
@@ -260,11 +263,11 @@ public class Administrador extends JPanel {
 		this.setComponentZOrder(label, 0);
 	}
 
-	public void agregarUsuario(String alias, ImageIcon imagen, int edad, float estatura, ActionListener listener) {
+	public void agregarUsuario(String alias, ImageIcon imagen, String edad, String estatura, ActionListener listener) {
 		panelUsuarios.add(new PanelUsuarioAdmin(alias, imagen, edad, estatura, listener));
 	}
 
-	public void agregarUsuario(String alias, ImageIcon imagen, int edad, float estatura, ActionListener listener,
+	public void agregarUsuario(String alias, ImageIcon imagen, String edad, String estatura, ActionListener listener,
 			String ingresoProm) {
 		panelUsuarios.add(new PanelUsuarioAdmin(alias, imagen, edad, estatura, listener, ingresoProm));
 	}
@@ -518,6 +521,22 @@ public class Administrador extends JPanel {
 
 	public void setBotonVolver(JButton botonVolver) {
 		this.botonVolver = botonVolver;
+	}
+
+	public JTextField getTxtBuscar() {
+		return txtBuscar;
+	}
+
+	public void setTxtBuscar(JTextField txtBuscar) {
+		this.txtBuscar = txtBuscar;
+	}
+
+	public JButton getBotonBuscar() {
+		return botonBuscar;
+	}
+
+	public void setBotonBuscar(JButton botonBuscar) {
+		this.botonBuscar = botonBuscar;
 	}
 	
 }

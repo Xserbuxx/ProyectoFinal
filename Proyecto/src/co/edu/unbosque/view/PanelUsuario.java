@@ -1,118 +1,113 @@
 package co.edu.unbosque.view;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionListener;
-import javax.swing.*;
-import javax.swing.border.EmptyBorder;
+
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 public class PanelUsuario extends JPanel {
 
-    private Color colorTinder = new Color(255, 51, 102);
-    private JPanel barraLateral;
-
-    public PanelUsuario(String alias, ImageIcon imagen, int edad, float estatura, int likes, boolean like,
+    public PanelUsuario(String alias, ImageIcon imagen, String edad, String estatura, int likes, boolean like,
             ActionListener listener) {
-    	  setLayout(null);
-          setBackground(Color.WHITE);
-          setPreferredSize(new Dimension(420, 520)); // tamaño fijo tipo tarjeta
-          setBorder(BorderFactory.createCompoundBorder(
-                  BorderFactory.createLineBorder(new Color(220, 220, 220), 1),
-                  new EmptyBorder(10, 10, 10, 10)
-          ));
+        this.setBackground(new Color(59, 59, 59));
+        this.setLayout(null);
+        this.setPreferredSize(new Dimension(900, 300));
 
-          // 🔹 Imagen del usuario
-          Image imagenEscalada = imagen.getImage().getScaledInstance(320, 320, Image.SCALE_SMOOTH);
-          JLabel labelImagen = new JLabel(new ImageIcon(imagenEscalada));
-          labelImagen.setBounds(50, 20, 320, 320); // centrada dentro de la tarjeta
-          add(labelImagen);
+        Image imagenEscalada = imagen.getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH);
+        JLabel labelImagen = new JLabel(new ImageIcon(imagenEscalada));
+        labelImagen.setBounds(400, 20, 80, 80);
+        this.add(labelImagen);
+        
+        JPanel borde = new JPanel();
+        borde.setBackground(new Color(0,0,0,0));
+        borde.setBounds(225, 10, 400, 280);
+        borde.setBorder(BorderFactory.createLineBorder(Color.black));
 
-          // 🔹 Alias
-          JLabel lblAlias = new JLabel(alias, SwingConstants.CENTER);
-          lblAlias.setFont(new Font("SansSerif", Font.BOLD, 20));
-          lblAlias.setBounds(0, 350, 420, 25);
-          add(lblAlias);
+        crearLabel(alias, Color.black, 325, 120, 600, 25, 16);
+        crearLabel(edad + "", Color.black, 325, 150, 600, 25, 16);
+        crearLabel(estatura + "", Color.black, 325, 180, 600, 25, 16);
 
-          // 🔹 Edad
-          JLabel lblEdad = new JLabel(edad + " años", SwingConstants.CENTER);
-          lblEdad.setFont(new Font("SansSerif", Font.PLAIN, 16));
-          lblEdad.setBounds(0, 380, 420, 20);
-          add(lblEdad);
+        JButton botonLike = new JButton("\u2764 " + likes);
+        botonLike.setBounds(400, 240, 100, 40);
+        botonLike.setBackground(Color.white);
+        botonLike.setFont(new Font("Sans", Font.PLAIN, 22));
+        botonLike.setFocusable(false);
+        botonLike.setContentAreaFilled(false);
+        botonLike.setFocusPainted(false);
+        botonLike.setBorderPainted(false);
 
-          // 🔹 Estatura
-          JLabel lblEstatura = new JLabel("Estatura: " + estatura + " cm", SwingConstants.CENTER);
-          lblEstatura.setFont(new Font("SansSerif", Font.PLAIN, 15));
-          lblEstatura.setBounds(0, 405, 420, 20);
-          add(lblEstatura);
+        botonLike.setForeground(like ? Color.red : Color.gray);
+        botonLike.setActionCommand("BotonLike-" + alias);
+        botonLike.addActionListener(listener);
+        
+        this.add(borde);
+        this.add(botonLike);
+        
+        this.setComponentZOrder(borde, this.getComponentCount() - 1);
+    }
+    
+    public void cambiarModo(Color colorFondo, Color colorTexto) {
+		this.setBackground(colorFondo);
+		for (int i = 0; i < this.getComponentCount(); i++) {
+			if (this.getComponent(i) instanceof JLabel) {
+				((JLabel) this.getComponent(i)).setForeground(colorTexto);
+			}
+		}
+	}
 
-          // 🔹 Botón de Like
-          JButton botonLike = new JButton("\u2764 " + likes);
-          botonLike.setFont(new Font("SansSerif", Font.PLAIN, 26));
-          botonLike.setBounds(165, 445, 90, 50); // centrado horizontalmente
-          botonLike.setFocusable(false);
-          botonLike.setContentAreaFilled(false);
-          botonLike.setFocusPainted(false);
-          botonLike.setBorderPainted(false);
-          botonLike.setForeground(like ? colorTinder : Color.LIGHT_GRAY);
-          botonLike.setActionCommand("BotonLike-" + alias);
-          botonLike.addActionListener(listener);
-          add(botonLike);
-      }
+    public PanelUsuario(String alias, ImageIcon imagen, String edad, String estatura, int likes, boolean like,
+            ActionListener listener, String ingresoProm) {
+        this.setBackground(new Color(59, 59, 59));
+        this.setLayout(null);
+        this.setPreferredSize(new Dimension(900, 300));
 
-      // 🔹 Constructor con ingresoProm
-      public PanelUsuario(String alias, ImageIcon imagen, int edad, float estatura, int likes, boolean like,
-              ActionListener listener, String ingresoProm) {
+        Image imagenEscalada = imagen.getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH);
+        JLabel labelImagen = new JLabel(new ImageIcon(imagenEscalada));
+        labelImagen.setBounds(400, 20, 80, 80);
+        this.add(labelImagen);
+        
+        JPanel borde = new JPanel();
+        borde.setBackground(new Color(0,0,0,0));
+        borde.setBounds(225, 10, 400, 280);
+        borde.setBorder(BorderFactory.createLineBorder(Color.black));
 
-          setLayout(null);
-          setBackground(Color.WHITE);
-          setPreferredSize(new Dimension(420, 540)); // mismo tamaño de tarjeta
-          setBorder(BorderFactory.createCompoundBorder(
-                  BorderFactory.createLineBorder(new Color(220, 220, 220), 1),
-                  new EmptyBorder(10, 10, 10, 10)
-          ));
+        crearLabel(alias, Color.black, 325, 120, 600, 25, 16);
+        crearLabel(edad + "", Color.black, 325, 150, 600, 25, 16);
+        crearLabel(estatura + "", Color.black, 325, 180, 600, 25, 16);
+        crearLabel(ingresoProm, Color.black, 325, 210, 600, 25, 16);
 
-          Image imagenEscalada = imagen.getImage().getScaledInstance(320, 320, Image.SCALE_SMOOTH);
-          JLabel labelImagen = new JLabel(new ImageIcon(imagenEscalada));
-          labelImagen.setBounds(50, 20, 320, 320);
-          add(labelImagen);
+        JButton botonLike = new JButton("\u2764 " + likes);
+        botonLike.setBounds(400, 240, 100, 40);
+        botonLike.setBackground(Color.white);
+        botonLike.setFont(new Font("Sans", Font.PLAIN, 22));
+        botonLike.setFocusable(false);
+        botonLike.setContentAreaFilled(false);
+        botonLike.setFocusPainted(false);
+        botonLike.setBorderPainted(false);
 
-          JLabel lblAlias = new JLabel(alias, SwingConstants.CENTER);
-          lblAlias.setFont(new Font("SansSerif", Font.BOLD, 20));
-          lblAlias.setBounds(0, 350, 420, 25);
-          add(lblAlias);
+        botonLike.setForeground(like ? Color.red : Color.gray);
+        botonLike.setActionCommand("BotonLike-" + alias);
+        botonLike.addActionListener(listener);
+        
+        this.add(borde);
+        this.add(botonLike);
+        
+        this.setComponentZOrder(borde, this.getComponentCount() - 1);
+    }
 
-          JLabel lblEdad = new JLabel(edad + " años", SwingConstants.CENTER);
-          lblEdad.setFont(new Font("SansSerif", Font.PLAIN, 16));
-          lblEdad.setBounds(0, 380, 420, 20);
-          add(lblEdad);
-
-          JLabel lblEstatura = new JLabel("Estatura: " + estatura + " cm", SwingConstants.CENTER);
-          lblEstatura.setFont(new Font("SansSerif", Font.PLAIN, 15));
-          lblEstatura.setBounds(0, 405, 420, 20);
-          add(lblEstatura);
-
-          JLabel lblIngreso = new JLabel("Ingreso: " + ingresoProm, SwingConstants.CENTER);
-          lblIngreso.setFont(new Font("SansSerif", Font.ITALIC, 13));
-          lblIngreso.setBounds(0, 430, 420, 20);
-          add(lblIngreso);
-
-          JButton botonLike = new JButton("\u2764 " + likes);
-          botonLike.setFont(new Font("SansSerif", Font.PLAIN, 26));
-          botonLike.setBounds(165, 465, 90, 50);
-          botonLike.setFocusable(false);
-          botonLike.setContentAreaFilled(false);
-          botonLike.setFocusPainted(false);
-          botonLike.setBorderPainted(false);
-          botonLike.setForeground(like ? colorTinder : Color.LIGHT_GRAY);
-          botonLike.setActionCommand("BotonLike-" + alias);
-          botonLike.addActionListener(listener);
-          add(botonLike);
-      }
-
-    public void crearLabel(String texto, Color color, int x, int y, int ancho, int alto, int tamanoLetra) {
+    public void crearLabel(String texto, Color colorFondo, int x, int y, int ancho, int alto, int tamanoLetra) {
         JLabel label = new JLabel(texto);
-        label.setForeground(color);
+        label.setForeground(colorFondo);
         label.setBounds(x, y, ancho, alto);
-        label.setFont(new Font("SansSerif", Font.BOLD, tamanoLetra));
-        add(label);
+        label.setFont(new Font("Sans", Font.BOLD, tamanoLetra));
+        this.add(label);
+        this.setComponentZOrder(label, 0);
     }
 }

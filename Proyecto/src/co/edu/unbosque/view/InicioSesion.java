@@ -74,11 +74,8 @@ public class InicioSesion extends JPanel {
 		botonRegistrarse.setFocusPainted(false);
 		
 		cambiarModo = new JButton();
-		cambiarModo.setBounds(1000, 10, 200, 50);
-		cambiarModo.setBackground(colorTinder);
-		cambiarModo.setBorderPainted(false);
-		cambiarModo.setFocusPainted(false);
-		cambiarModo.setFocusable(false);
+		cambiarModo.setBounds(10, 10, 180, 40);
+		CampoRedondeado.aplicarRedondeado(cambiarModo, 25, new Color(255, 51, 102), Color.WHITE);
 		
 		this.add(cambiarModo);
 		this.add(derecha);

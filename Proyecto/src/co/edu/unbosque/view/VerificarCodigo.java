@@ -49,11 +49,8 @@ public class VerificarCodigo extends JPanel {
 		CampoRedondeado.aplicarRedondeado(botonConfirmar, 25, colorTinder, Color.WHITE);
 
 		cambiarModo = new JButton();
-		cambiarModo.setBounds(100, 10, 200, 50);
-		cambiarModo.setBackground(colorTinder);
-		cambiarModo.setFocusable(false);
-		cambiarModo.setFocusPainted(false);
-		cambiarModo.setBorderPainted(false);
+		cambiarModo.setBounds(1060, 15, 180, 40);
+		CampoRedondeado.aplicarRedondeado(cambiarModo, 25, new Color(255, 51, 102), Color.WHITE);
 
 		this.add(cambiarModo);
 		panelBorde.add(campoCodigo);
