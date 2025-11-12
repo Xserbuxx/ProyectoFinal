@@ -1,99 +1,83 @@
 package co.edu.unbosque.view;
 
 import java.awt.Color;
-import java.awt.Component;
-import java.awt.GridLayout;
+import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.event.ActionListener;
-
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
+import javax.swing.*;
 
 public class Aplicacion extends JPanel {
 
+	private JPanel barraLateral;
 	private JScrollPane scrollPanel;
 	private JPanel panelUsuarios;
 	private JButton botonPerfil;
 	private JButton botonVolver;
-
+	private JLabel logo;
+	private Color colorTinder = new Color(255, 51, 102);
 	public Aplicacion() {
-		this.setLayout(null);
-		this.setBackground(new Color(59, 59, 59));
+		setLayout(null);
+		setBackground(new Color(59, 59, 59));
 
+		// 🔹 Barra lateral
+		barraLateral = new JPanel();
+		barraLateral.setLayout(null);
+		barraLateral.setBackground(new Color(255, 51, 102));
+		barraLateral.setBounds(0, 0, 350, 720);
+
+		 ImageIcon imgVolver = new ImageIcon("Resources/volver3.png");
+		    botonVolver = new JButton(new ImageIcon(imgVolver.getImage().getScaledInstance(40, 40, Image.SCALE_SMOOTH)));
+		    botonVolver.setBounds(10, 10, 40, 40);
+		    botonVolver.setContentAreaFilled(false);
+		    botonVolver.setBorderPainted(false);
+		    botonVolver.setFocusPainted(false);
+		    barraLateral.add(botonVolver);
+
+		    ImageIcon imgLogo = new ImageIcon("Resources/logo.png"); // Asegúrate del nombre correcto del archivo
+		    JLabel logo = new JLabel(new ImageIcon(imgLogo.getImage().getScaledInstance(180, 60, Image.SCALE_SMOOTH)));
+		    logo.setBounds(60, -10, 180, 75); // subido arriba y más largo
+		    barraLateral.add(logo);
+
+
+		botonPerfil = new JButton("Perfil");
+		botonPerfil.setBounds(1130, 10, 100, 40);
+		CampoRedondeado.aplicarRedondeado(botonPerfil, 25, colorTinder, Color.WHITE);
 		
-		ImageIcon imagenPerfil = new ImageIcon("Resources/perfil.png");
-		Image imagenRedimensionadaPerfil = imagenPerfil.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
-		ImageIcon imagenRedimensionada = new ImageIcon(imagenRedimensionadaPerfil);
+		panelUsuarios = new JPanel(null);
+		panelUsuarios.setBackground(new Color(59, 59, 59));
+		panelUsuarios.setPreferredSize(new Dimension(1180, 0));
 
-		botonPerfil = new JButton(imagenRedimensionada);
-		botonPerfil.setBounds(600, 0, 50, 50);
-		botonPerfil.setBackground(new Color(0, 0, 0, 0));
-		botonPerfil.setContentAreaFilled(false);
-		botonPerfil.setBorderPainted(false);
-		botonPerfil.setFocusPainted(false);
-		botonPerfil.setFocusable(false);
-		
-		ImageIcon imagenVolver = new ImageIcon("Resources/volver.png");
-		Image imagenRedimensionadaVolver = imagenVolver.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
-		ImageIcon imagenRedimensionadaVolverv = new ImageIcon(imagenRedimensionadaVolver);
+		// 🔹 Scroll principal
+		scrollPanel = new JScrollPane(panelUsuarios);
+		scrollPanel.setBounds(350, 60, 1180, 640);
+		scrollPanel.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollPanel.getVerticalScrollBar().setUnitIncrement(16);
+		scrollPanel.setBorder(null);
 
-		botonVolver = new JButton(imagenRedimensionadaVolverv);
-		botonVolver.setBounds(10, 10, 50, 50);
-		botonVolver.setBackground(Color.red);
-		botonVolver.setBorderPainted(false);
-		botonVolver.setFocusPainted(false);
-		botonVolver.setFocusable(false);
-
-		panelUsuarios = new JPanel();
-		panelUsuarios.setBackground(Color.WHITE);
-		panelUsuarios.setLayout(new GridLayout(0, 1, 10, 10));
-
-		scrollPanel = new JScrollPane(panelUsuarios, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
-				JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		scrollPanel.setBounds(0, 60, 1260, 640);
-		scrollPanel.setBackground(new Color(36, 41, 46));
-		
-		this.add(botonVolver);
-		this.add(botonPerfil);
-		this.add(scrollPanel);
-	}
-	
-	public void cambiarModo() {
-		Color fondo;
-		Color texto;
-		if (this.getBackground().equals(Color.WHITE)) {
-			fondo = new Color(36, 41, 46);
-			texto = Color.WHITE;
-		} else {
-			fondo = Color.WHITE;
-			texto = Color.BLACK;
-		}
-		this.setBackground(fondo);
-		panelUsuarios.setBackground(fondo);
-		for (int i = 0; i < panelUsuarios.getComponentCount(); i++) {
-			Component comp = panelUsuarios.getComponent(i);
-			if (comp instanceof PanelUsuario) {
-				((PanelUsuario) comp).cambiarModo(fondo, texto);
-			}
-		}
-	}
-
-	public void agregarUsuario(String alias, ImageIcon imagen, int edad, float estatura, int likes, boolean like,
+		barraLateral.add(botonVolver);
+		add(barraLateral);
+		add(scrollPanel);
+		add(botonPerfil);
+	}	public void agregarUsuario(String alias, ImageIcon imagen, int edad, float estatura, int likes, boolean like,
 			ActionListener listener) {
-		panelUsuarios.add(new PanelUsuario(alias, imagen, edad, estatura, likes, like, listener));
+
+		PanelUsuario tarjeta = new PanelUsuario(alias, imagen, edad, estatura, likes, like, listener);
+		tarjeta.setBounds(235, panelUsuarios.getComponentCount() * 580, 380, 540);
+		panelUsuarios.add(tarjeta);
+		panelUsuarios.setPreferredSize(new Dimension(1180, panelUsuarios.getComponentCount() * 580));
 	}
-	
+
 	public void agregarUsuario(String alias, ImageIcon imagen, int edad, float estatura, int likes, boolean like,
 			ActionListener listener, String ingresoProm) {
-		panelUsuarios.add(new PanelUsuario(alias, imagen, edad, estatura, likes, like, listener, ingresoProm));
+
+		PanelUsuario tarjeta = new PanelUsuario(alias, imagen, edad, estatura, likes, like, listener, ingresoProm);
+		tarjeta.setBounds(235, panelUsuarios.getComponentCount() * 580, 380, 540);
+		panelUsuarios.add(tarjeta);
+		panelUsuarios.setPreferredSize(new Dimension(1180, panelUsuarios.getComponentCount() * 580));
 	}
-	
 	public void limpiarUsuarios() {
 		panelUsuarios.removeAll();
-		panelUsuarios.revalidate();
-		panelUsuarios.repaint();
+		panelUsuarios.setPreferredSize(new Dimension(1180, 0));
 	}
 
 	public JScrollPane getScrollPanel() {
@@ -127,5 +111,5 @@ public class Aplicacion extends JPanel {
 	public void setBotonVolver(JButton botonVolver) {
 		this.botonVolver = botonVolver;
 	}
-	
 }
+
