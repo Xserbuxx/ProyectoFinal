@@ -15,35 +15,35 @@ public class Perfil extends JPanel {
 	private JButton botonVolver;
 	private JButton botonIncognito;
 	private JButton cambiarModo;
-
+	private Color colorTinder = new Color(255, 51, 102);
 	public Perfil() {
 		this.setLayout(null);
-		this.setBackground(new Color(36, 41, 46));
+		this.setBackground(new Color(59, 59, 59));
 
-		ImageIcon imagenVolver = new ImageIcon("Resources/volver.png");
-		Image imagenRedimensionadaVolver = imagenVolver.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
-		ImageIcon imagenRedimensionada = new ImageIcon(imagenRedimensionadaVolver);
+		ImageIcon imagenVolver = new ImageIcon("Resources/volver3.png");
+	    Image imagenRedimensionadaVolver = imagenVolver.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+	    ImageIcon imagenRedimensionada = new ImageIcon(imagenRedimensionadaVolver);
 
-		botonVolver = new JButton(imagenRedimensionada);
-		botonVolver.setBounds(10, 10, 50, 50);
-		botonVolver.setBackground(Color.red);
-		botonVolver.setBorderPainted(false);
-		botonVolver.setFocusPainted(false);
-		botonVolver.setFocusable(false);
+	    botonVolver = new JButton(imagenRedimensionada);
+	    botonVolver.setBounds(10, 10, 50, 50);
+	    botonVolver.setBorderPainted(false);
+	    botonVolver.setFocusPainted(false);
+	    botonVolver.setFocusable(false);
+	    botonVolver.setContentAreaFilled(false);
+	    add(botonVolver);
+	    
+	   
+	   
+	    
+		botonIncognito =new JButton("Incógnito: ON");
+	    botonIncognito.setBounds(930, 15, 150, 40);
+		CampoRedondeado.aplicarRedondeado(   botonIncognito, 25, colorTinder, Color.WHITE);
+	    add(botonIncognito);
 
-		botonIncognito = new JButton();
-		botonIncognito.setBounds(100, 10, 200, 50);
-		botonIncognito.setBorderPainted(false);
-		botonIncognito.setFocusPainted(false);
-		botonIncognito.setFocusable(false);
-
-		cambiarModo = new JButton();
-		cambiarModo.setBounds(330, 10, 200, 50);
-		cambiarModo.setBackground(Color.blue);
-		cambiarModo.setBorderPainted(false);
-		cambiarModo.setFocusPainted(false);
-		cambiarModo.setFocusable(false);
-
+	    cambiarModo = new JButton("Modo Oscuro");
+	    cambiarModo.setBounds(1090, 15, 150, 40);
+		CampoRedondeado.aplicarRedondeado(cambiarModo, 25, colorTinder, Color.WHITE);
+	    add(cambiarModo);
 		this.add(botonIncognito);
 		this.add(botonVolver);
 		this.add(cambiarModo);

@@ -19,6 +19,7 @@ public class Idioma extends JPanel {
 	private JLabel textoEncabezado;
 	private JPanel panelContenido;
 
+	private Color colorTinder = new Color(255, 51, 102);
 	private Font campoFuente = new Font("Segoe UI", Font.PLAIN, 30);
 	private Font campoFuente2 = new Font("Segoe UI", Font.PLAIN, 20);
 	public Idioma() {
@@ -29,17 +30,12 @@ public class Idioma extends JPanel {
 		panelEncabezado.setLayout(null);
 		panelEncabezado.setBounds(0, 0, 1280, 100);
 
-		ImageIcon headerIcon = new ImageIcon("Resources/fondoEncabezado.png");
-		Image headerImg = headerIcon.getImage().getScaledInstance(1280, 100, Image.SCALE_SMOOTH);
-		JLabel headerBg = new JLabel(new ImageIcon(headerImg));
-		headerBg.setLayout(null);
-		headerBg.setBounds(0, 0, 1280, 100);
+		panelEncabezado.setBackground(colorTinder); 
 
 		imagenLogo = new JLabel(new ImageIcon("Resources/logo.png"));
 		imagenLogo.setBounds(0, 5, 250, 80);
-		headerBg.add(imagenLogo);
+		panelEncabezado.add(imagenLogo);
 
-		panelEncabezado.add(headerBg);
 		this.add(panelEncabezado);
 
 		panelContenido = new JPanel();
@@ -48,7 +44,6 @@ public class Idioma extends JPanel {
 		panelContenido.setBackground(new Color(59, 59, 59));
 		this.add(panelContenido);
 
-		Color colorTinder = new Color(255, 51, 102);
 		textoEncabezado = new JLabel("¿Estás preparado para encontrar tu match perfecto?", JLabel.CENTER);
 		textoEncabezado.setFont(campoFuente);
 		textoEncabezado.setForeground(Color.WHITE);

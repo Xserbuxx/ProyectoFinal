@@ -9,28 +9,29 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
-	<classpathentry kind="lib" path="C:/Users/serbux/Documents/GitHub/ProyectoFinal/iText-Core-9.3.0-only-jars/barcodes-9.3.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/serbux/Documents/GitHub/ProyectoFinal/iText-Core-9.3.0-only-jars/bouncy-castle-adapter-9.3.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/serbux/Documents/GitHub/ProyectoFinal/iText-Core-9.3.0-only-jars/bouncy-castle-connector-9.3.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/serbux/Documents/GitHub/ProyectoFinal/iText-Core-9.3.0-only-jars/bouncy-castle-fips-adapter-9.3.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/serbux/Documents/GitHub/ProyectoFinal/iText-Core-9.3.0-only-jars/commons-9.3.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/serbux/Documents/GitHub/ProyectoFinal/iText-Core-9.3.0-only-jars/font-asian-9.3.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/serbux/Documents/GitHub/ProyectoFinal/iText-Core-9.3.0-only-jars/forms-9.3.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/serbux/Documents/GitHub/ProyectoFinal/iText-Core-9.3.0-only-jars/hyph-9.3.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/serbux/Documents/GitHub/ProyectoFinal/iText-Core-9.3.0-only-jars/io-9.3.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/serbux/Documents/GitHub/ProyectoFinal/iText-Core-9.3.0-only-jars/kernel-9.3.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/serbux/Documents/GitHub/ProyectoFinal/iText-Core-9.3.0-only-jars/layout-9.3.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/serbux/Documents/GitHub/ProyectoFinal/iText-Core-9.3.0-only-jars/pdfa-9.3.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/serbux/Documents/GitHub/ProyectoFinal/iText-Core-9.3.0-only-jars/pdftest-9.3.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/serbux/Documents/GitHub/ProyectoFinal/iText-Core-9.3.0-only-jars/pdfua-9.3.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/serbux/Documents/GitHub/ProyectoFinal/iText-Core-9.3.0-only-jars/sign-9.3.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/serbux/Documents/GitHub/ProyectoFinal/iText-Core-9.3.0-only-jars/styled-xml-parser-9.3.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/serbux/Documents/GitHub/ProyectoFinal/iText-Core-9.3.0-only-jars/svg-9.3.0.jar"/>
-	<classpathentry kind="lib" path="C:/Users/serbux/Documents/GitHub/ProyectoFinal/JFree/jfreechart-1.5.4.jar"/>
-	<classpathentry kind="lib" path="C:/Users/serbux/Documents/GitHub/ProyectoFinal/iText-Core-9.3.0-only-jars/logback-classic-1.4.11.jar"/>
-	<classpathentry kind="lib" path="C:/Users/serbux/Documents/GitHub/ProyectoFinal/iText-Core-9.3.0-only-jars/logback-core-1.4.11.jar"/>
-	<classpathentry kind="lib" path="C:/Users/serbux/Documents/GitHub/ProyectoFinal/iText-Core-9.3.0-only-jars/slf4j-api-2.0.9.jar"/>
-	<classpathentry kind="lib" path="C:/Users/serbux/Documents/GitHub/ProyectoFinal/jakarta/jakarta.activation-2.0.1.jar"/>
-	<classpathentry kind="lib" path="C:/Users/serbux/Documents/GitHub/ProyectoFinal/jakarta/jakarta.mail-2.0.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/diazk/OneDrive/Documentos/desarrollo/proyectofin/ProyectoFinal/jakarta/jakarta.activation-2.0.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/diazk/OneDrive/Documentos/desarrollo/proyectofin/ProyectoFinal/jakarta/jakarta.mail-2.0.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/diazk/OneDrive/Documentos/desarrollo/proyectofin/ProyectoFinal/JFree/jfreechart-1.5.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/diazk/OneDrive/Documentos/desarrollo/proyectofin/ProyectoFinal/JFree/jfreechart-1.5.6.jar"/>
+	<classpathentry kind="lib" path="C:/Users/diazk/OneDrive/Documentos/desarrollo/proyectofin/ProyectoFinal/iText-Core-9.3.0-only-jars/barcodes-9.3.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/diazk/OneDrive/Documentos/desarrollo/proyectofin/ProyectoFinal/iText-Core-9.3.0-only-jars/bouncy-castle-adapter-9.3.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/diazk/OneDrive/Documentos/desarrollo/proyectofin/ProyectoFinal/iText-Core-9.3.0-only-jars/bouncy-castle-connector-9.3.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/diazk/OneDrive/Documentos/desarrollo/proyectofin/ProyectoFinal/iText-Core-9.3.0-only-jars/bouncy-castle-fips-adapter-9.3.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/diazk/OneDrive/Documentos/desarrollo/proyectofin/ProyectoFinal/iText-Core-9.3.0-only-jars/commons-9.3.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/diazk/OneDrive/Documentos/desarrollo/proyectofin/ProyectoFinal/iText-Core-9.3.0-only-jars/font-asian-9.3.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/diazk/OneDrive/Documentos/desarrollo/proyectofin/ProyectoFinal/iText-Core-9.3.0-only-jars/forms-9.3.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/diazk/OneDrive/Documentos/desarrollo/proyectofin/ProyectoFinal/iText-Core-9.3.0-only-jars/hyph-9.3.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/diazk/OneDrive/Documentos/desarrollo/proyectofin/ProyectoFinal/iText-Core-9.3.0-only-jars/io-9.3.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/diazk/OneDrive/Documentos/desarrollo/proyectofin/ProyectoFinal/iText-Core-9.3.0-only-jars/kernel-9.3.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/diazk/OneDrive/Documentos/desarrollo/proyectofin/ProyectoFinal/iText-Core-9.3.0-only-jars/layout-9.3.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/diazk/OneDrive/Documentos/desarrollo/proyectofin/ProyectoFinal/iText-Core-9.3.0-only-jars/logback-classic-1.4.11.jar"/>
+	<classpathentry kind="lib" path="C:/Users/diazk/OneDrive/Documentos/desarrollo/proyectofin/ProyectoFinal/iText-Core-9.3.0-only-jars/logback-core-1.4.11.jar"/>
+	<classpathentry kind="lib" path="C:/Users/diazk/OneDrive/Documentos/desarrollo/proyectofin/ProyectoFinal/iText-Core-9.3.0-only-jars/pdfa-9.3.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/diazk/OneDrive/Documentos/desarrollo/proyectofin/ProyectoFinal/iText-Core-9.3.0-only-jars/pdftest-9.3.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/diazk/OneDrive/Documentos/desarrollo/proyectofin/ProyectoFinal/iText-Core-9.3.0-only-jars/pdfua-9.3.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/diazk/OneDrive/Documentos/desarrollo/proyectofin/ProyectoFinal/iText-Core-9.3.0-only-jars/sign-9.3.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/diazk/OneDrive/Documentos/desarrollo/proyectofin/ProyectoFinal/iText-Core-9.3.0-only-jars/slf4j-api-2.0.9.jar"/>
+	<classpathentry kind="lib" path="C:/Users/diazk/OneDrive/Documentos/desarrollo/proyectofin/ProyectoFinal/iText-Core-9.3.0-only-jars/styled-xml-parser-9.3.0.jar"/>
+	<classpathentry kind="lib" path="C:/Users/diazk/OneDrive/Documentos/desarrollo/proyectofin/ProyectoFinal/iText-Core-9.3.0-only-jars/svg-9.3.0.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
