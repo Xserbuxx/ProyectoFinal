@@ -105,11 +105,8 @@ public class SeleccionGustos extends JPanel {
 		estadoDivorcio.add(noDivorciada);
 		
 		cambiarModo = new JButton();
-		cambiarModo.setBounds(1000, 20, 200, 50);
-		cambiarModo.setBackground(colorTinder);
-		cambiarModo.setFocusable(false);
-		cambiarModo.setFocusPainted(false);
-		cambiarModo.setBorderPainted(false);
+		cambiarModo.setBounds(1060, 15, 180, 40);
+		CampoRedondeado.aplicarRedondeado(cambiarModo, 25, new Color(255, 51, 102), Color.WHITE);
 		
 		this.add(cambiarModo);
 		this.add(divorciada);

@@ -13,7 +13,7 @@ import javax.swing.JPanel;
 
 public class PanelUsuarioAdmin extends JPanel {
 
-	public PanelUsuarioAdmin(String alias, ImageIcon imagen, int edad, float estatura, ActionListener listener) {
+	public PanelUsuarioAdmin(String alias, ImageIcon imagen, String edad, String estatura, ActionListener listener) {
 		this.setBackground(Color.white);
 		this.setLayout(null);
 		this.setPreferredSize(new Dimension(800, 150));
@@ -72,7 +72,7 @@ public class PanelUsuarioAdmin extends JPanel {
 		}
 	}
 
-	public PanelUsuarioAdmin(String alias, ImageIcon imagen, int edad, float estatura, ActionListener listener,
+	public PanelUsuarioAdmin(String alias, ImageIcon imagen, String edad, String estatura, ActionListener listener,
 			String ingresoProm) {
 		this.setBackground(Color.white);
 		this.setLayout(null);

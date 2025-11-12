@@ -6,38 +6,36 @@ import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class PanelUsuario extends JPanel {
-    private Color colorTinder = new Color(255, 51, 102);
-    private JPanel barraLateral;
 
-    public PanelUsuario(String alias, ImageIcon imagen, int edad, float estatura, int likes, boolean like,
+    public PanelUsuario(String alias, ImageIcon imagen, String edad, String estatura, int likes, boolean like,
             ActionListener listener) {
         this.setBackground(new Color(59, 59, 59));
         this.setLayout(null);
-        this.setPreferredSize(new Dimension(575, 120));
-        
-        barraLateral = new JPanel();
-        barraLateral.setBackground(colorTinder);
-        barraLateral.setBounds(0, 0, 158, 120);
-        this.add(barraLateral);
+        this.setPreferredSize(new Dimension(900, 300));
 
         Image imagenEscalada = imagen.getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH);
         JLabel labelImagen = new JLabel(new ImageIcon(imagenEscalada));
-        labelImagen.setBounds(175, 20, 80, 80);
+        labelImagen.setBounds(400, 20, 80, 80);
         this.add(labelImagen);
+        
+        JPanel borde = new JPanel();
+        borde.setBackground(new Color(0,0,0,0));
+        borde.setBounds(225, 10, 400, 280);
+        borde.setBorder(BorderFactory.createLineBorder(Color.black));
 
-        // 🔹 Datos del usuario
-        crearLabel(alias, Color.black, 275, 20, 200, 25, 16);
-        crearLabel(edad + "", Color.black, 275, 45, 200, 25, 16);
-        crearLabel(estatura + "", Color.black, 275, 70, 200, 25, 16);
+        crearLabel(alias, Color.black, 325, 120, 600, 25, 16);
+        crearLabel(edad + "", Color.black, 325, 150, 600, 25, 16);
+        crearLabel(estatura + "", Color.black, 325, 180, 600, 25, 16);
 
         JButton botonLike = new JButton("\u2764 " + likes);
-        botonLike.setBounds(435, 35, 100, 40);
+        botonLike.setBounds(400, 240, 100, 40);
         botonLike.setBackground(Color.white);
         botonLike.setFont(new Font("Sans", Font.PLAIN, 22));
         botonLike.setFocusable(false);
@@ -48,8 +46,11 @@ public class PanelUsuario extends JPanel {
         botonLike.setForeground(like ? Color.red : Color.gray);
         botonLike.setActionCommand("BotonLike-" + alias);
         botonLike.addActionListener(listener);
-
+        
+        this.add(borde);
         this.add(botonLike);
+        
+        this.setComponentZOrder(borde, this.getComponentCount() - 1);
     }
     
     public void cambiarModo(Color colorFondo, Color colorTexto) {
@@ -61,29 +62,29 @@ public class PanelUsuario extends JPanel {
 		}
 	}
 
-    public PanelUsuario(String alias, ImageIcon imagen, int edad, float estatura, int likes, boolean like,
+    public PanelUsuario(String alias, ImageIcon imagen, String edad, String estatura, int likes, boolean like,
             ActionListener listener, String ingresoProm) {
         this.setBackground(new Color(59, 59, 59));
         this.setLayout(null);
-        this.setPreferredSize(new Dimension(575, 120));
-
-        barraLateral = new JPanel();
-        barraLateral.setBackground(colorTinder);
-        barraLateral.setBounds(0, 0, 158, 120);
-        this.add(barraLateral);
+        this.setPreferredSize(new Dimension(900, 300));
 
         Image imagenEscalada = imagen.getImage().getScaledInstance(80, 80, Image.SCALE_SMOOTH);
         JLabel labelImagen = new JLabel(new ImageIcon(imagenEscalada));
-        labelImagen.setBounds(175, 20, 80, 80);
+        labelImagen.setBounds(400, 20, 80, 80);
         this.add(labelImagen);
+        
+        JPanel borde = new JPanel();
+        borde.setBackground(new Color(0,0,0,0));
+        borde.setBounds(225, 10, 400, 280);
+        borde.setBorder(BorderFactory.createLineBorder(Color.black));
 
-        crearLabel(alias, Color.black, 275, 20, 200, 25, 16);
-        crearLabel(edad + "", Color.black, 275, 45, 200, 25, 16);
-        crearLabel(estatura + "", Color.black, 275, 70, 200, 25, 16);
-        crearLabel(ingresoProm, Color.black, 275, 90, 200, 20, 13);
+        crearLabel(alias, Color.black, 325, 120, 600, 25, 16);
+        crearLabel(edad + "", Color.black, 325, 150, 600, 25, 16);
+        crearLabel(estatura + "", Color.black, 325, 180, 600, 25, 16);
+        crearLabel(ingresoProm, Color.black, 325, 210, 600, 25, 16);
 
         JButton botonLike = new JButton("\u2764 " + likes);
-        botonLike.setBounds(435, 35, 100, 40);
+        botonLike.setBounds(400, 240, 100, 40);
         botonLike.setBackground(Color.white);
         botonLike.setFont(new Font("Sans", Font.PLAIN, 22));
         botonLike.setFocusable(false);
@@ -94,8 +95,11 @@ public class PanelUsuario extends JPanel {
         botonLike.setForeground(like ? Color.red : Color.gray);
         botonLike.setActionCommand("BotonLike-" + alias);
         botonLike.addActionListener(listener);
-
+        
+        this.add(borde);
         this.add(botonLike);
+        
+        this.setComponentZOrder(borde, this.getComponentCount() - 1);
     }
 
     public void crearLabel(String texto, Color colorFondo, int x, int y, int ancho, int alto, int tamanoLetra) {
