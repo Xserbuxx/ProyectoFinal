@@ -77,7 +77,7 @@ public class Idioma extends JPanel {
 		iconoMundo.setForeground(Color.WHITE);
 		panelComboDecorado.add(iconoMundo);
 
-		String[] idiomas = { "Español", "English", "Português", "Русский", "中文", "עברית" };
+		String[] idiomas = { "Español", "English", "Português", "Русский", "\u4e2d\u56fd\u4eba", "עברית" };
 		String[] rutasBanderas = { "Resources/bandera_es.png", "Resources/bandera_usa.png", "Resources/bandera_pt.png",
 				"Resources/bandera_rusia.png", "Resources/bandera_china.png", "Resources/bandera_israel.png" };
 

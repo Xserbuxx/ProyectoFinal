@@ -300,7 +300,7 @@ public class Controlador implements ActionListener {
 			case "\u0420\u0443\u0441\u0441\u043A\u0438\u0439":
 				prop = FileHandler.cargarArchivoDePropiedades("ru.properties");
 				break;
-			case "\u4E2D\u56FD\u4EBA":
+			case "\u4e2d\u56fd\u4eba":
 				prop = FileHandler.cargarArchivoDePropiedades("ch.properties");
 				break;
 			case "\u05e2\u05d1\u05e8\u05d9\u05ea":

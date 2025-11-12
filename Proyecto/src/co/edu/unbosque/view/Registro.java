@@ -119,7 +119,7 @@ public class Registro extends JPanel {
 		botonSexoMujer.setBounds(430, 200, 50, 30);
 		CampoRedondeado.aplicarRedondeado(botonSexoMujer, 20, colorTinder, Color.WHITE);
 
-		Font campoFuente = new Font("Segoe UI", Font.PLAIN, 14);
+		Font campoFuente = new Font("Sans", Font.PLAIN, 14);
 
 		campoNombre = new CampoRedondeado(15, 45);
 		campoNombre.setBounds(370, 250, 500, 45);
@@ -152,7 +152,7 @@ public class Registro extends JPanel {
 
 		botonExaminar = new JButton();
 		botonExaminar.setBounds(760, 670, 110, 45);
-		botonExaminar.setFont(new Font("Segoe UI", Font.BOLD, 12));
+		botonExaminar.setFont(new Font("Sans", Font.BOLD, 12));
 		CampoRedondeado.aplicarRedondeado(botonExaminar, 25, colorTinder, Color.WHITE);
 
 		campoContrasena = new CampoRedondeado(15, 45);
@@ -172,7 +172,7 @@ public class Registro extends JPanel {
 		botonIniciarSesion = new JButton();
 		botonIniciarSesion.setBounds(460, 1100, 200, 18);
 		botonIniciarSesion.setHorizontalAlignment(SwingConstants.LEFT);
-		botonIniciarSesion.setFont(new Font("Segoe UI", Font.BOLD, 14));
+		botonIniciarSesion.setFont(new Font("Sans", Font.BOLD, 14));
 		botonIniciarSesion.setForeground(colorTinder);
 		botonIniciarSesion.setContentAreaFilled(false);
 		botonIniciarSesion.setBorderPainted(false);
