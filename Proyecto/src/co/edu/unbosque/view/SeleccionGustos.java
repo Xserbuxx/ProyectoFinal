@@ -14,24 +14,53 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
+/**
+ * Clase que representa el panel de selección de gustos y preferencias en la aplicación.
+ * Permite a los usuarios especificar sus preferencias sobre las características
+ * de las personas que les interesan, como rango de edad, estatura ideal,
+ * y preferencias específicas según el género.
+ * 
+ * @author Leidy Natalia Díaz Peña
+ * @version 1.0
+ */
 public class SeleccionGustos extends JPanel {
 
+	/** Campo de texto para ingresar la edad mínima deseada */
 	private JTextField campoEdadMinima;
+	
+	/** Campo de texto para ingresar la edad máxima deseada */
 	private JTextField campoEdadMaxima;
+	
+	/** Campo de texto para ingresar la estatura ideal */
 	private JTextField campoEstaturaIdeal;
+	
+	/** Campo de texto para ingresar el ingreso ideal (solo para mujeres) */
 	private JTextField campoIngresoIdeal;
 
+	/** Botón para confirmar la selección de gustos */
 	private JButton botonConfirmar;
 
+	/** Radio button para indicar preferencia por persona divorciada */
 	private JRadioButton divorciada;
+	
+	/** Radio button para indicar preferencia por persona no divorciada */
 	private JRadioButton noDivorciada;
 
+	/** Grupo de botones para el estado de divorcio */
 	private ButtonGroup estadoDivorcio;
 
+	/** Panel que contiene el formulario de gustos */
 	private JPanel panelFormulario;
 	
+	/** Botón para cambiar entre modo claro y oscuro */
 	private JButton cambiarModo;
 
+	/**
+	 * Constructor de la clase SeleccionGustos.
+	 * Inicializa todos los componentes gráficos del panel de selección de gustos,
+	 * configura sus propiedades visuales y los agrega al panel.
+	 * Incluye un panel decorativo con imagen de fondo.
+	 */
 	public SeleccionGustos() {
 
 		this.setBackground(new Color(59, 59, 59));
@@ -120,6 +149,12 @@ public class SeleccionGustos extends JPanel {
 		this.add(panelFormulario);
 	}
 
+	/**
+	 * Muestra los campos específicos para usuarios mujeres.
+	 * Permite ingresar el ingreso ideal y oculta las opciones de estado de divorcio.
+	 * 
+	 * @param labelIngresoIdeal Texto de la etiqueta de ingreso ideal
+	 */
 	public void mostrarCamposMujer(String labelIngresoIdeal) {
 		campoIngresoIdeal.setVisible(true);
 		campoIngresoIdeal.setEnabled(true);
@@ -132,6 +167,12 @@ public class SeleccionGustos extends JPanel {
 		crearLabel(labelIngresoIdeal, Color.WHITE, 850, 190 + 200, 200, 30, 16);
 	}
 
+	/**
+	 * Muestra los campos específicos para usuarios hombres.
+	 * Permite seleccionar preferencia sobre estado de divorcio y oculta el campo de ingreso.
+	 * 
+	 * @param labelDivorciada Texto de la etiqueta de estado divorciada
+	 */
 	public void mostrarCamposHombre(String labelDivorciada) {
 		campoIngresoIdeal.setVisible(false);
 		campoIngresoIdeal.setEnabled(false);
@@ -144,6 +185,20 @@ public class SeleccionGustos extends JPanel {
 		crearLabel(labelDivorciada, Color.WHITE, 850, 190 + 200, 200, 30, 16);
 	}
 
+	/**
+	 * Muestra todos los textos de las etiquetas del formulario de gustos.
+	 * Este método es utilizado para la internacionalización de la interfaz.
+	 * 
+	 * @param labelEdadMinima Texto de la etiqueta de edad mínima
+	 * @param labelEdadMaxima Texto de la etiqueta de edad máxima
+	 * @param labelEstaturaIdeal Texto de la etiqueta de estatura ideal
+	 * @param labelDivorciada Texto para la opción divorciada
+	 * @param labelNoDivorciada Texto para la opción no divorciada
+	 * @param labelConfirmar Texto del botón confirmar
+	 * @param labelEdad Texto de la etiqueta de edad
+	 * @param labelPersonaIdeal Texto del título "persona ideal"
+	 * @param labelCambiarModo Texto del botón cambiar modo
+	 */
 	public void mostrarTextos(String labelEdadMinima, String labelEdadMaxima, String labelEstaturaIdeal,
 			String labelDivorciada, String labelNoDivorciada, String labelConfirmar, String labelEdad,
 			String labelPersonaIdeal, String labelCambiarModo) {
@@ -162,6 +217,12 @@ public class SeleccionGustos extends JPanel {
 		cambiarModo.setText(labelCambiarModo);
 	}
 
+	/**
+	 * Elimina las etiquetas relacionadas con los campos específicos de género.
+	 * 
+	 * @param labelIngresoProm Texto de la etiqueta de ingreso promedio
+	 * @param labelEstadoDivorcio Texto de la etiqueta de estado de divorcio
+	 */
 	public void eliminarLabelGustos(String labelIngresoProm, String labelEstadoDivorcio) {
 		for (Component c : this.getComponents()) {
 			if (!(c instanceof JLabel)) {
@@ -175,6 +236,9 @@ public class SeleccionGustos extends JPanel {
 		}
 	}
 
+	/**
+	 * Limpia todos los campos del formulario de gustos y restablece las selecciones.
+	 */
 	public void limpiarCampos() {
 		campoEdadMinima.setText("");
 		campoEdadMaxima.setText("");
@@ -183,6 +247,10 @@ public class SeleccionGustos extends JPanel {
 		estadoDivorcio.clearSelection();
 	}
 	
+	/**
+	 * Cambia entre el modo oscuro y modo claro de la interfaz.
+	 * Alterna los colores de fondo y texto de todos los componentes del panel.
+	 */
 	public void cambiarModo() {
 		if (this.getBackground().equals(new Color(59, 59, 59))) {
 			this.setBackground(Color.WHITE);
@@ -215,6 +283,18 @@ public class SeleccionGustos extends JPanel {
 		}
 	}
 
+	/**
+	 * Crea y agrega una etiqueta al panel con las propiedades especificadas.
+	 * La etiqueta se posiciona al frente de otros componentes.
+	 * 
+	 * @param texto Texto a mostrar en la etiqueta
+	 * @param colorFondo Color del texto de la etiqueta
+	 * @param x Posición X de la etiqueta
+	 * @param y Posición Y de la etiqueta
+	 * @param ancho Ancho de la etiqueta
+	 * @param alto Alto de la etiqueta
+	 * @param tamanoLetra Tamaño de la fuente
+	 */
 	public void crearLabel(String texto, Color colorFondo, int x, int y, int ancho, int alto, int tamanoLetra) {
 		JLabel label = new JLabel(texto);
 		label.setForeground(colorFondo);
@@ -224,74 +304,164 @@ public class SeleccionGustos extends JPanel {
 		this.setComponentZOrder(label, 0);
 	}
 
+	/**
+	 * Obtiene el campo de texto de la edad mínima.
+	 * 
+	 * @return El campo edad mínima
+	 */
 	public JTextField getCampoEdadMinima() {
 		return campoEdadMinima;
 	}
 
+	/**
+	 * Establece el campo de texto de la edad mínima.
+	 * 
+	 * @param campoEdadMinima El campo a establecer
+	 */
 	public void setCampoEdadMinima(JTextField campoEdadMinima) {
 		this.campoEdadMinima = campoEdadMinima;
 	}
 
+	/**
+	 * Obtiene el campo de texto de la edad máxima.
+	 * 
+	 * @return El campo edad máxima
+	 */
 	public JTextField getCampoEdadMaxima() {
 		return campoEdadMaxima;
 	}
 
+	/**
+	 * Establece el campo de texto de la edad máxima.
+	 * 
+	 * @param campoEdadMaxima El campo a establecer
+	 */
 	public void setCampoEdadMaxima(JTextField campoEdadMaxima) {
 		this.campoEdadMaxima = campoEdadMaxima;
 	}
 
+	/**
+	 * Obtiene el campo de texto de la estatura ideal.
+	 * 
+	 * @return El campo estatura ideal
+	 */
 	public JTextField getCampoEstaturaIdeal() {
 		return campoEstaturaIdeal;
 	}
 
+	/**
+	 * Establece el campo de texto de la estatura ideal.
+	 * 
+	 * @param campoEstaturaIdeal El campo a establecer
+	 */
 	public void setCampoEstaturaIdeal(JTextField campoEstaturaIdeal) {
 		this.campoEstaturaIdeal = campoEstaturaIdeal;
 	}
 
+	/**
+	 * Obtiene el campo de texto del ingreso ideal.
+	 * 
+	 * @return El campo ingreso ideal
+	 */
 	public JTextField getCampoIngresoIdeal() {
 		return campoIngresoIdeal;
 	}
 
+	/**
+	 * Establece el campo de texto del ingreso ideal.
+	 * 
+	 * @param campoIngresoIdeal El campo a establecer
+	 */
 	public void setCampoIngresoIdeal(JTextField campoIngresoIdeal) {
 		this.campoIngresoIdeal = campoIngresoIdeal;
 	}
 
+	/**
+	 * Obtiene el botón de confirmar.
+	 * 
+	 * @return El botón confirmar
+	 */
 	public JButton getBotonConfirmar() {
 		return botonConfirmar;
 	}
 
+	/**
+	 * Establece el botón de confirmar.
+	 * 
+	 * @param botonConfirmar El botón a establecer
+	 */
 	public void setBotonConfirmar(JButton botonConfirmar) {
 		this.botonConfirmar = botonConfirmar;
 	}
 
+	/**
+	 * Obtiene el radio button de divorciada.
+	 * 
+	 * @return El radio button divorciada
+	 */
 	public JRadioButton getDivorciada() {
 		return divorciada;
 	}
 
+	/**
+	 * Establece el radio button de divorciada.
+	 * 
+	 * @param divorciada El radio button a establecer
+	 */
 	public void setDivorciada(JRadioButton divorciada) {
 		this.divorciada = divorciada;
 	}
 
+	/**
+	 * Obtiene el radio button de no divorciada.
+	 * 
+	 * @return El radio button no divorciada
+	 */
 	public JRadioButton getNoDivorciada() {
 		return noDivorciada;
 	}
 
+	/**
+	 * Establece el radio button de no divorciada.
+	 * 
+	 * @param noDivorciada El radio button a establecer
+	 */
 	public void setNoDivorciada(JRadioButton noDivorciada) {
 		this.noDivorciada = noDivorciada;
 	}
 
+	/**
+	 * Obtiene el grupo de botones de estado de divorcio.
+	 * 
+	 * @return El grupo de estado de divorcio
+	 */
 	public ButtonGroup getEstadoDivorcio() {
 		return estadoDivorcio;
 	}
 
+	/**
+	 * Establece el grupo de botones de estado de divorcio.
+	 * 
+	 * @param estadoDivorcio El grupo a establecer
+	 */
 	public void setEstadoDivorcio(ButtonGroup estadoDivorcio) {
 		this.estadoDivorcio = estadoDivorcio;
 	}
 
+	/**
+	 * Obtiene el botón cambiar modo.
+	 * 
+	 * @return El botón cambiar modo
+	 */
 	public JButton getCambiarModo() {
 		return cambiarModo;
 	}
 
+	/**
+	 * Establece el botón cambiar modo.
+	 * 
+	 * @param cambiarModo El botón a establecer
+	 */
 	public void setCambiarModo(JButton cambiarModo) {
 		this.cambiarModo = cambiarModo;
 	}

@@ -14,7 +14,10 @@ import co.edu.unbosque.model.HombreDTO;
  */
 public class HombreDAO implements DAO<HombreDTO, Hombre> {
 
+	/** Nombre del archivo serializado para almacenar los hombres */
 	private String SERIAL_FILE_NAME = "hombres.bin";
+	
+	/** Lista de todos los hombres en el sistema */
 	private ArrayList<Hombre> hombres;
 
 	/**

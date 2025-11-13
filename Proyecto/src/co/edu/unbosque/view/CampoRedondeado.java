@@ -2,13 +2,26 @@ package co.edu.unbosque.view;
 
 import java.awt.*;
 import javax.swing.*;
-import javax.swing.border.Border;
 import javax.swing.plaf.basic.BasicButtonUI;
 
+/**
+ * Clase que extiende JTextField para crear campos de texto con bordes redondeados.
+ * Proporciona un método estático para aplicar estilo redondeado a otros componentes Swing.
+ * 
+ * @author Leidy Natalia Díaz Peña
+ * @version 1.0
+ */
 public class CampoRedondeado extends JTextField {
 
+	/** Radio de las esquinas redondeadas */
 	private int radio;
 
+	/**
+	 * Constructor que crea un campo de texto redondeado.
+	 * 
+	 * @param columnas El número de columnas del campo de texto
+	 * @param radio El radio de las esquinas redondeadas
+	 */
 	public CampoRedondeado(int columnas, int radio) {
 		super(columnas);
 		this.radio = radio;
@@ -20,8 +33,13 @@ public class CampoRedondeado extends JTextField {
 		setForeground(Color.BLACK);
 	}
 
+	/**
+	 * Sobrescribe el método para pintar el componente con esquinas redondeadas.
+	 * 
+	 * @param g El contexto gráfico
+	 */
 	@Override
-	protected void paintComponent(Graphics g) {
+	public void paintComponent(Graphics g) {
 		Graphics2D g2 = (Graphics2D) g.create();
 		g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		g2.setColor(getBackground());
@@ -31,34 +49,15 @@ public class CampoRedondeado extends JTextField {
 		g2.dispose();
 	}
 
-	private static class BordeRedondeado implements Border {
-		private int radio;
-		private Color color;
-
-		public BordeRedondeado(int radio, Color color) {
-			this.radio = radio;
-			this.color = color;
-		}
-
-		@Override
-		public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
-			Graphics2D g2 = (Graphics2D) g;
-			g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-			g2.setColor(color);
-			g2.drawRoundRect(x, y, width - 1, height - 1, radio, radio);
-		}
-
-		@Override
-		public Insets getBorderInsets(Component c) {
-			return new Insets(5, 10, 5, 10);
-		}
-
-		@Override
-		public boolean isBorderOpaque() {
-			return false;
-		}
-	}
-
+	/**
+	 * Método estático que aplica un estilo redondeado a cualquier componente Swing.
+	 * Funciona especialmente bien con JButton.
+	 * 
+	 * @param componente El componente al que se le aplicará el estilo
+	 * @param radio El radio de las esquinas redondeadas
+	 * @param colorFondo El color de fondo del componente
+	 * @param colorTexto El color del texto del componente
+	 */
 	public static void aplicarRedondeado(JComponent componente, int radio, Color colorFondo, Color colorTexto) {
 		componente.setOpaque(false);
 		componente.setBackground(colorFondo);

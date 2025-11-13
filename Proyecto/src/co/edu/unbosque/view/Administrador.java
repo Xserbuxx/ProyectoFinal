@@ -16,39 +16,95 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
+/**
+ * Panel de administración del sistema.
+ * Permite visualizar, ordenar, filtrar usuarios y generar reportes en PDF.
+ * Incluye funcionalidades de búsqueda, ranking y gestión de usuarios.
+ * 
+ * @author Leidy Natalia Díaz Peña
+ * @version 1.0
+ */
 public class Administrador extends JPanel {
 
+	/** Panel de desplazamiento para la lista de usuarios */
 	private JScrollPane scrollPanel;
+	
+	/** Panel contenedor de los paneles de usuario */
 	private JPanel panelUsuarios;
+	
+	/** Botón para ejecutar el ordenamiento */
 	private JButton botonOrdenar;
+	
+	/** Radio button para ordenamiento ascendente */
 	private JRadioButton botonAscendente;
+	
+	/** Radio button para ordenamiento descendente */
 	private JRadioButton botonDescendente;
+	
+	/** Radio button para ordenar por edad */
 	private JRadioButton botonPorEdad;
+	
+	/** Radio button para ordenar por nombre */
 	private JRadioButton botonNombre;
+	
+	/** Radio button para ordenar por alias */
 	private JRadioButton botonAlias;
+	
+	/** Radio button para ordenar por likes */
 	private JRadioButton botonLikes;
+	
+	/** Grupo de botones para tipo de ordenamiento */
 	private ButtonGroup grupoOrdenamientos;
+	
+	/** Grupo de botones para criterio de ordenamiento */
 	private ButtonGroup grupoCriterios;
 
+	/** Radio button para top de likes */
 	private JRadioButton botonTopLikes;
+	
+	/** Radio button para top de ingresos */
 	private JRadioButton botonTopIngresos;
+	
+	/** Grupo de botones para tipo de ranking */
 	private ButtonGroup grupoTop;
 
+	/** Botón para generar ranking top */
 	private JButton botonTop;
 
+	/** Botón para generar reporte PDF */
 	private JButton botonPDF;
+	
+	/** Radio button para PDF de edades */
 	private JRadioButton botonEdadPDF;
+	
+	/** Radio button para PDF de likes */
 	private JRadioButton botonLikesPDF;
+	
+	/** Radio button para PDF de ingresos */
 	private JRadioButton botonIngresosPDF;
+	
+	/** Radio button para PDF de estaturas */
 	private JRadioButton botonEstaturaPDF;
+	
+	/** Grupo de botones para tipo de PDF */
 	private ButtonGroup grupoPDF;
+	
+	/** Botón para cambiar entre modo claro y oscuro */
 	private JButton cambiarModo;
 	
+	/** Botón para volver al menú anterior */
 	private JButton botonVolver;
 	
+	/** Campo de texto para búsqueda */
 	private JTextField txtBuscar;
+	
+	/** Botón para ejecutar la búsqueda */
 	private JButton botonBuscar;
 
+	/**
+	 * Constructor que inicializa el panel de administración.
+	 * Crea todos los componentes visuales y los organiza en el panel.
+	 */
 	public Administrador() {
 		this.setLayout(null);
 		this.setBackground(new Color(36, 41, 46));
@@ -197,6 +253,30 @@ public class Administrador extends JPanel {
 		this.add(barraLateral);
 	}
 
+	/**
+	 * Muestra los textos traducidos en todos los componentes según el idioma seleccionado.
+	 * 
+	 * @param labelBotonOrdenar Texto del botón ordenar
+	 * @param labelBotonAscendente Texto del botón ascendente
+	 * @param labelBotonDescendente Texto del botón descendente
+	 * @param labelBotonPorEdad Texto del botón por edad
+	 * @param labelBotonNombre Texto del botón nombre
+	 * @param labelBotonAlias Texto del botón alias
+	 * @param labelBotonLikes Texto del botón likes
+	 * @param labelBotonTopLikes Texto del botón top likes
+	 * @param labelBotonTopIngresos Texto del botón top ingresos
+	 * @param labelBotonTop Texto del botón top
+	 * @param labelOrdenarPor Texto de la etiqueta "Ordenar por"
+	 * @param labelCriterio Texto de la etiqueta "Criterio"
+	 * @param labelTop Texto de la etiqueta "Top"
+	 * @param labelPDF Texto del botón PDF
+	 * @param labelBotonEdadPDF Texto del botón edad PDF
+	 * @param labelBotonLikesPDF Texto del botón likes PDF
+	 * @param labelBotonIngresosPDF Texto del botón ingresos PDF
+	 * @param labelBotonEstaturaPDF Texto del botón estatura PDF
+	 * @param labelCambiarModo Texto del botón cambiar modo
+	 * @param labelBotonBuscar Texto del botón buscar
+	 */
 	public void mostrarTextos(String labelBotonOrdenar, String labelBotonAscendente, String labelBotonDescendente,
 			String labelBotonPorEdad, String labelBotonNombre, String labelBotonAlias, String labelBotonLikes,
 			String labelBotonTopLikes, String labelBotonTopIngresos, String labelBotonTop, String labelOrdenarPor,
@@ -224,6 +304,10 @@ public class Administrador extends JPanel {
 		botonBuscar.setText(labelBotonBuscar);
 	}
 	
+	/**
+	 * Cambia el modo visual del panel entre claro y oscuro.
+	 * Alterna los colores de fondo y texto de todos los componentes.
+	 */
 	public void cambiarModo() {
 		Color fondo;
 		Color texto;
@@ -254,6 +338,17 @@ public class Administrador extends JPanel {
 		this.repaint();
 	}
 
+	/**
+	 * Crea y agrega una etiqueta de texto al panel con el estilo especificado.
+	 * 
+	 * @param texto El texto a mostrar
+	 * @param colorFondo El color del texto
+	 * @param x Posición X
+	 * @param y Posición Y
+	 * @param ancho Ancho de la etiqueta
+	 * @param alto Alto de la etiqueta
+	 * @param tamanoLetra Tamaño de la fuente
+	 */
 	public void crearLabel(String texto, Color colorFondo, int x, int y, int ancho, int alto, int tamanoLetra) {
 		JLabel label = new JLabel(texto);
 		label.setForeground(colorFondo);
@@ -263,21 +358,46 @@ public class Administrador extends JPanel {
 		this.setComponentZOrder(label, 0);
 	}
 
+	/**
+	 * Agrega un panel de usuario mujer a la lista.
+	 * 
+	 * @param alias El alias del usuario
+	 * @param imagen La imagen de perfil
+	 * @param edad La edad del usuario
+	 * @param estatura La estatura del usuario
+	 * @param listener Listener para los botones de acción
+	 */
 	public void agregarUsuario(String alias, ImageIcon imagen, String edad, String estatura, ActionListener listener) {
 		panelUsuarios.add(new PanelUsuarioAdmin(alias, imagen, edad, estatura, listener));
 	}
 
+	/**
+	 * Agrega un panel de usuario hombre a la lista.
+	 * 
+	 * @param alias El alias del usuario
+	 * @param imagen La imagen de perfil
+	 * @param edad La edad del usuario
+	 * @param estatura La estatura del usuario
+	 * @param listener Listener para los botones de acción
+	 * @param ingresoProm El ingreso promedio del usuario
+	 */
 	public void agregarUsuario(String alias, ImageIcon imagen, String edad, String estatura, ActionListener listener,
 			String ingresoProm) {
 		panelUsuarios.add(new PanelUsuarioAdmin(alias, imagen, edad, estatura, listener, ingresoProm));
 	}
 
+	/**
+	 * Elimina todos los paneles de usuario de la lista.
+	 */
 	public void limpiarUsuarios() {
 		panelUsuarios.removeAll();
 		panelUsuarios.revalidate();
 		panelUsuarios.repaint();
 	}
 
+	/**
+	 * Deshabilita todos los componentes del panel.
+	 */
 	public void setOff() {
 		scrollPanel.setEnabled(false);
 		panelUsuarios.setEnabled(false);
@@ -308,6 +428,9 @@ public class Administrador extends JPanel {
 		cambiarModo.setEnabled(false);
 	}
 
+	/**
+	 * Habilita todos los componentes del panel.
+	 */
 	public void setOn() {
 		scrollPanel.setEnabled(true);
 		panelUsuarios.setEnabled(true);
@@ -340,201 +463,452 @@ public class Administrador extends JPanel {
 		cambiarModo.setEnabled(true);
 	}
 
+	/**
+	 * Obtiene el panel de desplazamiento.
+	 * 
+	 * @return El scroll panel
+	 */
 	public JScrollPane getScrollPanel() {
 		return scrollPanel;
 	}
 
+	/**
+	 * Establece el panel de desplazamiento.
+	 * 
+	 * @param scrollPanel El nuevo scroll panel
+	 */
 	public void setScrollPanel(JScrollPane scrollPanel) {
 		this.scrollPanel = scrollPanel;
 	}
 
+	/**
+	 * Obtiene el panel de usuarios.
+	 * 
+	 * @return El panel usuarios
+	 */
 	public JPanel getPanelUsuarios() {
 		return panelUsuarios;
 	}
 
+	/**
+	 * Establece el panel de usuarios.
+	 * 
+	 * @param panelUsuarios El nuevo panel usuarios
+	 */
 	public void setPanelUsuarios(JPanel panelUsuarios) {
 		this.panelUsuarios = panelUsuarios;
 	}
 
+	/**
+	 * Obtiene el botón de ordenar.
+	 * 
+	 * @return El botón ordenar
+	 */
 	public JButton getBotonOrdenar() {
 		return botonOrdenar;
 	}
 
+	/**
+	 * Establece el botón de ordenar.
+	 * 
+	 * @param botonOrdenar El nuevo botón ordenar
+	 */
 	public void setBotonOrdenar(JButton botonOrdenar) {
 		this.botonOrdenar = botonOrdenar;
 	}
 
+	/**
+	 * Obtiene el radio button ascendente.
+	 * 
+	 * @return El botón ascendente
+	 */
 	public JRadioButton getBotonAscendente() {
 		return botonAscendente;
 	}
 
+	/**
+	 * Establece el radio button ascendente.
+	 * 
+	 * @param botonAscendente El nuevo botón ascendente
+	 */
 	public void setBotonAscendente(JRadioButton botonAscendente) {
 		this.botonAscendente = botonAscendente;
 	}
 
+	/**
+	 * Obtiene el radio button descendente.
+	 * 
+	 * @return El botón descendente
+	 */
 	public JRadioButton getBotonDescendente() {
 		return botonDescendente;
 	}
 
+	/**
+	 * Establece el radio button descendente.
+	 * 
+	 * @param botonDescendente El nuevo botón descendente
+	 */
 	public void setBotonDescendente(JRadioButton botonDescendente) {
 		this.botonDescendente = botonDescendente;
 	}
 
+	/**
+	 * Obtiene el radio button por edad.
+	 * 
+	 * @return El botón por edad
+	 */
 	public JRadioButton getBotonPorEdad() {
 		return botonPorEdad;
 	}
 
+	/**
+	 * Establece el radio button por edad.
+	 * 
+	 * @param botonPorEdad El nuevo botón por edad
+	 */
 	public void setBotonPorEdad(JRadioButton botonPorEdad) {
 		this.botonPorEdad = botonPorEdad;
 	}
 
+	/**
+	 * Obtiene el radio button nombre.
+	 * 
+	 * @return El botón nombre
+	 */
 	public JRadioButton getBotonNombre() {
 		return botonNombre;
 	}
 
+	/**
+	 * Establece el radio button nombre.
+	 * 
+	 * @param botonNombre El nuevo botón nombre
+	 */
 	public void setBotonNombre(JRadioButton botonNombre) {
 		this.botonNombre = botonNombre;
 	}
 
+	/**
+	 * Obtiene el radio button alias.
+	 * 
+	 * @return El botón alias
+	 */
 	public JRadioButton getBotonAlias() {
 		return botonAlias;
 	}
 
+	/**
+	 * Establece el radio button alias.
+	 * 
+	 * @param botonAlias El nuevo botón alias
+	 */
 	public void setBotonAlias(JRadioButton botonAlias) {
 		this.botonAlias = botonAlias;
 	}
 
+	/**
+	 * Obtiene el radio button likes.
+	 * 
+	 * @return El botón likes
+	 */
 	public JRadioButton getBotonLikes() {
 		return botonLikes;
 	}
 
+	/**
+	 * Establece el radio button likes.
+	 * 
+	 * @param botonLikes El nuevo botón likes
+	 */
 	public void setBotonLikes(JRadioButton botonLikes) {
 		this.botonLikes = botonLikes;
 	}
 
+	/**
+	 * Obtiene el grupo de ordenamientos.
+	 * 
+	 * @return El grupo ordenamientos
+	 */
 	public ButtonGroup getGrupoOrdenamientos() {
 		return grupoOrdenamientos;
 	}
 
+	/**
+	 * Establece el grupo de ordenamientos.
+	 * 
+	 * @param grupoOrdenamientos El nuevo grupo ordenamientos
+	 */
 	public void setGrupoOrdenamientos(ButtonGroup grupoOrdenamientos) {
 		this.grupoOrdenamientos = grupoOrdenamientos;
 	}
 
+	/**
+	 * Obtiene el grupo de criterios.
+	 * 
+	 * @return El grupo criterios
+	 */
 	public ButtonGroup getGrupoCriterios() {
 		return grupoCriterios;
 	}
 
+	/**
+	 * Establece el grupo de criterios.
+	 * 
+	 * @param grupoCriterios El nuevo grupo criterios
+	 */
 	public void setGrupoCriterios(ButtonGroup grupoCriterios) {
 		this.grupoCriterios = grupoCriterios;
 	}
 
+	/**
+	 * Obtiene el radio button top likes.
+	 * 
+	 * @return El botón top likes
+	 */
 	public JRadioButton getBotonTopLikes() {
 		return botonTopLikes;
 	}
 
+	/**
+	 * Establece el radio button top likes.
+	 * 
+	 * @param botonTopLikes El nuevo botón top likes
+	 */
 	public void setBotonTopLikes(JRadioButton botonTopLikes) {
 		this.botonTopLikes = botonTopLikes;
 	}
 
+	/**
+	 * Obtiene el radio button top ingresos.
+	 * 
+	 * @return El botón top ingresos
+	 */
 	public JRadioButton getBotonTopIngresos() {
 		return botonTopIngresos;
 	}
 
+	/**
+	 * Establece el radio button top ingresos.
+	 * 
+	 * @param botonTopIngresos El nuevo botón top ingresos
+	 */
 	public void setBotonTopIngresos(JRadioButton botonTopIngresos) {
 		this.botonTopIngresos = botonTopIngresos;
 	}
 
+	/**
+	 * Obtiene el grupo top.
+	 * 
+	 * @return El grupo top
+	 */
 	public ButtonGroup getGrupoTop() {
 		return grupoTop;
 	}
 
+	/**
+	 * Establece el grupo top.
+	 * 
+	 * @param grupoTop El nuevo grupo top
+	 */
 	public void setGrupoTop(ButtonGroup grupoTop) {
 		this.grupoTop = grupoTop;
 	}
 
+	/**
+	 * Obtiene el botón top.
+	 * 
+	 * @return El botón top
+	 */
 	public JButton getBotonTop() {
 		return botonTop;
 	}
 
+	/**
+	 * Establece el botón top.
+	 * 
+	 * @param botonTop El nuevo botón top
+	 */
 	public void setBotonTop(JButton botonTop) {
 		this.botonTop = botonTop;
 	}
 
+	/**
+	 * Obtiene el botón PDF.
+	 * 
+	 * @return El botón PDF
+	 */
 	public JButton getBotonPDF() {
 		return botonPDF;
 	}
 
+	/**
+	 * Establece el botón PDF.
+	 * 
+	 * @param botonPDF El nuevo botón PDF
+	 */
 	public void setBotonPDF(JButton botonPDF) {
 		this.botonPDF = botonPDF;
 	}
+	
+	/**
+	 * Obtiene el radio button edad PDF.
+	 * 
+	 * @return El botón edad PDF
+	 */
 	public JRadioButton getBotonEdadPDF() {
 		return botonEdadPDF;
 	}
 
+	/**
+	 * Obtiene el radio button likes PDF.
+	 * 
+	 * @return El botón likes PDF
+	 */
 	public JRadioButton getBotonLikesPDF() {
 		return botonLikesPDF;
 	}
 
+	/**
+	 * Establece el radio button likes PDF.
+	 * 
+	 * @param botonLikesPDF El nuevo botón likes PDF
+	 */
 	public void setBotonLikesPDF(JRadioButton botonLikesPDF) {
 		this.botonLikesPDF = botonLikesPDF;
 	}
 
+	/**
+	 * Obtiene el radio button ingresos PDF.
+	 * 
+	 * @return El botón ingresos PDF
+	 */
 	public JRadioButton getBotonIngresosPDF() {
 		return botonIngresosPDF;
 	}
 
+	/**
+	 * Establece el radio button ingresos PDF.
+	 * 
+	 * @param botonIngresosPDF El nuevo botón ingresos PDF
+	 */
 	public void setBotonIngresosPDF(JRadioButton botonIngresosPDF) {
 		this.botonIngresosPDF = botonIngresosPDF;
 	}
 
+	/**
+	 * Obtiene el radio button estatura PDF.
+	 * 
+	 * @return El botón estatura PDF
+	 */
 	public JRadioButton getBotonEstaturaPDF() {
 		return botonEstaturaPDF;
 	}
 
+	/**
+	 * Establece el radio button estatura PDF.
+	 * 
+	 * @param botonEstaturaPDF El nuevo botón estatura PDF
+	 */
 	public void setBotonEstaturaPDF(JRadioButton botonEstaturaPDF) {
 		this.botonEstaturaPDF = botonEstaturaPDF;
 	}
 
+	/**
+	 * Obtiene el grupo PDF.
+	 * 
+	 * @return El grupo PDF
+	 */
 	public ButtonGroup getGrupoPDF() {
 		return grupoPDF;
 	}
 
+	/**
+	 * Establece el grupo PDF.
+	 * 
+	 * @param grupoPDF El nuevo grupo PDF
+	 */
 	public void setGrupoPDF(ButtonGroup grupoPDF) {
 		this.grupoPDF = grupoPDF;
 	}
 
+	/**
+	 * Establece el radio button edad PDF.
+	 * 
+	 * @param botonEdadPDF El nuevo botón edad PDF
+	 */
 	public void setBotonEdadPDF(JRadioButton botonEdadPDF) {
 		this.botonEdadPDF = botonEdadPDF;
 	}
 
+	/**
+	 * Obtiene el botón cambiar modo.
+	 * 
+	 * @return El botón cambiar modo
+	 */
 	public JButton getCambiarModo() {
 		return cambiarModo;
 	}
 
+	/**
+	 * Establece el botón cambiar modo.
+	 * 
+	 * @param cambiarModo El nuevo botón cambiar modo
+	 */
 	public void setCambiarModo(JButton cambiarModo) {
 		this.cambiarModo = cambiarModo;
 	}
 
+	/**
+	 * Obtiene el botón volver.
+	 * 
+	 * @return El botón volver
+	 */
 	public JButton getBotonVolver() {
 		return botonVolver;
 	}
 
+	/**
+	 * Establece el botón volver.
+	 * 
+	 * @param botonVolver El nuevo botón volver
+	 */
 	public void setBotonVolver(JButton botonVolver) {
 		this.botonVolver = botonVolver;
 	}
 
+	/**
+	 * Obtiene el campo de texto buscar.
+	 * 
+	 * @return El campo texto buscar
+	 */
 	public JTextField getTxtBuscar() {
 		return txtBuscar;
 	}
 
+	/**
+	 * Establece el campo de texto buscar.
+	 * 
+	 * @param txtBuscar El nuevo campo texto buscar
+	 */
 	public void setTxtBuscar(JTextField txtBuscar) {
 		this.txtBuscar = txtBuscar;
 	}
 
+	/**
+	 * Obtiene el botón buscar.
+	 * 
+	 * @return El botón buscar
+	 */
 	public JButton getBotonBuscar() {
 		return botonBuscar;
 	}
 
+	/**
+	 * Establece el botón buscar.
+	 * 
+	 * @param botonBuscar El nuevo botón buscar
+	 */
 	public void setBotonBuscar(JButton botonBuscar) {
 		this.botonBuscar = botonBuscar;
 	}

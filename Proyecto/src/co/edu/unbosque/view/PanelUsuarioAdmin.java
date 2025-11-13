@@ -11,8 +11,24 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+/**
+ * Panel que representa la tarjeta de un usuario en el panel de administración.
+ * Muestra información del usuario y botones para ver detalles o dar de baja.
+ * 
+ * @author Leidy Natalia Díaz Peña
+ * @version 1.0
+ */
 public class PanelUsuarioAdmin extends JPanel {
 
+	/**
+	 * Constructor que crea un panel de usuario para administración (mujeres).
+	 * 
+	 * @param alias El alias del usuario
+	 * @param imagen La imagen de perfil
+	 * @param edad La edad del usuario
+	 * @param estatura La estatura del usuario
+	 * @param listener Listener para los botones de acción
+	 */
 	public PanelUsuarioAdmin(String alias, ImageIcon imagen, String edad, String estatura, ActionListener listener) {
 		this.setBackground(Color.white);
 		this.setLayout(null);
@@ -63,6 +79,12 @@ public class PanelUsuarioAdmin extends JPanel {
 		this.add(botonBaja);
 	}
 	
+	/**
+	 * Cambia el modo visual del panel entre claro y oscuro.
+	 * 
+	 * @param colorFondo Color de fondo a aplicar
+	 * @param colorTexto Color de texto a aplicar
+	 */
 	public void cambiarModo(Color colorFondo, Color colorTexto) {
 		this.setBackground(colorFondo);
 		for (int i = 0; i < this.getComponentCount(); i++) {
@@ -72,6 +94,17 @@ public class PanelUsuarioAdmin extends JPanel {
 		}
 	}
 
+	/**
+	 * Constructor que crea un panel de usuario para administración (hombres).
+	 * Incluye información adicional del ingreso promedio.
+	 * 
+	 * @param alias El alias del usuario
+	 * @param imagen La imagen de perfil
+	 * @param edad La edad del usuario
+	 * @param estatura La estatura del usuario
+	 * @param listener Listener para los botones de acción
+	 * @param ingresoProm El ingreso promedio del usuario
+	 */
 	public PanelUsuarioAdmin(String alias, ImageIcon imagen, String edad, String estatura, ActionListener listener,
 			String ingresoProm) {
 		this.setBackground(Color.white);
@@ -124,6 +157,17 @@ public class PanelUsuarioAdmin extends JPanel {
 		this.add(botonBaja);
 	}
 
+	/**
+	 * Crea y agrega una etiqueta de texto al panel.
+	 * 
+	 * @param texto El texto a mostrar
+	 * @param colorFondo El color del texto
+	 * @param x Posición X
+	 * @param y Posición Y
+	 * @param ancho Ancho de la etiqueta
+	 * @param alto Alto de la etiqueta
+	 * @param tamanoLetra Tamaño de la fuente
+	 */
 	public void crearLabel(String texto, Color colorFondo, int x, int y, int ancho, int alto, int tamanoLetra) {
 		JLabel label = new JLabel(texto);
 		label.setForeground(colorFondo);

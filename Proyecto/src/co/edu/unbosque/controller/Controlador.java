@@ -60,11 +60,19 @@ import jakarta.mail.internet.MimeMessage;
  */
 public class Controlador implements ActionListener {
 
+	/** Fachada del modelo que gestiona los datos */
 	private ModelFacade mf;
+	
+	/** Fachada de la vista que gestiona la interfaz gráfica */
 	private ViewFacade vf;
+	
+	/** Propiedades de configuración e internacionalización */
 	private Properties prop;
+	
+	/** Generador de números aleatorios para códigos de verificación */
 	private Random ran;
 
+	/** Usuario que ha iniciado sesión actualmente */
 	private Persona usuarioActual;
 
 	/**
@@ -1564,7 +1572,6 @@ public class Controlador implements ActionListener {
 			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(correo));
 			message.setSubject(prop.getProperty("mensaje.correo.asunto"), "UTF-8");
 
-			// cambiar mensaje por un properties
 			message.setContent(
 					prop.getProperty("mensaje.correo.parte1") + codigo + prop.getProperty("mensaje.correo.parte2"),
 					"text/plain; charset=UTF-8");
@@ -1860,7 +1867,7 @@ public class Controlador implements ActionListener {
 	 * @param datos         El arreglo de datos para analizar
 	 * @param nombreArchivo El nombre del archivo PDF a generar
 	 */
-	public void generarInforme(double[] datos, String nombreArchivo) {
+	private void generarInforme(double[] datos, String nombreArchivo) {
 		if (datos == null || datos.length == 0) {
 			vf.getVentanaPrincipal().mostrarError(prop.getProperty("error.generarPdf.faltaDatos"));
 			return;

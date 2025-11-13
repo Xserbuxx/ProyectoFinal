@@ -10,18 +10,46 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+/**
+ * Panel de selección de idioma de la aplicación.
+ * Permite al usuario elegir entre diferentes idiomas disponibles.
+ * 
+ * @author Leidy Natalia Díaz Peña
+ * @version 1.0
+ */
 public class Idioma extends JPanel {
 
+	/** ComboBox para seleccionar el idioma */
 	private JComboBox<String> comboBox;
+	
+	/** Botón para confirmar la selección */
 	private JButton confirmar;
+	
+	/** Panel del encabezado superior */
 	private JPanel panelEncabezado;
+	
+	/** Etiqueta con el logo de la aplicación */
 	private JLabel imagenLogo;
+	
+	/** Etiqueta con el texto del encabezado */
 	private JLabel textoEncabezado;
+	
+	/** Panel principal de contenido */
 	private JPanel panelContenido;
 
+	/** Color principal de la aplicación (rosa Tinder) */
 	private Color colorTinder = new Color(255, 51, 102);
+	
+	/** Fuente principal para textos grandes */
 	private Font campoFuente = new Font("Segoe UI", Font.PLAIN, 30);
+	
+	/** Fuente secundaria para textos medianos */
 	private Font campoFuente2 = new Font("Segoe UI", Font.PLAIN, 20);
+	
+	/**
+	 * Constructor que inicializa el panel de selección de idioma.
+	 * Crea la interfaz con un combobox de idiomas decorado con banderas.
+	 */
 	public Idioma() {
 		this.setLayout(null);
 		this.setBounds(0, 0, 1280, 720);
@@ -120,20 +148,111 @@ public class Idioma extends JPanel {
 
 	}
 
-	public JButton getConfirmar() {
-		return confirmar;
-	}
-
-	public void setConfirmar(JButton confirmar) {
-		this.confirmar = confirmar;
-	}
-
+	/**
+	 * Obtiene el combobox de selección de idiomas.
+	 * 
+	 * @return El combobox de idiomas
+	 */
 	public JComboBox<String> getComboBox() {
 		return comboBox;
 	}
 
+	/**
+	 * Establece el combobox de selección de idiomas.
+	 * 
+	 * @param comboBox El nuevo combobox
+	 */
 	public void setComboBox(JComboBox<String> comboBox) {
 		this.comboBox = comboBox;
 	}
 
+	/**
+	 * Obtiene el botón de confirmación.
+	 * 
+	 * @return El botón confirmar
+	 */
+	public JButton getConfirmar() {
+		return confirmar;
+	}
+
+	/**
+	 * Establece el botón de confirmación.
+	 * 
+	 * @param confirmar El nuevo botón confirmar
+	 */
+	public void setConfirmar(JButton confirmar) {
+		this.confirmar = confirmar;
+	}
+
+	/**
+	 * Obtiene el panel del encabezado.
+	 * 
+	 * @return El panel encabezado
+	 */
+	public JPanel getPanelEncabezado() {
+		return panelEncabezado;
+	}
+
+	/**
+	 * Establece el panel del encabezado.
+	 * 
+	 * @param panelEncabezado El nuevo panel encabezado
+	 */
+	public void setPanelEncabezado(JPanel panelEncabezado) {
+		this.panelEncabezado = panelEncabezado;
+	}
+
+	/**
+	 * Obtiene la etiqueta del logo.
+	 * 
+	 * @return La etiqueta imagen logo
+	 */
+	public JLabel getImagenLogo() {
+		return imagenLogo;
+	}
+
+	/**
+	 * Establece la etiqueta del logo.
+	 * 
+	 * @param imagenLogo La nueva etiqueta logo
+	 */
+	public void setImagenLogo(JLabel imagenLogo) {
+		this.imagenLogo = imagenLogo;
+	}
+
+	/**
+	 * Obtiene la etiqueta del texto del encabezado.
+	 * 
+	 * @return La etiqueta texto encabezado
+	 */
+	public JLabel getTextoEncabezado() {
+		return textoEncabezado;
+	}
+
+	/**
+	 * Establece la etiqueta del texto del encabezado.
+	 * 
+	 * @param textoEncabezado La nueva etiqueta texto
+	 */
+	public void setTextoEncabezado(JLabel textoEncabezado) {
+		this.textoEncabezado = textoEncabezado;
+	}
+
+	/**
+	 * Obtiene el panel de contenido principal.
+	 * 
+	 * @return El panel contenido
+	 */
+	public JPanel getPanelContenido() {
+		return panelContenido;
+	}
+
+	/**
+	 * Establece el panel de contenido principal.
+	 * 
+	 * @param panelContenido El nuevo panel contenido
+	 */
+	public void setPanelContenido(JPanel panelContenido) {
+		this.panelContenido = panelContenido;
+	}
 }

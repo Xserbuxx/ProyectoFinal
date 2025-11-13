@@ -14,25 +14,58 @@ import javax.swing.ImageIcon;
  */
 public abstract class Persona implements Serializable {
 
+	/** Identificador de versión para la serialización */
 	private static final long serialVersionUID = 1L;
-	// datos basicos
+	
+	/** Nombre completo de la persona */
 	private String nombre;
+	
+	/** Alias o nombre de usuario único */
 	private String alias;
+	
+	/** Edad de la persona en años */
 	private int edad;
+	
+	/** Fecha de nacimiento en formato texto */
 	private String fechaNacimiento;
+	
+	/** Estatura de la persona en centímetros */
 	private float estatura;
+	
+	/** Correo electrónico de la persona */
 	private String correo;
+	
+	/** Imagen de perfil de la persona */
 	private ImageIcon imagen;
+	
+	/** Indica si la persona está disponible para citas */
 	private boolean disponibilidad;
+	
+	/** Contraseña de la cuenta */
 	private String contrasena;
+	
+	/** Código de verificación de la cuenta */
 	private int codigo;
+	
+	/** Número de likes que ha recibido la persona */
 	private int likesRecibidos;
+	
+	/** Indica si la persona está en modo incógnito */
 	private boolean incognito;
+	
+	/** Lista de alias de personas a las que se les ha dado like */
 	private ArrayList<String> likesDados;
+	
+	/** Indica si la cuenta está verificada */
 	private boolean verificado;
-	// gustos
+	
+	/** Edad máxima deseada en una pareja */
 	private int edadMaxima;
+	
+	/** Edad mínima deseada en una pareja */
 	private int edadMinima;
+	
+	/** Estatura ideal deseada en una pareja en centímetros */
 	private float estaturaIdeal;
 
 	/**

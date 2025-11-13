@@ -13,10 +13,13 @@ import javax.swing.ImageIcon;
  */
 public class Hombre extends Persona {
 
+	/** Identificador de versión para la serialización */
 	private static final long serialVersionUID = 1L;
-	// datos basicos
+	
+	/** Ingreso promedio mensual del hombre */
 	private float ingresoProm;
-	// gustos
+	
+	/** Preferencia sobre el estado civil de la pareja (divorciada o no) */
 	private boolean estadoDivorcio;
 
 	/**

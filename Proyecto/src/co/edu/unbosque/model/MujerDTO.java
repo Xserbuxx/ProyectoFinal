@@ -13,9 +13,10 @@ import javax.swing.ImageIcon;
  */
 public class MujerDTO extends Persona {
 
-	// datos basicos
+	/** Indica si la mujer está divorciada */
 	private boolean Divorciada;
-	// gustos
+	
+	/** Ingreso ideal deseado en una pareja */
 	private float ingresosIdeal;
 
 	/**

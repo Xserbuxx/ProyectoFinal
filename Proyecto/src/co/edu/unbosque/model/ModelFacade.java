@@ -14,9 +14,13 @@ import co.edu.unbosque.model.persistence.MujerDAO;
  */
 public class ModelFacade {
 
+	/** DAO para gestionar usuarios hombres */
 	private HombreDAO hombreDAO;
+	
+	/** DAO para gestionar usuarios mujeres */
 	private MujerDAO mujerDAO;
 	
+	/** Lista combinada de todas las personas del sistema */
 	private ArrayList<Persona> personas;
 
 	/**

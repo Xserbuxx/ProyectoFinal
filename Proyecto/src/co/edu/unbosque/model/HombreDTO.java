@@ -13,9 +13,10 @@ import javax.swing.ImageIcon;
  */
 public class HombreDTO extends Persona {
 
-	// datos basicos
+	/** Ingreso promedio mensual del hombre */
 	private float ingresoProm;
-	// gustos
+	
+	/** Preferencia sobre el estado civil de la pareja (divorciada o no) */
 	private boolean estadoDivorcio;
 
 	/**
@@ -98,16 +99,7 @@ public class HombreDTO extends Persona {
 		super(nombre, alias, edad, fechaNacimiento, estatura, correo, imagen, disponibilidad, contrasena, codigo,
 				edadMaxima, edadMinima, estaturaIdeal, likesRecibidos, incognito, likesDados, verificado);
 		// TODO Auto-generated constructor stub
-	}
-	
-	/*
-	public HombreDTO(String alias, String contrasena) {
-		super("", alias, 0, "", 0f, "", null, false, contrasena, 0, 0, 0, 0f, 0, false, null, false);
-	}
-	mf.getHombreDAO().crear(new HombreDTO("admin", "admin"));
-	
-	borrar esto, es solo para crear el admin temporalmente*/
-	
+	}	
 
 	/**
 	 * Obtiene el ingreso promedio mensual del hombre.

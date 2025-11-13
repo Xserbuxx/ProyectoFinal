@@ -16,42 +16,93 @@ import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+/**
+ * Clase que representa el panel de registro de usuarios en la aplicación.
+ * Proporciona una interfaz gráfica para que los usuarios ingresen sus datos personales
+ * y preferencias para crear una cuenta en el sistema.
+ * 
+ * @author Leidy Natalia Díaz Peña
+ * @version 1.0
+ */
 public class Registro extends JPanel {
 
+	/** Scroll pane que contiene el panel izquierda */
 	private JScrollPane scroll;
+	
+	/** Panel principal que contiene todos los componentes del formulario */
 	private JPanel izquierda;
 
+	/** Botón para confirmar el registro */
 	private JButton botonConfirmar;
+	
+	/** Botón para redirigir al inicio de sesión */
 	private JButton botonIniciarSesion;
 
+	/** Botón para seleccionar el sexo masculino */
 	private JButton botonSexoHombre;
+	
+	/** Botón para seleccionar el sexo femenino */
 	private JButton botonSexoMujer;
 
+	/** Radio button para indicar disponibilidad */
 	private JRadioButton disponible;
+	
+	/** Radio button para indicar no disponibilidad */
 	private JRadioButton noDisponible;
+	
+	/** Grupo de botones para la disponibilidad */
 	private ButtonGroup grupoDisponibilidad;
 
+	/** Radio button para indicar estado divorciada */
 	private JRadioButton divorciada;
+	
+	/** Radio button para indicar estado no divorciada */
 	private JRadioButton noDivorciada;
+	
+	/** Grupo de botones para el estado civil */
 	private ButtonGroup grupoSexo;
 
+	/** Botón para examinar y seleccionar una imagen */
 	private JButton botonExaminar;
 
+	/** Campo de texto para ingresar el nombre */
 	private JTextField campoNombre;
+	
+	/** Campo de texto para ingresar el alias */
 	private JTextField campoAlias;
+	
+	/** Campo de texto para ingresar la edad */
 	private JTextField campoEdad;
+	
+	/** Campo de texto para ingresar la fecha de nacimiento */
 	private JTextField campoFechaNacimiento;
+	
+	/** Campo de texto para ingresar la estatura */
 	private JTextField campoEstatura;
+	
+	/** Campo de texto para ingresar el correo electrónico */
 	private JTextField campoCorreo;
+	
+	/** Campo de texto para mostrar la ruta de la imagen seleccionada */
 	private JTextField campoImagen;
+	
+	/** Campo de texto para ingresar la contraseña */
 	private JTextField campoContrasena;
 
+	/** Campo de texto para ingresar el ingreso promedio (solo para hombres) */
 	private JTextField campoIngresoProm;
 
+	/** Selector de archivos para elegir la imagen de perfil */
 	private JFileChooser fileChooser;
 	
+	/** Botón para cambiar entre modo claro y oscuro */
 	private JButton cambiarModo;
 
+	/**
+	 * Constructor de la clase Registro.
+	 * Inicializa todos los componentes gráficos del panel de registro,
+	 * configura sus propiedades visuales y los agrega al panel.
+	 */
 	public Registro() {
 		this.setLayout(null);
 
@@ -206,6 +257,31 @@ public class Registro extends JPanel {
 
 	}
 
+	/**
+	 * Muestra todos los textos de las etiquetas del formulario de registro.
+	 * Este método es utilizado para la internacionalización de la interfaz.
+	 * 
+	 * @param labelRegistro Texto del título de registro
+	 * @param labelNombre Texto de la etiqueta de nombre
+	 * @param labelAlias Texto de la etiqueta de alias
+	 * @param labelEdad Texto de la etiqueta de edad
+	 * @param labelFechaNacimiento Texto de la etiqueta de fecha de nacimiento
+	 * @param labelEstatura Texto de la etiqueta de estatura
+	 * @param labelCorreo Texto de la etiqueta de correo
+	 * @param labelImagen Texto de la etiqueta de imagen
+	 * @param labelDisponibilidad Texto de la etiqueta de disponibilidad
+	 * @param labelDisponible Texto para la opción disponible
+	 * @param labelNoDisponible Texto para la opción no disponible
+	 * @param labelContrasena Texto de la etiqueta de contraseña
+	 * @param labelBotonConfirmar Texto del botón confirmar
+	 * @param labelBotonIniciarSesionTexto Texto del botón iniciar sesión
+	 * @param labelYaCuenta Texto para "ya tiene cuenta"
+	 * @param labelSexo Texto de la etiqueta de sexo
+	 * @param labelDivorciada Texto para la opción divorciada
+	 * @param labelNoDivorciada Texto para la opción no divorciada
+	 * @param labelBotonExaminar Texto del botón examinar
+	 * @param labelCambiarModo Texto del botón cambiar modo
+	 */
 	public void mostrarTextos(String labelRegistro, String labelNombre, String labelAlias, String labelEdad,
 			String labelFechaNacimiento, String labelEstatura, String labelCorreo, String labelImagen,
 			String labelDisponibilidad, String labelDisponible, String labelNoDisponible, String labelContrasena,
@@ -246,6 +322,12 @@ public class Registro extends JPanel {
 		cambiarModo.setText(labelCambiarModo);
 	}
 
+	/**
+	 * Muestra el campo específico para usuarios hombres (ingreso promedio).
+	 * Oculta los campos específicos de mujeres.
+	 * 
+	 * @param labelIngresoProm Texto de la etiqueta de ingreso promedio
+	 */
 	public void mostrarCampoHombre(String labelIngresoProm) {
 
 		divorciada.setVisible(false);
@@ -261,6 +343,12 @@ public class Registro extends JPanel {
 		crearLabel(labelIngresoProm, Color.WHITE, 370, 900, 500, 30, 20);
 	}
 
+	/**
+	 * Muestra los campos específicos para usuarios mujeres (estado civil).
+	 * Oculta los campos específicos de hombres.
+	 * 
+	 * @param labelDivorciada Texto de la etiqueta de estado divorciada
+	 */
 	public void mostrarCampoMujer(String labelDivorciada) {
 
 		campoIngresoProm.setVisible(false);
@@ -278,6 +366,12 @@ public class Registro extends JPanel {
 
 	}
 
+	/**
+	 * Elimina las etiquetas relacionadas con los campos específicos de sexo.
+	 * 
+	 * @param labelIngresoProm Texto de la etiqueta de ingreso promedio
+	 * @param labelDivorciada Texto de la etiqueta de estado divorciada
+	 */
 	public void eliminarLabelSexos(String labelIngresoProm, String labelDivorciada) {
 		for (Component c : izquierda.getComponents()) {
 			if (!(c instanceof JLabel)) {
@@ -292,6 +386,10 @@ public class Registro extends JPanel {
 		}
 	}
 
+	/**
+	 * Abre un cuadro de diálogo para seleccionar una imagen de perfil.
+	 * Solo permite archivos con extensión .jpg
+	 */
 	public void obtenerRutaImagen() {
 		fileChooser = new JFileChooser();
 
@@ -302,6 +400,10 @@ public class Registro extends JPanel {
 		}
 	}
 
+	/**
+	 * Cambia entre el modo oscuro y modo claro de la interfaz.
+	 * Alterna los colores de fondo y texto de todos los componentes.
+	 */
 	public void cambiarModo() {
 		Color fondo;
 		Color texto;
@@ -338,6 +440,17 @@ public class Registro extends JPanel {
 		izquierda.repaint();	
 	}
 
+	/**
+	 * Crea y agrega una etiqueta al panel con las propiedades especificadas.
+	 * 
+	 * @param texto Texto a mostrar en la etiqueta
+	 * @param colorFondo Color del fondo (no utilizado actualmente)
+	 * @param x Posición X de la etiqueta
+	 * @param y Posición Y de la etiqueta
+	 * @param ancho Ancho de la etiqueta
+	 * @param alto Alto de la etiqueta
+	 * @param tamanoLetra Tamaño de la fuente
+	 */
 	public void crearLabel(String texto, Color colorFondo, int x, int y, int ancho, int alto, int tamanoLetra) {
 		JLabel label = new JLabel(texto);
 		label.setForeground(new Color(200, 200, 200));
@@ -346,6 +459,10 @@ public class Registro extends JPanel {
 		izquierda.add(label);
 	}
 
+	/**
+	 * Limpia todos los campos del formulario y restablece las selecciones.
+	 * Oculta los campos específicos de sexo.
+	 */
 	public void limpiarCampos() {
 		campoNombre.setText("");
 		campoAlias.setText("");
@@ -366,194 +483,434 @@ public class Registro extends JPanel {
 		campoIngresoProm.setEnabled(false);
 	}
 
+	/**
+	 * Obtiene el scroll pane del panel.
+	 * 
+	 * @return El scroll pane
+	 */
 	public JScrollPane getScroll() {
 		return scroll;
 	}
 
+	/**
+	 * Establece el scroll pane del panel.
+	 * 
+	 * @param scroll El scroll pane a establecer
+	 */
 	public void setScroll(JScrollPane scroll) {
 		this.scroll = scroll;
 	}
 
+	/**
+	 * Obtiene el panel izquierda que contiene el formulario.
+	 * 
+	 * @return El panel izquierda
+	 */
 	public JPanel getIzquierda() {
 		return izquierda;
 	}
 
+	/**
+	 * Establece el panel izquierda.
+	 * 
+	 * @param izquierda El panel a establecer
+	 */
 	public void setIzquierda(JPanel izquierda) {
 		this.izquierda = izquierda;
 	}
 
+	/**
+	 * Obtiene el botón de confirmar registro.
+	 * 
+	 * @return El botón confirmar
+	 */
 	public JButton getBotonConfirmar() {
 		return botonConfirmar;
 	}
 
+	/**
+	 * Establece el botón de confirmar registro.
+	 * 
+	 * @param botonConfirmar El botón a establecer
+	 */
 	public void setBotonConfirmar(JButton botonConfirmar) {
 		this.botonConfirmar = botonConfirmar;
 	}
 
+	/**
+	 * Obtiene el botón de iniciar sesión.
+	 * 
+	 * @return El botón iniciar sesión
+	 */
 	public JButton getBotonIniciarSesion() {
 		return botonIniciarSesion;
 	}
 
+	/**
+	 * Establece el botón de iniciar sesión.
+	 * 
+	 * @param botonIniciarSesion El botón a establecer
+	 */
 	public void setBotonIniciarSesion(JButton botonIniciarSesion) {
 		this.botonIniciarSesion = botonIniciarSesion;
 	}
 
+	/**
+	 * Obtiene el botón de selección de sexo hombre.
+	 * 
+	 * @return El botón sexo hombre
+	 */
 	public JButton getBotonSexoHombre() {
 		return botonSexoHombre;
 	}
 
+	/**
+	 * Establece el botón de selección de sexo hombre.
+	 * 
+	 * @param botonSexoHombre El botón a establecer
+	 */
 	public void setBotonSexoHombre(JButton botonSexoHombre) {
 		this.botonSexoHombre = botonSexoHombre;
 	}
 
+	/**
+	 * Obtiene el botón de selección de sexo mujer.
+	 * 
+	 * @return El botón sexo mujer
+	 */
 	public JButton getBotonSexoMujer() {
 		return botonSexoMujer;
 	}
 
+	/**
+	 * Establece el botón de selección de sexo mujer.
+	 * 
+	 * @param botonSexoMujer El botón a establecer
+	 */
 	public void setBotonSexoMujer(JButton botonSexoMujer) {
 		this.botonSexoMujer = botonSexoMujer;
 	}
 
+	/**
+	 * Obtiene el radio button de disponible.
+	 * 
+	 * @return El radio button disponible
+	 */
 	public JRadioButton getDisponible() {
 		return disponible;
 	}
 
+	/**
+	 * Establece el radio button de disponible.
+	 * 
+	 * @param disponible El radio button a establecer
+	 */
 	public void setDisponible(JRadioButton disponible) {
 		this.disponible = disponible;
 	}
 
+	/**
+	 * Obtiene el radio button de no disponible.
+	 * 
+	 * @return El radio button no disponible
+	 */
 	public JRadioButton getNoDisponible() {
 		return noDisponible;
 	}
 
+	/**
+	 * Establece el radio button de no disponible.
+	 * 
+	 * @param noDisponible El radio button a establecer
+	 */
 	public void setNoDisponible(JRadioButton noDisponible) {
 		this.noDisponible = noDisponible;
 	}
 
+	/**
+	 * Obtiene el grupo de botones de disponibilidad.
+	 * 
+	 * @return El grupo de disponibilidad
+	 */
 	public ButtonGroup getGrupoDisponibilidad() {
 		return grupoDisponibilidad;
 	}
 
+	/**
+	 * Establece el grupo de botones de disponibilidad.
+	 * 
+	 * @param grupoDisponibilidad El grupo a establecer
+	 */
 	public void setGrupoDisponibilidad(ButtonGroup grupoDisponibilidad) {
 		this.grupoDisponibilidad = grupoDisponibilidad;
 	}
 
+	/**
+	 * Obtiene el campo de texto del nombre.
+	 * 
+	 * @return El campo nombre
+	 */
 	public JTextField getCampoNombre() {
 		return campoNombre;
 	}
 
+	/**
+	 * Establece el campo de texto del nombre.
+	 * 
+	 * @param campoNombre El campo a establecer
+	 */
 	public void setCampoNombre(JTextField campoNombre) {
 		this.campoNombre = campoNombre;
 	}
 
+	/**
+	 * Obtiene el campo de texto del alias.
+	 * 
+	 * @return El campo alias
+	 */
 	public JTextField getCampoAlias() {
 		return campoAlias;
 	}
 
+	/**
+	 * Establece el campo de texto del alias.
+	 * 
+	 * @param campoAlias El campo a establecer
+	 */
 	public void setCampoAlias(JTextField campoAlias) {
 		this.campoAlias = campoAlias;
 	}
 
+	/**
+	 * Obtiene el campo de texto de la edad.
+	 * 
+	 * @return El campo edad
+	 */
 	public JTextField getCampoEdad() {
 		return campoEdad;
 	}
 
+	/**
+	 * Establece el campo de texto de la edad.
+	 * 
+	 * @param campoEdad El campo a establecer
+	 */
 	public void setCampoEdad(JTextField campoEdad) {
 		this.campoEdad = campoEdad;
 	}
 
+	/**
+	 * Obtiene el campo de texto de la fecha de nacimiento.
+	 * 
+	 * @return El campo fecha de nacimiento
+	 */
 	public JTextField getCampoFechaNacimiento() {
 		return campoFechaNacimiento;
 	}
 
+	/**
+	 * Establece el campo de texto de la fecha de nacimiento.
+	 * 
+	 * @param campoFechaNacimiento El campo a establecer
+	 */
 	public void setCampoFechaNacimiento(JTextField campoFechaNacimiento) {
 		this.campoFechaNacimiento = campoFechaNacimiento;
 	}
 
+	/**
+	 * Obtiene el campo de texto de la estatura.
+	 * 
+	 * @return El campo estatura
+	 */
 	public JTextField getCampoEstatura() {
 		return campoEstatura;
 	}
 
+	/**
+	 * Establece el campo de texto de la estatura.
+	 * 
+	 * @param campoEstatura El campo a establecer
+	 */
 	public void setCampoEstatura(JTextField campoEstatura) {
 		this.campoEstatura = campoEstatura;
 	}
 
+	/**
+	 * Obtiene el campo de texto del correo electrónico.
+	 * 
+	 * @return El campo correo
+	 */
 	public JTextField getCampoCorreo() {
 		return campoCorreo;
 	}
 
+	/**
+	 * Establece el campo de texto del correo electrónico.
+	 * 
+	 * @param campoCorreo El campo a establecer
+	 */
 	public void setCampoCorreo(JTextField campoCorreo) {
 		this.campoCorreo = campoCorreo;
 	}
 
+	/**
+	 * Obtiene el campo de texto de la imagen.
+	 * 
+	 * @return El campo imagen
+	 */
 	public JTextField getCampoImagen() {
 		return campoImagen;
 	}
 
+	/**
+	 * Establece el campo de texto de la imagen.
+	 * 
+	 * @param campoImagen El campo a establecer
+	 */
 	public void setCampoImagen(JTextField campoImagen) {
 		this.campoImagen = campoImagen;
 	}
 
+	/**
+	 * Obtiene el campo de texto de la contraseña.
+	 * 
+	 * @return El campo contraseña
+	 */
 	public JTextField getCampoContrasena() {
 		return campoContrasena;
 	}
 
+	/**
+	 * Establece el campo de texto de la contraseña.
+	 * 
+	 * @param campoContrasena El campo a establecer
+	 */
 	public void setCampoContrasena(JTextField campoContrasena) {
 		this.campoContrasena = campoContrasena;
 	}
 
+	/**
+	 * Obtiene el campo de texto del ingreso promedio.
+	 * 
+	 * @return El campo ingreso promedio
+	 */
 	public JTextField getCampoIngresoProm() {
 		return campoIngresoProm;
 	}
 
+	/**
+	 * Establece el campo de texto del ingreso promedio.
+	 * 
+	 * @param campoIngresoProm El campo a establecer
+	 */
 	public void setCampoIngresoProm(JTextField campoIngresoProm) {
 		this.campoIngresoProm = campoIngresoProm;
 	}
 
+	/**
+	 * Obtiene el radio button de divorciada.
+	 * 
+	 * @return El radio button divorciada
+	 */
 	public JRadioButton getDivorciada() {
 		return divorciada;
 	}
 
+	/**
+	 * Establece el radio button de divorciada.
+	 * 
+	 * @param divorciada El radio button a establecer
+	 */
 	public void setDivorciada(JRadioButton divorciada) {
 		this.divorciada = divorciada;
 	}
 
+	/**
+	 * Obtiene el radio button de no divorciada.
+	 * 
+	 * @return El radio button no divorciada
+	 */
 	public JRadioButton getNoDivorciada() {
 		return noDivorciada;
 	}
 
+	/**
+	 * Establece el radio button de no divorciada.
+	 * 
+	 * @param noDivorciada El radio button a establecer
+	 */
 	public void setNoDivorciada(JRadioButton noDivorciada) {
 		this.noDivorciada = noDivorciada;
 	}
 
+	/**
+	 * Obtiene el grupo de botones de sexo.
+	 * 
+	 * @return El grupo de sexo
+	 */
 	public ButtonGroup getGrupoSexo() {
 		return grupoSexo;
 	}
 
+	/**
+	 * Establece el grupo de botones de sexo.
+	 * 
+	 * @param grupoSexo El grupo a establecer
+	 */
 	public void setGrupoSexo(ButtonGroup grupoSexo) {
 		this.grupoSexo = grupoSexo;
 	}
 
+	/**
+	 * Obtiene el botón examinar.
+	 * 
+	 * @return El botón examinar
+	 */
 	public JButton getBotonExaminar() {
 		return botonExaminar;
 	}
 
+	/**
+	 * Establece el botón examinar.
+	 * 
+	 * @param botonExaminar El botón a establecer
+	 */
 	public void setBotonExaminar(JButton botonExaminar) {
 		this.botonExaminar = botonExaminar;
 	}
 
+	/**
+	 * Obtiene el selector de archivos.
+	 * 
+	 * @return El file chooser
+	 */
 	public JFileChooser getFileChooser() {
 		return fileChooser;
 	}
 
+	/**
+	 * Establece el selector de archivos.
+	 * 
+	 * @param fileChooser El file chooser a establecer
+	 */
 	public void setFileChooser(JFileChooser fileChooser) {
 		this.fileChooser = fileChooser;
 	}
 
+	/**
+	 * Obtiene el botón cambiar modo.
+	 * 
+	 * @return El botón cambiar modo
+	 */
 	public JButton getCambiarModo() {
 		return cambiarModo;
 	}
 
+	/**
+	 * Establece el botón cambiar modo.
+	 * 
+	 * @param cambiarModo El botón a establecer
+	 */
 	public void setCambiarModo(JButton cambiarModo) {
 		this.cambiarModo = cambiarModo;
 	}

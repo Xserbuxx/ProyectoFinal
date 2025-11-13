@@ -19,15 +19,28 @@ import java.util.Scanner;
  */
 public class FileHandler {
 
-	// texto
+	/** Archivo de texto para operaciones de lectura/escritura */
 	public static File archivo;
+	
+	/** Escritor para archivos de texto */
 	public static PrintWriter escritor;
+	
+	/** Lector para archivos de texto */
 	public static Scanner lector;
-	// serializado
+	
+	/** Stream de entrada para archivos serializados */
 	public static FileInputStream fis;
+	
+	/** Stream de objetos de entrada para deserializar */
 	public static ObjectInputStream ois;
+	
+	/** Stream de salida para archivos serializados */
 	public static FileOutputStream fos;
+	
+	/** Stream de objetos de salida para serializar */
 	public static ObjectOutputStream oos;
+	
+	/** Objeto Properties para manejar archivos de propiedades */
 	public static Properties prop;
 
 	/**

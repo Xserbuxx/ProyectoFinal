@@ -10,11 +10,25 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+/**
+ * Panel de información detallada de un usuario.
+ * Muestra el perfil completo de un usuario seleccionado desde el panel de administración.
+ * 
+ * @author Leidy Natalia Díaz Peña
+ * @version 1.0
+ */
 public class InfoUsuario extends JPanel {
 
+	/** Botón para volver al menú anterior */
 	private JButton botonVolver;
+	
+	/** Botón para cambiar entre modo claro y oscuro */
 	private JButton cambiarModo;
 
+	/**
+	 * Constructor que inicializa el panel de información de usuario.
+	 * Crea la interfaz con los botones de navegación.
+	 */
 	public InfoUsuario() {
 		this.setLayout(null);
 		this.setBackground(new Color(36, 41, 46));
@@ -49,6 +63,25 @@ public class InfoUsuario extends JPanel {
 		this.add(barraLateral);
 	}
 
+	/**
+	 * Muestra el perfil completo de un usuario hombre.
+	 * 
+	 * @param labelNombreUsuario El nombre del usuario
+	 * @param labelAlias El alias del usuario
+	 * @param labelEdad La edad del usuario
+	 * @param labelFechaNacimiento La fecha de nacimiento
+	 * @param labelEstatura La estatura
+	 * @param labelCorreo El correo electrónico
+	 * @param ingresoPromedio El ingreso promedio
+	 * @param estadoDivorcio La preferencia de estado civil
+	 * @param edadMinima La edad mínima deseada
+	 * @param edadMaxima La edad máxima deseada
+	 * @param estaturaIdeal La estatura ideal
+	 * @param labelLikesRecibidos Los likes recibidos
+	 * @param imagenUsuario La imagen de perfil
+	 * @param labelDatos Texto de la sección "Datos"
+	 * @param labelGustos Texto de la sección "Gustos"
+	 */
 	public void mostrarPerfilHombre(String labelNombreUsuario, String labelAlias, String labelEdad,
 			String labelFechaNacimiento, String labelEstatura, String labelCorreo, String ingresoPromedio,
 			String estadoDivorcio, String edadMinima, String edadMaxima, String estaturaIdeal,
@@ -77,6 +110,22 @@ public class InfoUsuario extends JPanel {
 		this.setComponentZOrder(labelImagen, 0);
 	}
 
+	/**
+	 * Muestra las etiquetas traducidas para el perfil de hombre.
+	 * 
+	 * @param labelNombre Etiqueta "Nombre"
+	 * @param labelAlias Etiqueta "Alias"
+	 * @param labelEdad Etiqueta "Edad"
+	 * @param labelFechaNacimiento Etiqueta "Fecha de Nacimiento"
+	 * @param labelEstatura Etiqueta "Estatura"
+	 * @param labelCorreo Etiqueta "Correo"
+	 * @param labelIngresoPromedio Etiqueta "Ingreso Promedio"
+	 * @param labelEstadoDivorcio Etiqueta "Estado de Divorcio"
+	 * @param labelEdadMinima Etiqueta "Edad Mínima"
+	 * @param labelEdadMaxima Etiqueta "Edad Máxima"
+	 * @param labelEstaturaIdeal Etiqueta "Estatura Ideal"
+	 * @param labelLikesRecibidos Etiqueta "Likes Recibidos"
+	 */
 	public void mostrarTextosHombre(String labelNombre, String labelAlias, String labelEdad,
 			String labelFechaNacimiento, String labelEstatura, String labelCorreo, String labelIngresoPromedio,
 			String labelEstadoDivorcio, String labelEdadMinima, String labelEdadMaxima, String labelEstaturaIdeal,
@@ -96,6 +145,25 @@ public class InfoUsuario extends JPanel {
 
 	}
 
+	/**
+	 * Muestra el perfil completo de una usuario mujer.
+	 * 
+	 * @param labelNombreUsuario El nombre del usuario
+	 * @param labelAlias El alias del usuario
+	 * @param labelEdad La edad del usuario
+	 * @param labelFechaNacimiento La fecha de nacimiento
+	 * @param labelEstatura La estatura
+	 * @param labelCorreo El correo electrónico
+	 * @param labelEstadoDivorcio El estado de divorcio
+	 * @param ingresoPromedio El ingreso ideal deseado
+	 * @param labelEdadMinima La edad mínima deseada
+	 * @param labelEdadMaxima La edad máxima deseada
+	 * @param labelEstaturaIdeal La estatura ideal
+	 * @param labelLikesRecibidos Los likes recibidos
+	 * @param imagenUsuario La imagen de perfil
+	 * @param labelDatos Texto de la sección "Datos"
+	 * @param labelGustos Texto de la sección "Gustos"
+	 */
 	public void mostrarPerfilMujer(String labelNombreUsuario, String labelAlias, String labelEdad,
 			String labelFechaNacimiento, String labelEstatura, String labelCorreo, String labelEstadoDivorcio,
 			String ingresoPromedio, String labelEdadMinima, String labelEdadMaxima, String labelEstaturaIdeal,
@@ -124,6 +192,22 @@ public class InfoUsuario extends JPanel {
 		this.setComponentZOrder(labelImagen, 0);
 	}
 
+	/**
+	 * Muestra las etiquetas traducidas para el perfil de mujer.
+	 * 
+	 * @param labelNombre Etiqueta "Nombre"
+	 * @param labelAlias Etiqueta "Alias"
+	 * @param labelEdad Etiqueta "Edad"
+	 * @param labelFechaNacimiento Etiqueta "Fecha de Nacimiento"
+	 * @param labelEstatura Etiqueta "Estatura"
+	 * @param labelCorreo Etiqueta "Correo"
+	 * @param labelEstadoDivorcio Etiqueta "Estado de Divorcio"
+	 * @param labelIngresoPromedio Etiqueta "Ingreso Promedio"
+	 * @param labelEdadMinima Etiqueta "Edad Mínima"
+	 * @param labelEdadMaxima Etiqueta "Edad Máxima"
+	 * @param labelEstaturaIdeal Etiqueta "Estatura Ideal"
+	 * @param labelLikesRecibidos Etiqueta "Likes Recibidos"
+	 */
 	public void mostrarTextosMujer(String labelNombre, String labelAlias, String labelEdad, String labelFechaNacimiento,
 			String labelEstatura, String labelCorreo, String labelEstadoDivorcio, String labelIngresoPromedio,
 			String labelEdadMinima, String labelEdadMaxima, String labelEstaturaIdeal, String labelLikesRecibidos) {
@@ -143,6 +227,9 @@ public class InfoUsuario extends JPanel {
 
 	}
 
+	/**
+	 * Cambia el modo visual del panel entre claro y oscuro.
+	 */
 	public void cambiarModo() {
 		Color fondo = this.getBackground();
 		if (fondo.equals(new Color(36, 41, 46))) {
@@ -167,10 +254,18 @@ public class InfoUsuario extends JPanel {
 		this.repaint();
 	}
 
+	/**
+	 * Muestra los textos traducidos en el panel.
+	 * 
+	 * @param labelBotonCambiarModo Texto del botón cambiar modo
+	 */
 	public void mostrarTextos(String labelBotonCambiarModo) {
 		cambiarModo.setText(labelBotonCambiarModo);
 	}
 
+	/**
+	 * Elimina todas las etiquetas del panel.
+	 */
 	public void limpiarLabels() {
 		for (Component c : this.getComponents()) {
 			if (c instanceof JLabel) {
@@ -182,6 +277,17 @@ public class InfoUsuario extends JPanel {
 
 	}
 
+	/**
+	 * Crea y agrega una etiqueta de texto al panel.
+	 * 
+	 * @param texto El texto a mostrar
+	 * @param colorFondo El color del texto
+	 * @param x Posición X
+	 * @param y Posición Y
+	 * @param ancho Ancho de la etiqueta
+	 * @param alto Alto de la etiqueta
+	 * @param tamanoLetra Tamaño de la fuente
+	 */
 	public void crearLabel(String texto, Color colorFondo, int x, int y, int ancho, int alto, int tamanoLetra) {
 		JLabel label = new JLabel(texto);
 		label.setForeground(colorFondo);
@@ -191,20 +297,38 @@ public class InfoUsuario extends JPanel {
 		this.setComponentZOrder(label, 0);
 	}
 
-
+	/**
+	 * Obtiene el botón volver.
+	 * 
+	 * @return El botón volver
+	 */
 	public JButton getBotonVolver() {
 		return botonVolver;
 	}
 
+	/**
+	 * Establece el botón volver.
+	 * 
+	 * @param botonVolver El nuevo botón volver
+	 */
 	public void setBotonVolver(JButton botonVolver) {
 		this.botonVolver = botonVolver;
 	}
 
-
+	/**
+	 * Obtiene el botón cambiar modo.
+	 * 
+	 * @return El botón cambiar modo
+	 */
 	public JButton getCambiarModo() {
 		return cambiarModo;
 	}
 
+	/**
+	 * Establece el botón cambiar modo.
+	 * 
+	 * @param cambiarModo El nuevo botón cambiar modo
+	 */
 	public void setCambiarModo(JButton cambiarModo) {
 		this.cambiarModo = cambiarModo;
 	}

@@ -14,7 +14,10 @@ import co.edu.unbosque.model.MujerDTO;
  */
 public class MujerDAO implements DAO<MujerDTO, Mujer> {
 
+	/** Nombre del archivo serializado para almacenar las mujeres */
 	private String SERIAL_FILE_NAME = "mujeres.bin";
+	
+	/** Lista de todas las mujeres en el sistema */
 	private ArrayList<Mujer> mujeres;
 
 	/**
