@@ -37,8 +37,6 @@ public class TestRegistroUsuario {
 	 * Pre: datos válidos salvo la edad
 	 * Pasos: registrar usuario con fecha de nacimiento que resulte en 18 años exactos hoy
 	 * Esperado: registro permitido; edad calculada = 18
-	 * Tipo: Unit/Integración
-	 * Prioridad: Alta
 	 */
 	@Test
 	public void testRegistroUsuarioMayorDeEdad() {
@@ -97,8 +95,6 @@ public class TestRegistroUsuario {
 	 * Pre: fecha de nacimiento que da <18
 	 * Pasos: intentar registrar
 	 * Esperado: rechazo con mensaje "Debe ser mayor de 18"
-	 * Tipo: Unit
-	 * Prioridad: Alta
 	 */
 	@Test
 	public void testRegistroUsuarioMenorDeEdad() {
@@ -120,8 +116,6 @@ public class TestRegistroUsuario {
 	 * Pre: fecha en formato diferente (e.g., YYYY-MM-DD)
 	 * Pasos: enviar registro
 	 * Esperado: rechazo con mensaje de formato inválido (DD/MM/YYYY)
-	 * Tipo: Unit
-	 * Prioridad: Alta
 	 */
 	@Test
 	public void testRegistroFormatoFechaInvalido() {
@@ -142,8 +136,6 @@ public class TestRegistroUsuario {
 	 * Pre: fecha de nacimiento en el futuro
 	 * Pasos: enviar registro
 	 * Esperado: rechazo con mensaje de fecha futura
-	 * Tipo: Unit
-	 * Prioridad: Alta
 	 */
 	@Test
 	public void testRegistroFechaFutura() {
@@ -165,8 +157,6 @@ public class TestRegistroUsuario {
 	 * Pre: fecha que no coincide con la edad proporcionada
 	 * Pasos: enviar registro
 	 * Esperado: rechazo con mensaje de incoherencia
-	 * Tipo: Unit
-	 * Prioridad: Alta
 	 */
 	@Test
 	public void testRegistroFechaIncoherente() {
@@ -189,8 +179,6 @@ public class TestRegistroUsuario {
 	 * Pre: email sin '@' o dominio
 	 * Pasos: enviar registro
 	 * Esperado: rechazo con validación de email
-	 * Tipo: Unit
-	 * Prioridad: Alta
 	 */
 	@Test
 	public void testRegistroEmailInvalido() {
@@ -211,8 +199,6 @@ public class TestRegistroUsuario {
 	 * Pre: email con @ pero sin dominio completo
 	 * Pasos: enviar registro
 	 * Esperado: rechazo con validación de email
-	 * Tipo: Unit
-	 * Prioridad: Alta
 	 */
 	@Test
 	public void testRegistroEmailSinDominio() {
@@ -233,8 +219,6 @@ public class TestRegistroUsuario {
 	 * Pre: existe usuario con alias "pepito"
 	 * Pasos: intentar registrar otro usuario con alias "pepito"
 	 * Esperado: rechazo por alias duplicado
-	 * Tipo: Unit
-	 * Prioridad: Alta
 	 */
 	@Test
 	public void testRegistroAliasNoUnico() {
@@ -305,8 +289,6 @@ public class TestRegistroUsuario {
 	 * Pre: foto en PNG o sin extensión
 	 * Pasos: intentar subir foto
 	 * Esperado: rechazo; aceptar solo .jpg
-	 * Tipo: Integration/UI
-	 * Prioridad: Media
 	 */
 	@Test
 	public void testRegistroFotoFormatoNoJPG() {
@@ -327,8 +309,6 @@ public class TestRegistroUsuario {
 	 * Pre: ruta sin extensión de archivo
 	 * Pasos: intentar subir foto
 	 * Esperado: rechazo
-	 * Tipo: Unit
-	 * Prioridad: Media
 	 */
 	@Test
 	public void testRegistroFotoSinExtension() {
@@ -349,8 +329,6 @@ public class TestRegistroUsuario {
 	 * Pre: registrar hombre sin estatura
 	 * Pasos: enviar registro
 	 * Esperado: rechazo por campo obligatorio
-	 * Tipo: Unit
-	 * Prioridad: Alta
 	 */
 	@Test
 	public void testRegistroEstaturaObligatoriaHombres() {
@@ -371,8 +349,6 @@ public class TestRegistroUsuario {
 	 * Pre: estatura dentro del rango válido (50-250 cm)
 	 * Pasos: validar estatura
 	 * Esperado: validación exitosa
-	 * Tipo: Unit
-	 * Prioridad: Alta
 	 */
 	@Test
 	public void testRegistroEstaturaRangoValido() {
@@ -394,8 +370,6 @@ public class TestRegistroUsuario {
 	 * Pre: registrar hombre sin ingresos mensuales
 	 * Pasos: enviar registro
 	 * Esperado: rechazo por campo obligatorio
-	 * Tipo: Unit
-	 * Prioridad: Alta
 	 */
 	@Test
 	public void testRegistroIngresosObligatorioHombres() {
@@ -416,8 +390,6 @@ public class TestRegistroUsuario {
 	 * Pre: ingresos dentro del rango válido
 	 * Pasos: validar ingresos
 	 * Esperado: validación exitosa
-	 * Tipo: Unit
-	 * Prioridad: Alta
 	 */
 	@Test
 	public void testRegistroIngresosRangoValido() {
@@ -438,8 +410,6 @@ public class TestRegistroUsuario {
 	 * Pre: registrar mujer y omitir información de divorcio
 	 * Pasos: enviar registro
 	 * Esperado: registro permitido; campo nulo o "no informado" válido
-	 * Tipo: Unit
-	 * Prioridad: Media
 	 */
 	@Test
 	public void testRegistroDivorciosMujeresOpcional() {
@@ -482,8 +452,6 @@ public class TestRegistroUsuario {
 	 * Pre: campo nombre vacío
 	 * Pasos: intentar registrar
 	 * Esperado: rechazo por campo obligatorio
-	 * Tipo: Unit
-	 * Prioridad: Alta
 	 */
 	@Test
 	public void testRegistroCampoVacioNombre() {
@@ -504,8 +472,6 @@ public class TestRegistroUsuario {
 	 * Pre: campo alias vacío
 	 * Pasos: intentar registrar
 	 * Esperado: rechazo por campo obligatorio
-	 * Tipo: Unit
-	 * Prioridad: Alta
 	 */
 	@Test
 	public void testRegistroCampoVacioAlias() {
@@ -526,8 +492,6 @@ public class TestRegistroUsuario {
 	 * Pre: alias con caracteres especiales
 	 * Pasos: intentar registrar
 	 * Esperado: rechazo por caracteres no permitidos
-	 * Tipo: Unit
-	 * Prioridad: Alta
 	 */
 	@Test
 	public void testRegistroAliasCaracteresEspeciales() {
@@ -548,8 +512,6 @@ public class TestRegistroUsuario {
 	 * Pre: alias con menos de 8 caracteres
 	 * Pasos: intentar registrar
 	 * Esperado: rechazo por longitud mínima
-	 * Tipo: Unit
-	 * Prioridad: Media
 	 */
 	@Test
 	public void testRegistroAliasMuyCorto() {
@@ -570,8 +532,6 @@ public class TestRegistroUsuario {
 	 * Pre: alias con más de 50 caracteres
 	 * Pasos: intentar registrar
 	 * Esperado: rechazo por longitud máxima
-	 * Tipo: Unit
-	 * Prioridad: Media
 	 */
 	@Test
 	public void testRegistroAliasMuyLargo() {
@@ -592,8 +552,6 @@ public class TestRegistroUsuario {
 	 * Pre: todos los datos válidos para un hombre
 	 * Pasos: registrar usuario completo
 	 * Esperado: registro exitoso
-	 * Tipo: Integración
-	 * Prioridad: Alta
 	 */
 	@Test
 	public void testRegistroUsuarioCompletoHombre() {
@@ -643,8 +601,6 @@ public class TestRegistroUsuario {
 	 * Pre: todos los datos válidos para una mujer
 	 * Pasos: registrar usuario completo
 	 * Esperado: registro exitoso
-	 * Tipo: Integración
-	 * Prioridad: Alta
 	 */
 	@Test
 	public void testRegistroUsuarioCompletoMujer() {

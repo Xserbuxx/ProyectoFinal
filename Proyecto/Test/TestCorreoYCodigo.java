@@ -36,8 +36,6 @@ public class TestCorreoYCodigo {
 	 * Pasos: interceptar llamado al servicio de correo (mock)
 	 * Esperado: correo enviado con alias, contraseña y código de verificación; 
 	 *           formato del correo contiene código
-	 * Tipo: Integration (mock)
-	 * Prioridad: Alta
 	 */
 	@Test
 	public void testEnvioCorreoPostRegistro() {
@@ -99,8 +97,6 @@ public class TestCorreoYCodigo {
 	 * Pre: código enviado y almacenado
 	 * Pasos: ingresar código en UI
 	 * Esperado: cuenta marcada como verificada
-	 * Tipo: Integration
-	 * Prioridad: Alta
 	 */
 	@Test
 	public void testVerificacionCodigoValido() {
@@ -171,8 +167,6 @@ public class TestCorreoYCodigo {
 	 * Pre: código incorrecto
 	 * Pasos: ingresar
 	 * Esperado: rechazo y mensaje de error; cuenta no verificada
-	 * Tipo: Unit
-	 * Prioridad: Alta
 	 */
 	@Test
 	public void testVerificacionCodigoInvalido() {
@@ -223,8 +217,6 @@ public class TestCorreoYCodigo {
 	 * Pre: código negativo ingresado
 	 * Pasos: intentar validar código negativo
 	 * Esperado: rechazo con NumeroNegativoException
-	 * Tipo: Unit
-	 * Prioridad: Alta
 	 */
 	@Test
 	public void testVerificacionCodigoNegativo() {
@@ -245,8 +237,6 @@ public class TestCorreoYCodigo {
 	 * Pre: código con menos de 6 dígitos
 	 * Pasos: intentar validar código corto
 	 * Esperado: rechazo con CodigoException
-	 * Tipo: Unit
-	 * Prioridad: Alta
 	 */
 	@Test
 	public void testVerificacionCodigoMenosDe6Digitos() {
@@ -268,8 +258,6 @@ public class TestCorreoYCodigo {
 	 * Pre: código con más de 6 dígitos
 	 * Pasos: intentar validar código largo
 	 * Esperado: rechazo con CodigoException
-	 * Tipo: Unit
-	 * Prioridad: Alta
 	 */
 	@Test
 	public void testVerificacionCodigoMasDe6Digitos() {
@@ -291,8 +279,6 @@ public class TestCorreoYCodigo {
 	 * Pre: correo con formato válido
 	 * Pasos: validar formato de correo
 	 * Esperado: validación exitosa
-	 * Tipo: Unit
-	 * Prioridad: Alta
 	 */
 	@Test
 	public void testEnvioCorreoFormatoEmailValido() {

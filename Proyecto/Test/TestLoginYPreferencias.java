@@ -35,8 +35,6 @@ public class TestLoginYPreferencias {
 	 * Pre: usuario verificado registrado
 	 * Pasos: login con email/alias y contraseña
 	 * Esperado: acceso permitido
-	 * Tipo: Integration
-	 * Prioridad: Alta
 	 */
 	@Test
 	public void testLoginCredencialesCorrectas() {
@@ -92,8 +90,6 @@ public class TestLoginYPreferencias {
 	 * Pre: contraseña errónea
 	 * Pasos: intentar login
 	 * Esperado: acceso denegado; contador opcional de intentos
-	 * Tipo: Unit
-	 * Prioridad: Alta
 	 */
 	@Test
 	public void testLoginCredencialesIncorrectas() {
@@ -147,8 +143,6 @@ public class TestLoginYPreferencias {
 	 * Pre: usuario no registrado
 	 * Pasos: intentar login con alias inexistente
 	 * Esperado: acceso denegado
-	 * Tipo: Unit
-	 * Prioridad: Alta
 	 */
 	@Test
 	public void testLoginUsuarioNoExiste() {
@@ -183,8 +177,6 @@ public class TestLoginYPreferencias {
 	 * Pre: usuario registrado pero no verificado
 	 * Pasos: intentar login
 	 * Esperado: debe redirigir a verificación de código
-	 * Tipo: Integration
-	 * Prioridad: Alta
 	 */
 	@Test
 	public void testLoginUsuarioNoVerificado() {
@@ -235,8 +227,6 @@ public class TestLoginYPreferencias {
 	 * Pre: usuario logueado
 	 * Pasos: guardar rango de edad, estatura y estado divorcio
 	 * Esperado: preferencias persistidas en perfil
-	 * Tipo: Integration
-	 * Prioridad: Media
 	 */
 	@Test
 	public void testGuardarPreferenciasBusqueda() {

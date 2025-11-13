@@ -38,8 +38,6 @@ public class TestLikesYRanking {
 	 * Pre: perfil objetivo con N likes
 	 * Pasos: usuario A da like a perfil B
 	 * Esperado: likes de B aumentan a N+1
-	 * Tipo: Unit
-	 * Prioridad: Alta
 	 */
 	@Test
 	public void testDarLikeIncrementaContador() {
@@ -140,8 +138,6 @@ public class TestLikesYRanking {
 	 * Pre: intento malicioso de establecer likes negativos (API)
 	 * Pasos: llamar endpoint/update con -5
 	 * Esperado: validación evita valor negativo
-	 * Tipo: Unit/Security
-	 * Prioridad: Media
 	 */
 	@Test
 	public void testLikesNoNegativo() {
@@ -208,8 +204,6 @@ public class TestLikesYRanking {
 	 * Pre: usuario sin likes
 	 * Pasos: verificar que 0 likes es válido
 	 * Esperado: 0 es un valor válido para likes
-	 * Tipo: Unit
-	 * Prioridad: Media
 	 */
 	@Test
 	public void testLikesValorCero() {
@@ -259,8 +253,6 @@ public class TestLikesYRanking {
 	 * Pre: usuario A ya dio like a usuario B
 	 * Pasos: usuario A quita el like a usuario B
 	 * Esperado: likes de B disminuyen en 1
-	 * Tipo: Unit
-	 * Prioridad: Alta
 	 */
 	@Test
 	public void testRemoverLikeDecrementaContador() {
@@ -362,8 +354,6 @@ public class TestLikesYRanking {
 	 * Pre: varios usuarios dan like al mismo perfil
 	 * Pasos: 3 usuarios diferentes dan like a usuario objetivo
 	 * Esperado: contador incrementa correctamente 3 veces
-	 * Tipo: Integration
-	 * Prioridad: Alta
 	 */
 	@Test
 	public void testMultiplesLikesMismoUsuario() {
@@ -461,8 +451,6 @@ public class TestLikesYRanking {
 	 * Pre: varios usuarios con diferentes likes
 	 * Pasos: ordenar por likes ascendente
 	 * Esperado: lista ordenada de menor a mayor likes
-	 * Tipo: Integration
-	 * Prioridad: Media
 	 */
 	@Test
 	public void testOrdenamientoAscendenteLikes() {
