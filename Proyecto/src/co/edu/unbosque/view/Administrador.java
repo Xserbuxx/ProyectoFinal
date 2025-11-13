@@ -426,6 +426,8 @@ public class Administrador extends JPanel {
 		botonIngresosPDF.setEnabled(false);
 		botonEstaturaPDF.setEnabled(false);
 		cambiarModo.setEnabled(false);
+		txtBuscar.setEnabled(false);
+		botonBuscar.setEnabled(false);
 	}
 
 	/**
@@ -461,6 +463,8 @@ public class Administrador extends JPanel {
 		botonIngresosPDF.setEnabled(true);
 		botonEstaturaPDF.setEnabled(true);
 		cambiarModo.setEnabled(true);
+		txtBuscar.setEnabled(true);
+		botonBuscar.setEnabled(true);
 	}
 
 	/**

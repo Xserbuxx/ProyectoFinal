@@ -170,12 +170,16 @@ public class Controlador implements ActionListener {
 
 		if (e.getActionCommand().contains("BotonLike-")) {
 			JButton botonLike = (JButton) e.getSource();
+			
+			String aliasBuscado = e.getActionCommand().split("-")[1];
+			String aliasEncontrado = aliasBuscado.split(" ")[1];
+			
 			if (botonLike.getForeground() == Color.red) {
 				botonLike.setForeground(Color.gray);
 				botonLike.setText("\u2764 " + (Integer.parseInt(botonLike.getText().split(" ")[1]) - 1));
-				usuarioActual.getLikesDados().remove(botonLike.getActionCommand().split("-")[1]);
+				usuarioActual.getLikesDados().remove(aliasEncontrado);
 				mf.getPersonas().forEach(persona -> {
-					if (persona.getAlias().equals(botonLike.getActionCommand().split("-")[1])) {
+					if (persona.getAlias().equals(aliasEncontrado)) {
 						persona.setLikesRecibidos(persona.getLikesRecibidos() - 1);
 					}
 				});
@@ -183,9 +187,9 @@ public class Controlador implements ActionListener {
 			} else {
 				botonLike.setForeground(Color.red);
 				botonLike.setText("\u2764 " + (Integer.parseInt(botonLike.getText().split(" ")[1]) + 1));
-				usuarioActual.getLikesDados().add(botonLike.getActionCommand().split("-")[1]);
+				usuarioActual.getLikesDados().add(aliasEncontrado);
 				mf.getPersonas().forEach(persona -> {
-					if (persona.getAlias().equals(botonLike.getActionCommand().split("-")[1])) {
+					if (persona.getAlias().equals(aliasEncontrado)) {
 						persona.setLikesRecibidos(persona.getLikesRecibidos() + 1);
 					}
 				});
@@ -799,6 +803,7 @@ public class Controlador implements ActionListener {
 			LanzadorExcepciones.verificarEspaciosExcesivos(alias, prop.getProperty("ventana.registro.usuario"));
 			LanzadorExcepciones.verificarCampoMuyCorto(alias, prop.getProperty("ventana.registro.usuario"));
 			LanzadorExcepciones.verificarCampoMuyLargo(alias, prop.getProperty("ventana.registro.usuario"));
+			LanzadorExcepciones.verificarEspacios(alias, prop.getProperty("ventana.registro.usuario"));
 
 			int edad = 0;
 
@@ -992,6 +997,7 @@ public class Controlador implements ActionListener {
 			LanzadorExcepciones.verificarEspaciosExcesivos(alias, prop.getProperty("ventana.registro.usuario"));
 			LanzadorExcepciones.verificarCampoMuyCorto(alias, prop.getProperty("ventana.registro.usuario"));
 			LanzadorExcepciones.verificarCampoMuyLargo(alias, prop.getProperty("ventana.registro.usuario"));
+			LanzadorExcepciones.verificarEspacios(alias, prop.getProperty("ventana.registro.usuario"));
 
 			int edad = 0;
 
